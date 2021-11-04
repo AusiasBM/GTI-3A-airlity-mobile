@@ -10,8 +10,10 @@
 package com.example.tricoenvironment.airlity;
 
 import android.Manifest;
+import android.app.NotificationManager;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -38,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        // empieza el timer ----------------------------
 
         //Comprobamos si la app tiene los permisos para utilizar el bluetooth
         permisosBluetooth();
@@ -120,4 +123,7 @@ public class MainActivity extends AppCompatActivity {
                 return;
         }
     }
+    ///////////////////////////
+
+
 }

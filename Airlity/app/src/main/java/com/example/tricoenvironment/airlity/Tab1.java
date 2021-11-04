@@ -10,11 +10,15 @@
 
 package com.example.tricoenvironment.airlity;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +28,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 
 import com.google.gson.Gson;
@@ -53,7 +58,7 @@ public class Tab1 extends Fragment {
 
     private static final String ETIQUETA_LOG = ">>>>";
 
-
+private String nombreNotificacion;
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
@@ -120,14 +125,71 @@ public class Tab1 extends Fragment {
      *
      * botonBuscarNuestroDispositivoBTLEPulsado() ->
      */
+
+            public void detectarLecturasErroneas(Medicion medicion){
+                if(medicion.getTipo()=="HUMEDAD"){
+                    if(medicion.getMedida()<15 || medicion.getMedida()>95) {
+                       nombreNotificacion="notificacionHumedadErronea";
+                       crearNotificaciónSegundoPlano();
+                    }
+
+                }
+                if(medicion.getTipo()=="GAS"){
+                    //ug/m3 UNIDADES DEL GAS
+                    if(medicion.getMedida()<50 || medicion.getMedida()>400) {
+                        nombreNotificacion="notificacionGasErronea";
+                        crearNotificaciónSegundoPlano();
+                    }
+                }
+                if(medicion.getTipo()=="TEMPERATURA"){
+                    if(medicion.getMedida()<-20 || medicion.getMedida()>40) {
+                        nombreNotificacion="notificacionTemperaturaErronea";
+                        crearNotificaciónSegundoPlano();
+                    }
+
+                }
+            }
+            public void detectarLimiteGas(Medicion medicion){
+                if (medicion.getTipo()=="GAS"){
+                    if(medicion.getMedida()>150){
+                        nombreNotificacion="notificacionLimiteGas";
+                        crearNotificaciónSegundoPlano();
+                    }
+                }
+            }
+    
+    boolean esActivo = false;
+    boolean sensorNoEncontrado = false;
+
+    private NotificationManager notificationManager;
+    static final String CANAL_ID = "mi_canal";
+    static final int NOTIFICACION_ID = 1;
+    CountDownTimer ctd = new CountDownTimer(30000, 1000) {
+
+        public void onTick(long millisUntilFinished) {
+            Log.d("Contador","seconds remaining: " + millisUntilFinished / 1000);
+            esActivo = true;
+        }
+
+        public void onFinish() {
+            Log.d("Contador finalizado","done!");
+            esActivo = false;
+            sensorNoEncontrado = true;
+            nombreNotificacion="noReciveIbeacons";
+            crearNotificaciónSegundoPlano();
+        }
+    };
+
+
     public void botonBuscarNuestroDispositivoBTLEPulsado() {
 
         //this.buscarEsteDispositivoBTLE( Utilidades.stringToUUID( "EPSG-GTI-PROY-3A" ) ); GTI-3A-ABENEST C5:BC:C9:2D:5C:D0
-
-
         buscarDispositivo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!esActivo && !sensorNoEncontrado) {
+                    ctd.start();
+                }
                 Log.d(ETIQUETA_LOG, " boton nuestro dispositivo BTLE Pulsado" );
 
                 //Asegurarnos que almenos tenga un campo para filtrar nuestro dispositivo:
@@ -163,7 +225,7 @@ public class Tab1 extends Fragment {
                 try {
                     //Parar servicio escucha BLE
                     context.stopService(intentServicioBLE);
-
+                    ctd.cancel();
                     /*//Parar servicio rest
                     Intent stopIntent = new Intent();
                     stopIntent.setAction(ServicioLogicaFake.StopServicioREST.ACTION_STOP);
@@ -201,7 +263,76 @@ public class Tab1 extends Fragment {
             SimpleDateFormat sdf = new SimpleDateFormat("MMM dd yyyy HH:mm");
             Date resultado = new Date(medicion.getFecha());
             textFechaDispositivo.setText(resultado.toString());
+            ctd.cancel();
+            ctd.start();
+            detectarLecturasErroneas(medicion);
+            detectarLimiteGas(medicion);
         }
     }
+    private void crearNotificaciónSegundoPlano(){
+        //Crear la notificación
+        notificationManager = (NotificationManager)
+                context.getSystemService(Context.NOTIFICATION_SERVICE);
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel notificationChannel = new NotificationChannel(
+                    CANAL_ID, "Mis Notificaciones",
+                    NotificationManager.IMPORTANCE_DEFAULT);
+            notificationChannel.setDescription("Descripcion del canal");
+            notificationManager.createNotificationChannel(notificationChannel);
+        }
+        if(nombreNotificacion=="noReciveIbeacons"){
+            NotificationCompat.Builder notificacion =
+                    new NotificationCompat.Builder(getContext(), CANAL_ID)
+                            .setSmallIcon(R.mipmap.ic_launcher)
+                            .setContentTitle("Medidas no encontradas")
+                            .setContentText("El sensor no encuentra ninguna medida");
+            notificationManager.notify(NOTIFICACION_ID, notificacion.build());
+        }
+        if(nombreNotificacion=="notificacionHumedadErronea"){
+            NotificationCompat.Builder notificacion =
+                    new NotificationCompat.Builder(getContext(), CANAL_ID)
+                            .setSmallIcon(R.mipmap.ic_launcher)
+                            .setContentTitle("Humedad ERRONEA")
+                            .setContentText("Se ha producido un error respecto a los valores de humedad");
+            notificationManager.notify(NOTIFICACION_ID, notificacion.build());
+        }
+        if(nombreNotificacion=="notificacionGasErronea"){
+            NotificationCompat.Builder notificacion =
+                    new NotificationCompat.Builder(getContext(), CANAL_ID)
+                            .setSmallIcon(R.mipmap.ic_launcher)
+                            .setContentTitle("Gas ERRONEA")
+                            .setContentText("Se ha producido un error respecto a los valores de gas");
+            notificationManager.notify(NOTIFICACION_ID, notificacion.build());
+        }
+        if(nombreNotificacion=="notificacionTemperaturaErronea"){
+            NotificationCompat.Builder notificacion =
+                    new NotificationCompat.Builder(getContext(), CANAL_ID)
+                            .setSmallIcon(R.mipmap.ic_launcher)
+                            .setContentTitle("temperatura ERRONEA")
+                            .setContentText("Se ha producido un error respecto a los valores de temperatura");
+            notificationManager.notify(NOTIFICACION_ID, notificacion.build());
+        }
+        if(nombreNotificacion=="notificacionLimiteGas"){
+            NotificationCompat.Builder notificacion =
+                    new NotificationCompat.Builder(getContext(), CANAL_ID)
+                            .setSmallIcon(R.mipmap.ic_launcher)
+                            .setContentTitle("Calidad del aire pobre")
+                            .setContentText("El valor de gas en esta zona es demasiado alto");
+            notificationManager.notify(NOTIFICACION_ID, notificacion.build());
+        }
+
+
+
+        //Llançar l'aplicació des de la notificació
+        /*PendingIntent intencionPendiente = PendingIntent.getActivity(
+                this, 0, new Intent(this, Tab1.class), 0);
+        notificacion.setContentIntent(intencionPendiente);*/
+
+        //Servici en primer pla (DECLARAR EN EL MANIFEST)
+        //startForeground(NOTIFICACION_ID, notificacion.build());
+
+        //Servici en segon pla
+
+    }
 }
