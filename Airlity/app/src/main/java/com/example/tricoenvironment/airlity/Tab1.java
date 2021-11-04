@@ -58,7 +58,13 @@ public class Tab1 extends Fragment {
 
     private static final String ETIQUETA_LOG = ">>>>";
 
-private String nombreNotificacion;
+    private String nombreNotificacion;
+    boolean esActivo = false;
+    boolean sensorNoEncontrado = false;
+
+    private NotificationManager notificationManager;
+    static final String CANAL_ID = "mi_canal";
+    static final int NOTIFICACION_ID = 1;
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
@@ -119,17 +125,16 @@ private String nombreNotificacion;
     }
 
     /**
-     * botonBuscarNuestroDispositivoBTLEPulsado() se encarga de lanzar el servicio
-     * ServicioEscucharBeacons pasando con un Intent el contenido de los EditText nombreDispositivo
-     * y macDispositivo
-     *
-     * botonBuscarNuestroDispositivoBTLEPulsado() ->
+     * medicion->detectarLecturasErroneas()->
+     * funcion que envia una notificacion si la medicion que recibe supera valores atipicos
+     * Es decir si esta fuera del rango
      */
 
             public void detectarLecturasErroneas(Medicion medicion){
                 if(medicion.getTipo()=="HUMEDAD"){
                     if(medicion.getMedida()<15 || medicion.getMedida()>95) {
                        nombreNotificacion="notificacionHumedadErronea";
+                        //crear notificacion
                        crearNotificaciónSegundoPlano();
                     }
 
@@ -138,32 +143,40 @@ private String nombreNotificacion;
                     //ug/m3 UNIDADES DEL GAS
                     if(medicion.getMedida()<50 || medicion.getMedida()>400) {
                         nombreNotificacion="notificacionGasErronea";
+                        //crear notificacion
                         crearNotificaciónSegundoPlano();
                     }
                 }
                 if(medicion.getTipo()=="TEMPERATURA"){
                     if(medicion.getMedida()<-20 || medicion.getMedida()>40) {
                         nombreNotificacion="notificacionTemperaturaErronea";
+                        //crear notificacion
                         crearNotificaciónSegundoPlano();
                     }
 
                 }
             }
+    /**
+     * funcion que detecta la medicion de GAS y si execede de un valor de 150 manda una notificacion
+     * medicion->detectarLimiteGas()->
+     */
             public void detectarLimiteGas(Medicion medicion){
+                //si la medicion es de GAS
                 if (medicion.getTipo()=="GAS"){
                     if(medicion.getMedida()>150){
+                        //para elegir el tipo de notificacion
                         nombreNotificacion="notificacionLimiteGas";
+                        //crear una notificacion
                         crearNotificaciónSegundoPlano();
                     }
                 }
             }
-    
-    boolean esActivo = false;
-    boolean sensorNoEncontrado = false;
+    /**
+     * Contador timer
+     * el objeto crea un contador de 30 seg donde empieza una cuenta atras
+     * objeto ctd
+     */
 
-    private NotificationManager notificationManager;
-    static final String CANAL_ID = "mi_canal";
-    static final int NOTIFICACION_ID = 1;
     CountDownTimer ctd = new CountDownTimer(30000, 1000) {
 
         public void onTick(long millisUntilFinished) {
@@ -179,7 +192,13 @@ private String nombreNotificacion;
             crearNotificaciónSegundoPlano();
         }
     };
-
+    /**
+     * botonBuscarNuestroDispositivoBTLEPulsado() se encarga de lanzar el servicio
+     * ServicioEscucharBeacons pasando con un Intent el contenido de los EditText nombreDispositivo
+     * y macDispositivo
+     *
+     * botonBuscarNuestroDispositivoBTLEPulsado() ->
+     */
 
     public void botonBuscarNuestroDispositivoBTLEPulsado() {
 
