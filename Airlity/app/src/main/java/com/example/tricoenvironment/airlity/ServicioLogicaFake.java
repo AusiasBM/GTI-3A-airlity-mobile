@@ -181,11 +181,13 @@ public class ServicioLogicaFake extends IntentService {
         @Override
         public void onReceive(Context context, Intent intent) {
             String m = intent.getStringExtra("Medicion");
+            Log.d(ETIQUETA_LOG, m);
             Gson g = new Gson();
             Medicion medicion = g.fromJson(m, Medicion.class);
             String str =  g.toJson(medicion);
             Log.d(ETIQUETA_LOG, "" + str);
             medicionesString.add(str);
+
 
             Log.d(ETIQUETA_LOG, "" + medicionesString.size());
 

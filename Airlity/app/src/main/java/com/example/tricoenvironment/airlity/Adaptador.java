@@ -69,7 +69,7 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.ViewHolder>{
             //Poner en cada textView que tiene el layout elementos_recyclerview.xml
             // el dato que corresponda.
             txtvalor.setText("" + medicion.getMedida());
-            txtTipo.setText(medicion.getTipo());
+            txtTipo.setText(medicion.getTipoMedida());
 
             //Transformar la fecha en milisegundos a formato de fecha-hora
             SimpleDateFormat sdf = new SimpleDateFormat("MMM dd yyyy HH:mm");
