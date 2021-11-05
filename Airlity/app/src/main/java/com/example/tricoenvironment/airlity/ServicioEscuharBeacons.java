@@ -31,7 +31,6 @@ import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 // -------------------------------------------------------------------------------------------------
@@ -240,6 +239,7 @@ public class ServicioEscuharBeacons extends Service {
                 Log.d(ETIQUETA_LOG, "  buscarEsteDispositivoBTLE(): onScanResult() ");
                 mostrarInformacionDispositivoBTLE( resultado );
                 guardarNuevaMedida(resultado);
+                obtenerSensor(resultado);
             }
 
             @Override
@@ -346,12 +346,10 @@ public class ServicioEscuharBeacons extends Service {
         Log.d(ETIQUETA_LOG, "          iBeacon type = " + Integer.toHexString(tib.getiBeaconType()));
         Log.d(ETIQUETA_LOG, "          iBeacon length 0x = " + Integer.toHexString(tib.getiBeaconLength()) + " ( "
                 + tib.getiBeaconLength() + " ) ");
-        Log.d(ETIQUETA_LOG, " uuid  = " + Utilidades.bytesToHexString(tib.getUUID()));
-        Log.d(ETIQUETA_LOG, " uuid  = " + Utilidades.bytesToString(tib.getUUID()));
-        Log.d(ETIQUETA_LOG, " major  = " + Utilidades.bytesToHexString(tib.getMajor()) + "( "
-                + Utilidades.bytesToInt(tib.getMajor()) + " ) ");
-        Log.d(ETIQUETA_LOG, " minor  = " + Utilidades.bytesToHexString(tib.getMinor()) + "( "
-                + Utilidades.bytesToInt(tib.getMinor()) + " ) ");
+        Log.d(ETIQUETA_LOG, " concentracion  = " + Utilidades.bytesToInt(tib.getConcentracion()));
+        Log.d(ETIQUETA_LOG, " temperatura  = " + Utilidades.bytesToInt(tib.getTemperatura()));
+        Log.d(ETIQUETA_LOG, " humedad  = " + Utilidades.bytesToInt(tib.getHumedad()));
+        //Log.d(ETIQUETA_LOG, " tipoMedicion  = " + Utilidades.bytesToInt(tib.getTipoMedicion()));
         Log.d(ETIQUETA_LOG, " txPower  = " + Integer.toHexString(tib.getTxPower()) + " ( " + tib.getTxPower() + " )");
         Log.d(ETIQUETA_LOG, " ****************************************************");
 
@@ -376,15 +374,14 @@ public class ServicioEscuharBeacons extends Service {
 
         BluetoothDevice bluetoothDevice = result.getDevice();
 
-        medicion.setNombreSensor(bluetoothDevice.getName());
         medicion.setMacSensor(bluetoothDevice.getAddress());
         medicion.setFecha();
-        medicion.setUuidSensor(Utilidades.bytesToString(tramaIBeacon.getUUID()));
-        medicion.setMedida(Utilidades.bytesToInt(tramaIBeacon.getMinor()));
+        medicion.setMedida(Utilidades.bytesToInt(tramaIBeacon.getConcentracion()));
+        medicion.setTemperatura(Utilidades.bytesToInt(tramaIBeacon.getTemperatura()));
+        medicion.setHumedad(Utilidades.bytesToInt(tramaIBeacon.getHumedad()));
 
-        //Dentro de Major coger el byte más significativo para determinar el tipo de medida
-        byte[] tipoMedida =  Arrays.copyOfRange(tramaIBeacon.getMajor(), 0, 1 );
-        medicion.setTipo(Utilidades.bytesToInt(tipoMedida));
+        //De momento todas las mediciones serán de IAQ (como el sensor)
+        medicion.setTipoMedicion(0);
 
         //De momento poner lat y log del Campus de Gandia
         medicion.setLatitud(38.995860);
@@ -395,8 +392,23 @@ public class ServicioEscuharBeacons extends Service {
             mediciones.add(medicion);
             pasarMedicion(medicion);
         }
-
     }
+
+    private void obtenerSensor(ScanResult result){
+
+        Sensor sensor = new Sensor();
+        byte[] bytes = result.getScanRecord().getBytes();
+        TramaIBeacon tramaIBeacon = new TramaIBeacon(bytes);
+
+        BluetoothDevice bluetoothDevice = result.getDevice();
+
+        sensor.setNombre(bluetoothDevice.getName());
+        sensor.setMac(bluetoothDevice.getAddress());
+        sensor.setFecha();
+        sensor.setUuid(Utilidades.bytesToString(tramaIBeacon.getUUID()));
+        avisarDetecciónSensorEmitiendo(sensor);
+    }
+
 
 
     /**
@@ -419,7 +431,7 @@ public class ServicioEscuharBeacons extends Service {
         for (Medicion medicion : this.mediciones){
             //Si el tipo de medición coincide y la fecha se diferencia por menos de 5 segundos, la
             // medición ya está incluida y devuelve True
-            if(m.getTipo().equals(medicion.getTipo()) && (m.getFecha() < medicion.getFecha()+5000)){
+            if(m.getTipoMedida().equals(medicion.getTipoMedida()) && (m.getFecha() < medicion.getFecha()+5000)){
                 return true;
             }
         }
@@ -427,12 +439,12 @@ public class ServicioEscuharBeacons extends Service {
         return false;
     }
 
-    /**
-     * El método verArrayMedidas muestra en el LogCat las mediciones dentro de la lista
-     *
-     * verArrayMedidas() <-
-     *
-     */
+    /*
+     // El método verArrayMedidas muestra en el LogCat las mediciones dentro de la lista
+     //
+     // verArrayMedidas() <-
+     //
+
     public void verArrayMedidas(){
         Log.d(ETIQUETA_LOG, " Longitud de la lista  = " + this.mediciones.size());
         for (Medicion m : this.mediciones){
@@ -447,7 +459,7 @@ public class ServicioEscuharBeacons extends Service {
             Log.d(ETIQUETA_LOG, " long  = " + m.getLongitud());
             Log.d(ETIQUETA_LOG, " ****************************************************");
         }
-    }
+    }*/
 
 
     /**
@@ -464,6 +476,19 @@ public class ServicioEscuharBeacons extends Service {
         sendBroadcast(i);
     }
 
+    /**
+     * El método pasarMedicion envía un intent de forma broadcast dentro de la aplicación
+     * con la última medición
+     *
+     *  sensor: Sensor -> avisarDetecciónSensorEmitiendo() <-
+     *
+     */
+    public void avisarDetecciónSensorEmitiendo(Sensor s){
+        Intent i = new Intent();
+        i.setAction("DeteccionSensor");
+        i.putExtra("Sensor", s.toString());
+        sendBroadcast(i);
+    }
 
 
 } // class

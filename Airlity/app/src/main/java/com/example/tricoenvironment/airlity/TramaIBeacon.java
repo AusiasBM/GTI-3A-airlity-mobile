@@ -14,8 +14,10 @@ import java.util.Arrays;
 public class TramaIBeacon {
     private byte[] prefijo = null; // 9 bytes
     private byte[] uuid = null; // 16 bytes
-    private byte[] major = null; // 2 bytes
-    private byte[] minor = null; // 2 bytes
+    private byte[] temperatura = null; // 2 bytes
+    private byte[] humedad = null; // 2 bytes
+
+    private byte[] concentracion = null; // 2 bytes
     private byte txPower = 0; // 1 byte
 
     private byte[] losBytes;
@@ -43,15 +45,22 @@ public class TramaIBeacon {
     // -------------------------------------------------------------------------------
     // [byte] <- getMajor() <-
     // -------------------------------------------------------------------------------
-    public byte[] getMajor() {
-        return major;
+    public byte[] getTemperatura() {
+        return temperatura;
+    }
+
+    // -------------------------------------------------------------------------------
+    // [byte] <- getMajor() <-
+    // -------------------------------------------------------------------------------
+    public byte[] getHumedad() {
+        return humedad;
     }
 
     // -------------------------------------------------------------------------------
     // [byte] <- getMinor() <-
     // -------------------------------------------------------------------------------
-    public byte[] getMinor() {
-        return minor;
+    public byte[] getConcentracion() {
+        return concentracion;
     }
 
     // -------------------------------------------------------------------------------
@@ -111,8 +120,9 @@ public class TramaIBeacon {
 
         prefijo = Arrays.copyOfRange(losBytes, 0, 8+1 ); // 9 bytes
         uuid = Arrays.copyOfRange(losBytes, 9, 24+1 ); // 16 bytes
-        major = Arrays.copyOfRange(losBytes, 25, 26+1 ); // 2 bytes
-        minor = Arrays.copyOfRange(losBytes, 27, 28+1 ); // 2 bytes
+        concentracion = Arrays.copyOfRange(losBytes, 25, 26+1 ); // 2 bytes
+        temperatura = Arrays.copyOfRange(losBytes, 27, 27+1 ); // 1bytes
+        humedad = Arrays.copyOfRange(losBytes, 28, 28+1 ); // 1 bytes
         txPower = losBytes[ 29 ]; // 1 byte
 
         advFlags = Arrays.copyOfRange( prefijo, 0, 2+1 ); // 3 bytes

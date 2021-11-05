@@ -13,10 +13,10 @@ import static java.lang.System.currentTimeMillis;
 
 public class Medicion {
 
-    private enum TipoMedida{GAS, TEMPERATURA, HUMEDAD};
-    private TipoMedida tipo;
-    private String nombreSensor, macSensor, uuidSensor;
-    private int medida; //de moment serà un nº enter
+    private enum TipoMedida{IAQ, CO, NO2, O3};
+    private TipoMedida tipoMedicion;
+    private String macSensor;
+    private int medida, temperatura, humedad; //de moment serà un nº enter
     private double latitud, longitud;
     private long fecha;
 
@@ -37,6 +37,23 @@ public class Medicion {
         this.longitud = longitud;
         this.fecha = fecha;
     }*/
+
+
+    public int getTemperatura() {
+        return temperatura;
+    }
+
+    public void setTemperatura(int temperatura) {
+        this.temperatura = temperatura;
+    }
+
+    public int getHumedad() {
+        return humedad;
+    }
+
+    public void setHumedad(int humedad) {
+        this.humedad = humedad;
+    }
 
     /**
      * Método getFecha.
@@ -80,36 +97,15 @@ public class Medicion {
      *
      * @return tipo.name(). Devuelve el nombre del tipo de medida de la que es cada medición.
      */
-    public String getTipo() {
-        return tipo.name();
-    }
-
-
-    /**
-     * Método setTipo. Determina el tipo de medición que es cada objeto según un identificador (entero)
-     *
-     *  identificador : N -> setTipo() ->
-     *
-     * @param identificador Número entero
-     *
-     */
-    public void setTipo(int identificador) {
-        switch (identificador) {
-            case 11:
-                this.tipo = tipo.GAS;
-                break;
-            case 12:
-                this.tipo = tipo.TEMPERATURA;
-                break;
-            case 13:
-                this.tipo = tipo.HUMEDAD;
-                break;
-            default:
-                // Como se ha cambiado el tipo CO2 por GAS, poner default GAS
-                this.tipo = tipo.GAS;
-                break;
+    public String getTipoMedida() {
+        try{
+            return tipoMedicion.name();
+        }catch (Exception e){
+            return tipoMedicion.IAQ.name();
         }
+
     }
+
 
     /**
      * Método setTipo. Determina el tipo de medición que es cada objeto según un el texto que se
@@ -120,23 +116,57 @@ public class Medicion {
      *
      * @param tipoM Texto que identifica el tipo de medida.
      */
-    public void setTipo(String tipoM) {
+    public void setTipoMedicion(String tipoM) {
         switch (tipoM) {
-            case "GAS":
-                this.tipo = tipo.GAS;
+            case "IAQ":
+                this.tipoMedicion = tipoMedicion.IAQ;
                 break;
-            case "TEMPERATURA":
-                this.tipo = tipo.TEMPERATURA;
+            case "CO":
+                this.tipoMedicion = tipoMedicion.CO;
                 break;
-            case "HUMEDAD":
-                this.tipo = tipo.HUMEDAD;
+            case "NO2":
+                this.tipoMedicion = tipoMedicion.NO2;
                 break;
+            case "O3":
+                this.tipoMedicion = tipoMedicion.O3;
+                break;
+
             default:
                 // Como se ha cambiado el tipo CO2 por GAS, poner default GAS
-                this.tipo = tipo.GAS;
+                this.tipoMedicion = tipoMedicion.IAQ;
                 break;
         }
     }
+
+    /**
+     * Método setTipo. Determina el tipo de medición que es cada objeto según un identificador (entero)
+     *
+     *  identificador : N -> setTipo() ->
+     *
+     * @param identificador Número entero
+     *
+     */
+    public void setTipoMedicion(int identificador) {
+        switch (identificador) {
+            case 0:
+                this.tipoMedicion = tipoMedicion.IAQ;
+                break;
+            case 1:
+                this.tipoMedicion = tipoMedicion.CO;
+                break;
+            case 2:
+                this.tipoMedicion = tipoMedicion.NO2;
+                break;
+            case 3:
+                this.tipoMedicion = tipoMedicion.O3;
+                break;
+            default:
+                // Como se ha cambiado el tipo CO2 por GAS, poner default GAS
+                this.tipoMedicion = tipoMedicion.IAQ;
+                break;
+        }
+    }
+
 
 
     /**
@@ -164,30 +194,6 @@ public class Medicion {
 
 
     /**
-     * Método getNombreSensor.
-     *
-     *  Texto <- getNombreSensor() <-
-     *
-     * @return nombreSensor Devuelve el nombre del sensor que ha captado la medida.
-     */
-    public String getNombreSensor() {
-        return nombreSensor;
-    }
-
-
-    /**
-     * Método setNombreSensor.
-     *
-     * Texto -> setNombreSensor() ->
-     *
-     * @param  nombreSensor Nombre del sensor que ha captado la medida.
-     */
-    public void setNombreSensor(String nombreSensor) {
-        this.nombreSensor = nombreSensor;
-    }
-
-
-    /**
      * Método getMacSensor.
      *
      *  Texto <- getMacSensor() <-
@@ -208,30 +214,6 @@ public class Medicion {
      */
     public void setMacSensor(String macSensor) {
         this.macSensor = macSensor;
-    }
-
-
-    /**
-     * Método getUuidSensor.
-     *
-     *  Texto <- getUuidSensor() <-
-     *
-     * @return uuidSensor Devuelve un texto con la UUID del sensor que ha captado la medida.
-     */
-    public String getUuidSensor() {
-        return uuidSensor;
-    }
-
-
-    /**
-     * Método setUuidSensor.
-     *
-     * Z -> setUuidSensor() ->
-     *
-     * @param  uuidSensor Texto de la UUID del sensor que ha captado la medida.
-     */
-    public void setUuidSensor(String uuidSensor) {
-        this.uuidSensor = uuidSensor;
     }
 
 
@@ -293,11 +275,11 @@ public class Medicion {
     @Override
     public String toString() {
         return "{" +
-                " nombreSensor='" + nombreSensor + '\'' +
+                "tipoMedicion=" + tipoMedicion +
                 ", macSensor='" + macSensor + '\'' +
-                ", uuidSensor='" + uuidSensor + '\'' +
-                ", tipo=" + tipo.name() +
                 ", medida=" + medida +
+                ", temperatura=" + temperatura +
+                ", humedad=" + humedad +
                 ", latitud=" + latitud +
                 ", longitud=" + longitud +
                 ", fecha=" + fecha +

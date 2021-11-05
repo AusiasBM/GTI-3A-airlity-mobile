@@ -56,6 +56,9 @@ public class Tab1 extends Fragment {
     private IntentFilter intentFilter;
     private Receptor receptor;
 
+    private IntentFilter intentFilterMediciones;
+    private ReceptorMediciones receptorMediciones;
+
     private static final String ETIQUETA_LOG = ">>>>";
 
     private String nombreNotificacion;
@@ -65,6 +68,8 @@ public class Tab1 extends Fragment {
     private NotificationManager notificationManager;
     static final String CANAL_ID = "mi_canal";
     static final int NOTIFICACION_ID = 1;
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
@@ -72,8 +77,12 @@ public class Tab1 extends Fragment {
         context = getActivity();
 
         intentFilter = new IntentFilter();
-        intentFilter.addAction("Nueva_Medicion");
+        intentFilter.addAction("DeteccionSensor");
         receptor = new Receptor();
+
+        intentFilterMediciones = new IntentFilter();
+        intentFilterMediciones.addAction("Nueva_Medicion");
+        receptorMediciones = new ReceptorMediciones();
     }
 
 
@@ -131,30 +140,26 @@ public class Tab1 extends Fragment {
      */
 
             public void detectarLecturasErroneas(Medicion medicion){
-                if(medicion.getTipo()=="HUMEDAD"){
-                    if(medicion.getMedida()<15 || medicion.getMedida()>95) {
+
+                    if(medicion.getHumedad()<15 || medicion.getHumedad()>95) {
                        nombreNotificacion="notificacionHumedadErronea";
                         //crear notificacion
                        crearNotificaciónSegundoPlano();
                     }
 
-                }
-                if(medicion.getTipo()=="GAS"){
-                    //ug/m3 UNIDADES DEL GAS
-                    if(medicion.getMedida()<50 || medicion.getMedida()>400) {
+                    if(medicion.getMedida()<0 || medicion.getMedida()>40000) {
                         nombreNotificacion="notificacionGasErronea";
                         //crear notificacion
                         crearNotificaciónSegundoPlano();
                     }
-                }
-                if(medicion.getTipo()=="TEMPERATURA"){
-                    if(medicion.getMedida()<-20 || medicion.getMedida()>40) {
+
+                    if(medicion.getTemperatura()<-20 || medicion.getTemperatura()>40) {
                         nombreNotificacion="notificacionTemperaturaErronea";
                         //crear notificacion
                         crearNotificaciónSegundoPlano();
                     }
 
-                }
+
             }
     /**
      * funcion que detecta la medicion de GAS y si execede de un valor de 150 manda una notificacion
@@ -162,14 +167,14 @@ public class Tab1 extends Fragment {
      */
             public void detectarLimiteGas(Medicion medicion){
                 //si la medicion es de GAS
-                if (medicion.getTipo()=="GAS"){
-                    if(medicion.getMedida()>150){
-                        //para elegir el tipo de notificacion
-                        nombreNotificacion="notificacionLimiteGas";
-                        //crear una notificacion
-                        crearNotificaciónSegundoPlano();
-                    }
+
+                if(medicion.getMedida()>1500){
+                    //para elegir el tipo de notificacion
+                    nombreNotificacion="notificacionLimiteGas";
+                    //crear una notificacion
+                    crearNotificaciónSegundoPlano();
                 }
+
             }
     /**
      * Contador timer
@@ -269,25 +274,46 @@ public class Tab1 extends Fragment {
 
         @Override
         public void onReceive(Context context, Intent intent) {
+            String s = intent.getStringExtra("Sensor");
+            Gson gson = new Gson();
+            Sensor sensor = gson.fromJson(s, Sensor.class);
+
+            Log.d("INTENT", "" + sensor);
+
+            textNombreDispositivo.setText(sensor.getNombre());
+            textNMacDispositivo.setText(sensor.getMac());
+            textUuidDispositivo.setText(sensor.getUuid());
+
+            SimpleDateFormat sdf = new SimpleDateFormat("MMM dd yyyy HH:mm");
+            Date resultado = new Date(sensor.getFecha());
+            textFechaDispositivo.setText(resultado.toString());
+            ctd.cancel();
+            ctd.start();
+
+        }
+    }
+
+
+    /**
+     * Clase Receptor
+     * Receptor de mensajes broadcast de tipo "Nueva_Medicion"
+     */
+    private class ReceptorMediciones extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
             String m = intent.getStringExtra("Medicion");
             Gson gson = new Gson();
             Medicion medicion = gson.fromJson(m, Medicion.class);
 
             Log.d("INTENT", "" + medicion);
-
-            textNombreDispositivo.setText(medicion.getNombreSensor());
-            textNMacDispositivo.setText(medicion.getMacSensor());
-            textUuidDispositivo.setText(medicion.getUuidSensor());
-
-            SimpleDateFormat sdf = new SimpleDateFormat("MMM dd yyyy HH:mm");
-            Date resultado = new Date(medicion.getFecha());
-            textFechaDispositivo.setText(resultado.toString());
-            ctd.cancel();
-            ctd.start();
             detectarLecturasErroneas(medicion);
             detectarLimiteGas(medicion);
+
         }
     }
+
+
     private void crearNotificaciónSegundoPlano(){
         //Crear la notificación
         notificationManager = (NotificationManager)
