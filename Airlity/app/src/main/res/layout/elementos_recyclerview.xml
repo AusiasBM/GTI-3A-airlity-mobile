@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
-    android:layout_height="86dp"
+    android:layout_height="120dp"
     android:paddingTop="4dp"
     android:paddingBottom="4dp">
 
@@ -35,22 +35,69 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
         android:maxLines="1"
-        android:text="Valor:"
+        android:text="Concentracion (ppb):"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/icono"
         app:layout_constraintTop_toTopOf="@+id/guideline" />
+
+    <TextView
+        android:id="@+id/txtMedida3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:maxLines="1"
+        android:text="Temperatura (C):"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        app:layout_constraintBottom_toTopOf="@+id/txtMedida2"
+        app:layout_constraintStart_toEndOf="@+id/icono"
+        app:layout_constraintTop_toBottomOf="@+id/txtMedida" />
+
+    <TextView
+        android:id="@+id/txtMedida2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginBottom="4dp"
+        android:maxLines="1"
+        android:text="Humedad (%):"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/icono" />
 
     <TextView
         android:id="@+id/textValorRV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
         android:text="prova"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/txtMedida"
         app:layout_constraintTop_toTopOf="@+id/guideline" />
+
+    <TextView
+        android:id="@+id/textValorRV2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:text="prova"
+        app:layout_constraintStart_toEndOf="@+id/txtMedida3"
+        app:layout_constraintTop_toBottomOf="@+id/textValorRV" />
+
+    <TextView
+        android:id="@+id/textValorRV3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:text="prova"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txtMedida2"
+        app:layout_constraintTop_toBottomOf="@+id/textValorRV2"
+        app:layout_constraintVertical_bias="0.733" />
 
     <TextView
         android:id="@+id/textTipoMedida"

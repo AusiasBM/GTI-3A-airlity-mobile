@@ -38,7 +38,7 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.ViewHolder>{
      * en la aplicación.
      */
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView txtvalor, txtFecha, txtTipo;
+        private TextView txtvalor, txtFecha, txtTipo, txtTemp, txtHum;
 
         /**
          * Constructor de la clase ViewHolder. Asigna a cada TextView que tiene como campo privado
@@ -54,6 +54,9 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.ViewHolder>{
             txtFecha = itemView.findViewById(R.id.textFechaRV);
             txtvalor = itemView.findViewById(R.id.textValorRV);
             txtTipo = itemView.findViewById(R.id.textTipoRV);
+            txtTemp = itemView.findViewById(R.id.textValorRV2);
+            txtHum = itemView.findViewById(R.id.textValorRV3);
+
         }
 
         /**
@@ -69,12 +72,15 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.ViewHolder>{
             //Poner en cada textView que tiene el layout elementos_recyclerview.xml
             // el dato que corresponda.
             txtvalor.setText("" + medicion.getMedida());
-            txtTipo.setText(medicion.getTipoMedida());
+            txtTipo.setText("" +medicion.getTipoMedida());
+            txtTemp.setText("" + medicion.getTemperatura());
+            txtHum.setText("" + medicion.getHumedad());
 
             //Transformar la fecha en milisegundos a formato de fecha-hora
             SimpleDateFormat sdf = new SimpleDateFormat("MMM dd yyyy HH:mm");
             Date resultado = new Date(medicion.getFecha());
             txtFecha.setText(resultado.toString());
+
 
         }
     }// Class ViewHolder()

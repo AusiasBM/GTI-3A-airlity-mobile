@@ -98,11 +98,13 @@ public class Medicion {
      * @return tipo.name(). Devuelve el nombre del tipo de medida de la que es cada medición.
      */
     public String getTipoMedida() {
-        try{
-            return tipoMedicion.name();
+        /*try{
+
         }catch (Exception e){
             return tipoMedicion.IAQ.name();
-        }
+        }*/
+
+        return tipoMedicion.name();
 
     }
 
