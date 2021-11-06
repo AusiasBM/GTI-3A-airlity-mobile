@@ -349,7 +349,7 @@ public class ServicioEscuharBeacons extends Service {
         Log.d(ETIQUETA_LOG, " concentracion  = " + Utilidades.bytesToInt(tib.getConcentracion()));
         Log.d(ETIQUETA_LOG, " temperatura  = " + Utilidades.bytesToInt(tib.getTemperatura()));
         Log.d(ETIQUETA_LOG, " humedad  = " + Utilidades.bytesToInt(tib.getHumedad()));
-        //Log.d(ETIQUETA_LOG, " tipoMedicion  = " + Utilidades.bytesToInt(tib.getTipoMedicion()));
+        Log.d(ETIQUETA_LOG, " tipoMedicion  = " + Utilidades.bytesToString(tib.getTipoMedicion()));
         Log.d(ETIQUETA_LOG, " txPower  = " + Integer.toHexString(tib.getTxPower()) + " ( " + tib.getTxPower() + " )");
         Log.d(ETIQUETA_LOG, " ****************************************************");
 
@@ -381,7 +381,7 @@ public class ServicioEscuharBeacons extends Service {
         medicion.setHumedad(Utilidades.bytesToInt(tramaIBeacon.getHumedad()));
 
         //De momento todas las mediciones serán de IAQ (como el sensor)
-        medicion.setTipoMedicion(0);
+        medicion.setTipoMedicion(Utilidades.bytesToString(tramaIBeacon.getTipoMedicion()));
 
         //De momento poner lat y log del Campus de Gandia
         medicion.setLatitud(38.995860);

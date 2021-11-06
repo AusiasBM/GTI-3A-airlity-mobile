@@ -14,10 +14,11 @@ import java.util.Arrays;
 public class TramaIBeacon {
     private byte[] prefijo = null; // 9 bytes
     private byte[] uuid = null; // 16 bytes
-    private byte[] temperatura = null; // 2 bytes
-    private byte[] humedad = null; // 2 bytes
-
+    private byte[] temperatura = null; // 1 byte
+    private byte[] humedad = null; // 1 byte
     private byte[] concentracion = null; // 2 bytes
+    private byte[] tipoMedicion = null; // 3 bytes (los 3 últimos del UUID)
+
     private byte txPower = 0; // 1 byte
 
     private byte[] losBytes;
@@ -43,10 +44,17 @@ public class TramaIBeacon {
     }
 
     // -------------------------------------------------------------------------------
-    // [byte] <- getMajor() <-
+    // [byte] <- getTemperatura() <-
     // -------------------------------------------------------------------------------
     public byte[] getTemperatura() {
         return temperatura;
+    }
+
+    // -------------------------------------------------------------------------------
+    // [byte] <- getTipoMedicion() <-
+    // -------------------------------------------------------------------------------
+    public byte[] getTipoMedicion() {
+        return tipoMedicion;
     }
 
     // -------------------------------------------------------------------------------
@@ -124,6 +132,7 @@ public class TramaIBeacon {
         temperatura = Arrays.copyOfRange(losBytes, 27, 27+1 ); // 1bytes
         humedad = Arrays.copyOfRange(losBytes, 28, 28+1 ); // 1 bytes
         txPower = losBytes[ 29 ]; // 1 byte
+        tipoMedicion = Arrays.copyOfRange(uuid, 13, 16 );
 
         advFlags = Arrays.copyOfRange( prefijo, 0, 2+1 ); // 3 bytes
         advHeader = Arrays.copyOfRange( prefijo, 3, 4+1 ); // 2 bytes
