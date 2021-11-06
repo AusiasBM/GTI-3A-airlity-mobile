@@ -67,7 +67,7 @@ public class Tab1 extends Fragment {
 
     private NotificationManager notificationManager;
     static final String CANAL_ID = "mi_canal";
-    static final int NOTIFICACION_ID = 1;
+    static final int NOTIFICACION_ID = 2;
 
 
     @Override
@@ -131,6 +131,7 @@ public class Tab1 extends Fragment {
     public void onResume() {
         super.onResume();
         context.registerReceiver(receptor, intentFilter);
+        context.registerReceiver(receptorMediciones,intentFilterMediciones);
     }
 
     /**
@@ -141,19 +142,19 @@ public class Tab1 extends Fragment {
 
             public void detectarLecturasErroneas(Medicion medicion){
 
-                    if(medicion.getHumedad()<15 || medicion.getHumedad()>95) {
+                    if(medicion.getHumedad()<15 || medicion.getHumedad()>16) {
                        nombreNotificacion="notificacionHumedadErronea";
                         //crear notificacion
                        crearNotificaciónSegundoPlano();
                     }
 
-                    if(medicion.getMedida()<0 || medicion.getMedida()>40000) {
+                    if(medicion.getMedida()<0 || medicion.getMedida()>40) {
                         nombreNotificacion="notificacionGasErronea";
                         //crear notificacion
                         crearNotificaciónSegundoPlano();
                     }
 
-                    if(medicion.getTemperatura()<-20 || medicion.getTemperatura()>40) {
+                    if(medicion.getTemperatura()<-20 || medicion.getTemperatura()>4) {
                         nombreNotificacion="notificacionTemperaturaErronea";
                         //crear notificacion
                         crearNotificaciónSegundoPlano();
@@ -168,7 +169,7 @@ public class Tab1 extends Fragment {
             public void detectarLimiteGas(Medicion medicion){
                 //si la medicion es de GAS
 
-                if(medicion.getMedida()>1500){
+                if(medicion.getMedida()>15000){
                     //para elegir el tipo de notificacion
                     nombreNotificacion="notificacionLimiteGas";
                     //crear una notificacion
@@ -319,53 +320,58 @@ public class Tab1 extends Fragment {
         notificationManager = (NotificationManager)
                 context.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel notificationChannel = new NotificationChannel(
-                    CANAL_ID, "Mis Notificaciones",
-                    NotificationManager.IMPORTANCE_DEFAULT);
-            notificationChannel.setDescription("Descripcion del canal");
-            notificationManager.createNotificationChannel(notificationChannel);
+        try{
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                NotificationChannel notificationChannel = new NotificationChannel(
+                        CANAL_ID, "Mis Notificaciones",
+                        NotificationManager.IMPORTANCE_DEFAULT);
+                notificationChannel.setDescription("Descripcion del canal");
+                notificationManager.createNotificationChannel(notificationChannel);
+            }
+            if(nombreNotificacion=="noReciveIbeacons"){
+                NotificationCompat.Builder notificacion =
+                        new NotificationCompat.Builder(getContext(), CANAL_ID)
+                                .setSmallIcon(R.mipmap.ic_launcher)
+                                .setContentTitle("Medidas no encontradas")
+                                .setContentText("El sensor no encuentra ninguna medida");
+                notificationManager.notify(NOTIFICACION_ID, notificacion.build());
+            }
+            if(nombreNotificacion=="notificacionHumedadErronea"){
+                NotificationCompat.Builder notificacion =
+                        new NotificationCompat.Builder(getContext(), CANAL_ID)
+                                .setSmallIcon(R.mipmap.ic_launcher)
+                                .setContentTitle("Humedad ERRONEA")
+                                .setContentText("Se ha producido un error respecto a los valores de humedad");
+                notificationManager.notify(NOTIFICACION_ID, notificacion.build());
+            }
+            if(nombreNotificacion=="notificacionGasErronea"){
+                NotificationCompat.Builder notificacion =
+                        new NotificationCompat.Builder(getContext(), CANAL_ID)
+                                .setSmallIcon(R.mipmap.ic_launcher)
+                                .setContentTitle("Gas ERRONEA")
+                                .setContentText("Se ha producido un error respecto a los valores de gas");
+                notificationManager.notify(NOTIFICACION_ID, notificacion.build());
+            }
+            if(nombreNotificacion=="notificacionTemperaturaErronea"){
+                NotificationCompat.Builder notificacion =
+                        new NotificationCompat.Builder(getContext(), CANAL_ID)
+                                .setSmallIcon(R.mipmap.ic_launcher)
+                                .setContentTitle("Temperatura ERRONEA")
+                                .setContentText("Se ha producido un error respecto a los valores de temperatura");
+                notificationManager.notify(NOTIFICACION_ID, notificacion.build());
+            }
+            if(nombreNotificacion=="notificacionLimiteGas"){
+                NotificationCompat.Builder notificacion =
+                        new NotificationCompat.Builder(getContext(), CANAL_ID)
+                                .setSmallIcon(R.mipmap.ic_launcher)
+                                .setContentTitle("Calidad del aire pobre")
+                                .setContentText("El valor de gas en esta zona es demasiado alto");
+                notificationManager.notify(NOTIFICACION_ID, notificacion.build());
+            }
+        }catch (Exception e){
+
         }
-        if(nombreNotificacion=="noReciveIbeacons"){
-            NotificationCompat.Builder notificacion =
-                    new NotificationCompat.Builder(getContext(), CANAL_ID)
-                            .setSmallIcon(R.mipmap.ic_launcher)
-                            .setContentTitle("Medidas no encontradas")
-                            .setContentText("El sensor no encuentra ninguna medida");
-            notificationManager.notify(NOTIFICACION_ID, notificacion.build());
-        }
-        if(nombreNotificacion=="notificacionHumedadErronea"){
-            NotificationCompat.Builder notificacion =
-                    new NotificationCompat.Builder(getContext(), CANAL_ID)
-                            .setSmallIcon(R.mipmap.ic_launcher)
-                            .setContentTitle("Humedad ERRONEA")
-                            .setContentText("Se ha producido un error respecto a los valores de humedad");
-            notificationManager.notify(NOTIFICACION_ID, notificacion.build());
-        }
-        if(nombreNotificacion=="notificacionGasErronea"){
-            NotificationCompat.Builder notificacion =
-                    new NotificationCompat.Builder(getContext(), CANAL_ID)
-                            .setSmallIcon(R.mipmap.ic_launcher)
-                            .setContentTitle("Gas ERRONEA")
-                            .setContentText("Se ha producido un error respecto a los valores de gas");
-            notificationManager.notify(NOTIFICACION_ID, notificacion.build());
-        }
-        if(nombreNotificacion=="notificacionTemperaturaErronea"){
-            NotificationCompat.Builder notificacion =
-                    new NotificationCompat.Builder(getContext(), CANAL_ID)
-                            .setSmallIcon(R.mipmap.ic_launcher)
-                            .setContentTitle("temperatura ERRONEA")
-                            .setContentText("Se ha producido un error respecto a los valores de temperatura");
-            notificationManager.notify(NOTIFICACION_ID, notificacion.build());
-        }
-        if(nombreNotificacion=="notificacionLimiteGas"){
-            NotificationCompat.Builder notificacion =
-                    new NotificationCompat.Builder(getContext(), CANAL_ID)
-                            .setSmallIcon(R.mipmap.ic_launcher)
-                            .setContentTitle("Calidad del aire pobre")
-                            .setContentText("El valor de gas en esta zona es demasiado alto");
-            notificationManager.notify(NOTIFICACION_ID, notificacion.build());
-        }
+
 
 
 
