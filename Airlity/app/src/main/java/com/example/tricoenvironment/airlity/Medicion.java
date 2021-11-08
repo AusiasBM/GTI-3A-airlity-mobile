@@ -13,7 +13,7 @@ import static java.lang.System.currentTimeMillis;
 
 public class Medicion {
 
-    private enum TipoMedida{IAQ, CO, NO2, O3};
+    private enum TipoMedida{IAQ, SO2, NO2, O3};
     private TipoMedida tipoMedicion;
     private String macSensor;
     private int medida, temperatura, humedad; //de moment serà un nº enter
@@ -123,13 +123,13 @@ public class Medicion {
             case "IAQ":
                 this.tipoMedicion = tipoMedicion.IAQ;
                 break;
-            case "CO":
-                this.tipoMedicion = tipoMedicion.CO;
+            case "SO2":
+                this.tipoMedicion = tipoMedicion.SO2;
                 break;
             case "NO2":
                 this.tipoMedicion = tipoMedicion.NO2;
                 break;
-            case "O3":
+            case "_O3":
                 this.tipoMedicion = tipoMedicion.O3;
                 break;
 
@@ -154,7 +154,7 @@ public class Medicion {
                 this.tipoMedicion = tipoMedicion.IAQ;
                 break;
             case 1:
-                this.tipoMedicion = tipoMedicion.CO;
+                this.tipoMedicion = tipoMedicion.SO2;
                 break;
             case 2:
                 this.tipoMedicion = tipoMedicion.NO2;
