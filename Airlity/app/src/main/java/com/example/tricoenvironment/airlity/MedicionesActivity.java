@@ -1,5 +1,5 @@
 /**
- * MainActivity.java
+ * MedicionesActivity.java
  * @fecha: 07/10/2021
  * @autor: Aitor Benítez Estruch
  *
@@ -10,12 +10,13 @@
 package com.example.tricoenvironment.airlity;
 
 import android.Manifest;
-import android.app.NotificationManager;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,13 +30,13 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
-public class MainActivity extends AppCompatActivity {
+public class MedicionesActivity extends AppCompatActivity {
 
     private String[] nombres = new String[]{"Buscar dispositivo BLE","Listado Últimas Mediciones"};
     private static final int CODIGO_PETICION_PERMISOS = 11223344;
 
     /**
-     * Método onCreate se ejecuta antes de iniciar la actividad MainActivity
+     * Método onCreate se ejecuta antes de iniciar la actividad MedicionesActivity
      *
      * savedInstanceState:Bundle -> onCreate() ->
      *
@@ -43,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_mediciones);
 
         // empieza el timer ----------------------------
 
@@ -68,16 +69,18 @@ public class MainActivity extends AppCompatActivity {
         //Para el menu
         //Pegar esto en todas las clases de activity
         //-------------------------------------------
-        final DrawerLayout drawerLayout = findViewById(R.id.drawerLayout);
-        findViewById(R.id.im_menu).setOnClickListener(new View.OnClickListener() {
+        final DrawerLayout drawerLayout = findViewById(R.id.mediciones_drawerLayout);
+        findViewById(R.id.mediciones_im_menu).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 drawerLayout.openDrawer(GravityCompat.START);
             }
         });
 
-        NavigationView navigationView = findViewById(R.id.navigationView);
+        NavigationView navigationView = findViewById(R.id.mediciones_navigationView);
         navigationView.setItemIconTintList(null);
+
+        prepararDrawer(navigationView);
         //-------------------------------------------
         //-------------------------------------------
     }
@@ -99,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
         )
         {
             ActivityCompat.requestPermissions(
-                    MainActivity.this,
+                    MedicionesActivity.this,
                     new String[]{Manifest.permission.BLUETOOTH, Manifest.permission.BLUETOOTH_ADMIN, Manifest.permission.ACCESS_FINE_LOCATION},
                     CODIGO_PETICION_PERMISOS);
         }
@@ -146,6 +149,50 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     ///////////////////////////
+
+    private void prepararDrawer(NavigationView navigationView) {
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        menuItem.setChecked(true);
+                        seleccionarItem(menuItem);
+                        return true;
+                    }
+                });
+
+    }
+
+    private void seleccionarItem(MenuItem itemDrawer) {
+
+        switch (itemDrawer.getItemId()) {
+            case R.id.menu_mapa:
+                lanzarMapa();
+                break;
+            case R.id.menu_signin:
+                lanzarSignIn();
+                break;
+            case R.id.menu_mediciones:
+                break;
+            case R.id.menu_nosotros:
+                lanzarContactanos();
+                break;
+        }
+
+    }
+
+    private void lanzarMapa(){
+
+    }
+
+    private void lanzarSignIn(){
+        Intent i = new Intent(this, SignInActivity.class);
+        startActivity(i);
+    }
+
+    private void lanzarContactanos(){
+
+    }
 
 
 }
