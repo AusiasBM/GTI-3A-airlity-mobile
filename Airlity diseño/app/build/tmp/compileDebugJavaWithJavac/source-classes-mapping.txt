@@ -1,0 +1,29 @@
+com/airlity/airlity/ui/home/HomeFragment.java
+ com.airlity.airlity.ui.home.HomeFragment
+com/airlity/airlity/ui/slideshow/SlideshowFragment.java
+ com.airlity.airlity.ui.slideshow.SlideshowFragment
+com/airlity/airlity/ui/login/LoginViewModel.java
+ com.airlity.airlity.ui.login.LoginViewModel
+com/airlity/airlity/ui/login/LoginFragment.java
+ com.airlity.airlity.ui.login.LoginFragment
+ com.airlity.airlity.ui.login.LoginFragment$1
+ com.airlity.airlity.ui.login.LoginFragment$2
+ com.airlity.airlity.ui.login.LoginFragment$3
+ com.airlity.airlity.ui.login.LoginFragment$4
+com/airlity/airlity/ui/slideshow/SlideshowViewModel.java
+ com.airlity.airlity.ui.slideshow.SlideshowViewModel
+com/airlity/airlity/SignUpActivity.java
+ com.airlity.airlity.SignUpActivity
+ com.airlity.airlity.SignUpActivity$1
+com/airlity/airlity/ui/home/HomeViewModel.java
+ com.airlity.airlity.ui.home.HomeViewModel
+com/airlity/airlity/BuildConfig.java
+ com.airlity.airlity.BuildConfig
+com/airlity/airlity/ui/SignUpFragment.java
+ com.airlity.airlity.ui.SignUpFragment
+com/airlity/airlity/MenuSlideActivity.java
+ com.airlity.airlity.MenuSlideActivity
+ com.airlity.airlity.MenuSlideActivity$1
+com/airlity/airlity/MainActivity.java
+ com.airlity.airlity.MainActivity
+ com.airlity.airlity.MainActivity$1
