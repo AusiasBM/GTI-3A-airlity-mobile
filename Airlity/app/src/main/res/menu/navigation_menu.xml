@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menu_mapa"
+        android:icon="@drawable/mapa"
+        android:title="Mapa" />
+
+    <item
+        android:id="@+id/menu_mediciones"
+        android:icon="@drawable/grafica"
+        android:title="Mediciones" />
+
+    <item
+        android:id="@+id/menu_signin"
+        android:icon="@drawable/gente"
+        android:title="Iniciar sesión" />
+
+    <item
+        android:iconTint="@color/colorGrey"
+        android:title="Otros">
+
+        <menu>
+            <item
+                android:id="@+id/menu_soporte_tecnico"
+                android:icon="@drawable/soporte_tecnico"
+                android:title="Soporte técnico" />
+            <item
+                android:id="@+id/menu_contactanos"
+                android:icon="@drawable/equipo"
+                android:title="Conoce TricoEnvironment" />
+        </menu>
+
+    </item>
+</menu>

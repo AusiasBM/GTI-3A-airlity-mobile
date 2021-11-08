@@ -15,13 +15,17 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
@@ -40,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         // empieza el timer ----------------------------
 
         //Comprobamos si la app tiene los permisos para utilizar el bluetooth
@@ -58,6 +63,23 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
         ).attach();
+
+        //-------------------------------------------
+        //Para el menu
+        //Pegar esto en todas las clases de activity
+        //-------------------------------------------
+        final DrawerLayout drawerLayout = findViewById(R.id.drawerLayout);
+        findViewById(R.id.im_menu).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
+
+        NavigationView navigationView = findViewById(R.id.navigationView);
+        navigationView.setItemIconTintList(null);
+        //-------------------------------------------
+        //-------------------------------------------
     }
 
     /**
