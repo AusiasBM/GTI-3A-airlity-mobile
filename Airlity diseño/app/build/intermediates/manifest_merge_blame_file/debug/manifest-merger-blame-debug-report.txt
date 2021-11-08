@@ -1,0 +1,157 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.airlity.airlity"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="29"
+8-->/Users/ausiasbm/Downloads/Airlity2/app/src/main/AndroidManifest.xml
+9        android:targetSdkVersion="30" />
+9-->/Users/ausiasbm/Downloads/Airlity2/app/src/main/AndroidManifest.xml
+10
+11    <uses-permission android:name="android.permission.CAMERA" /> <!-- Don't require camera, as this requires a rear camera. This allows it to work on the Nexus 7 -->
+11-->[com.journeyapps:zxing-android-embedded:3.2.0] /Users/ausiasbm/.gradle/caches/transforms-3/61deb229990f41373930c1270974fa54/transformed/jetified-zxing-android-embedded-3.2.0/AndroidManifest.xml:21:5-65
+11-->[com.journeyapps:zxing-android-embedded:3.2.0] /Users/ausiasbm/.gradle/caches/transforms-3/61deb229990f41373930c1270974fa54/transformed/jetified-zxing-android-embedded-3.2.0/AndroidManifest.xml:21:22-62
+12    <uses-feature
+12-->[com.journeyapps:zxing-android-embedded:3.2.0] /Users/ausiasbm/.gradle/caches/transforms-3/61deb229990f41373930c1270974fa54/transformed/jetified-zxing-android-embedded-3.2.0/AndroidManifest.xml:24:5-26:36
+13        android:name="android.hardware.camera"
+13-->[com.journeyapps:zxing-android-embedded:3.2.0] /Users/ausiasbm/.gradle/caches/transforms-3/61deb229990f41373930c1270974fa54/transformed/jetified-zxing-android-embedded-3.2.0/AndroidManifest.xml:25:9-47
+14        android:required="false" />
+14-->[com.journeyapps:zxing-android-embedded:3.2.0] /Users/ausiasbm/.gradle/caches/transforms-3/61deb229990f41373930c1270974fa54/transformed/jetified-zxing-android-embedded-3.2.0/AndroidManifest.xml:26:9-33
+15    <uses-feature
+15-->[com.journeyapps:zxing-android-embedded:3.2.0] /Users/ausiasbm/.gradle/caches/transforms-3/61deb229990f41373930c1270974fa54/transformed/jetified-zxing-android-embedded-3.2.0/AndroidManifest.xml:27:5-29:36
+16        android:name="android.hardware.camera.front"
+16-->[com.journeyapps:zxing-android-embedded:3.2.0] /Users/ausiasbm/.gradle/caches/transforms-3/61deb229990f41373930c1270974fa54/transformed/jetified-zxing-android-embedded-3.2.0/AndroidManifest.xml:28:9-53
+17        android:required="false" /> <!-- TODO replace above two with next line after Android 4.2 -->
+17-->[com.journeyapps:zxing-android-embedded:3.2.0] /Users/ausiasbm/.gradle/caches/transforms-3/61deb229990f41373930c1270974fa54/transformed/jetified-zxing-android-embedded-3.2.0/AndroidManifest.xml:29:9-33
+18    <!-- <uses-feature android:name="android.hardware.camera.any"/> -->
+19    <uses-feature
+19-->[com.journeyapps:zxing-android-embedded:3.2.0] /Users/ausiasbm/.gradle/caches/transforms-3/61deb229990f41373930c1270974fa54/transformed/jetified-zxing-android-embedded-3.2.0/AndroidManifest.xml:32:5-34:36
+20        android:name="android.hardware.camera.autofocus"
+20-->[com.journeyapps:zxing-android-embedded:3.2.0] /Users/ausiasbm/.gradle/caches/transforms-3/61deb229990f41373930c1270974fa54/transformed/jetified-zxing-android-embedded-3.2.0/AndroidManifest.xml:33:9-57
+21        android:required="false" />
+21-->[com.journeyapps:zxing-android-embedded:3.2.0] /Users/ausiasbm/.gradle/caches/transforms-3/61deb229990f41373930c1270974fa54/transformed/jetified-zxing-android-embedded-3.2.0/AndroidManifest.xml:34:9-33
+22    <uses-feature
+22-->[com.journeyapps:zxing-android-embedded:3.2.0] /Users/ausiasbm/.gradle/caches/transforms-3/61deb229990f41373930c1270974fa54/transformed/jetified-zxing-android-embedded-3.2.0/AndroidManifest.xml:35:5-37:36
+23        android:name="android.hardware.camera.flash"
+23-->[com.journeyapps:zxing-android-embedded:3.2.0] /Users/ausiasbm/.gradle/caches/transforms-3/61deb229990f41373930c1270974fa54/transformed/jetified-zxing-android-embedded-3.2.0/AndroidManifest.xml:36:9-53
+24        android:required="false" />
+24-->[com.journeyapps:zxing-android-embedded:3.2.0] /Users/ausiasbm/.gradle/caches/transforms-3/61deb229990f41373930c1270974fa54/transformed/jetified-zxing-android-embedded-3.2.0/AndroidManifest.xml:37:9-33
+25    <uses-feature
+25-->[com.journeyapps:zxing-android-embedded:3.2.0] /Users/ausiasbm/.gradle/caches/transforms-3/61deb229990f41373930c1270974fa54/transformed/jetified-zxing-android-embedded-3.2.0/AndroidManifest.xml:38:5-40:36
+26        android:name="android.hardware.screen.landscape"
+26-->[com.journeyapps:zxing-android-embedded:3.2.0] /Users/ausiasbm/.gradle/caches/transforms-3/61deb229990f41373930c1270974fa54/transformed/jetified-zxing-android-embedded-3.2.0/AndroidManifest.xml:39:9-57
+27        android:required="false" />
+27-->[com.journeyapps:zxing-android-embedded:3.2.0] /Users/ausiasbm/.gradle/caches/transforms-3/61deb229990f41373930c1270974fa54/transformed/jetified-zxing-android-embedded-3.2.0/AndroidManifest.xml:40:9-33
+28    <uses-feature
+28-->[com.journeyapps:zxing-android-embedded:3.2.0] /Users/ausiasbm/.gradle/caches/transforms-3/61deb229990f41373930c1270974fa54/transformed/jetified-zxing-android-embedded-3.2.0/AndroidManifest.xml:41:5-43:36
+29        android:name="android.hardware.wifi"
+29-->[com.journeyapps:zxing-android-embedded:3.2.0] /Users/ausiasbm/.gradle/caches/transforms-3/61deb229990f41373930c1270974fa54/transformed/jetified-zxing-android-embedded-3.2.0/AndroidManifest.xml:42:9-45
+30        android:required="false" /> <!-- Include required permissions for Google Maps API to run. -->
+30-->[com.journeyapps:zxing-android-embedded:3.2.0] /Users/ausiasbm/.gradle/caches/transforms-3/61deb229990f41373930c1270974fa54/transformed/jetified-zxing-android-embedded-3.2.0/AndroidManifest.xml:43:9-33
+31    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+31-->[com.google.android.gms:play-services-maps:17.0.0] /Users/ausiasbm/.gradle/caches/transforms-3/075522a55ae82583a7d3b553bb99993c/transformed/jetified-play-services-maps-17.0.0/AndroidManifest.xml:23:5-79
+31-->[com.google.android.gms:play-services-maps:17.0.0] /Users/ausiasbm/.gradle/caches/transforms-3/075522a55ae82583a7d3b553bb99993c/transformed/jetified-play-services-maps-17.0.0/AndroidManifest.xml:23:22-76
+32    <uses-permission android:name="android.permission.INTERNET" />
+32-->[com.google.android.gms:play-services-maps:17.0.0] /Users/ausiasbm/.gradle/caches/transforms-3/075522a55ae82583a7d3b553bb99993c/transformed/jetified-play-services-maps-17.0.0/AndroidManifest.xml:24:5-67
+32-->[com.google.android.gms:play-services-maps:17.0.0] /Users/ausiasbm/.gradle/caches/transforms-3/075522a55ae82583a7d3b553bb99993c/transformed/jetified-play-services-maps-17.0.0/AndroidManifest.xml:24:22-64
+33
+34    <uses-feature
+34-->[com.google.android.gms:play-services-maps:17.0.0] /Users/ausiasbm/.gradle/caches/transforms-3/075522a55ae82583a7d3b553bb99993c/transformed/jetified-play-services-maps-17.0.0/AndroidManifest.xml:26:5-28:35
+35        android:glEsVersion="0x00020000"
+35-->[com.google.android.gms:play-services-maps:17.0.0] /Users/ausiasbm/.gradle/caches/transforms-3/075522a55ae82583a7d3b553bb99993c/transformed/jetified-play-services-maps-17.0.0/AndroidManifest.xml:27:9-41
+36        android:required="true" />
+36-->[com.google.android.gms:play-services-maps:17.0.0] /Users/ausiasbm/.gradle/caches/transforms-3/075522a55ae82583a7d3b553bb99993c/transformed/jetified-play-services-maps-17.0.0/AndroidManifest.xml:28:9-32
+37
+38    <application
+38-->/Users/ausiasbm/Downloads/Airlity2/app/src/main/AndroidManifest.xml:5:5-23:19
+39        android:allowBackup="true"
+39-->/Users/ausiasbm/Downloads/Airlity2/app/src/main/AndroidManifest.xml:6:9-35
+40        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+40-->[androidx.core:core:1.5.0] /Users/ausiasbm/.gradle/caches/transforms-3/97e7ec19bd11dff7ae3d399ac9d0fa5b/transformed/core-1.5.0/AndroidManifest.xml:24:18-86
+41        android:debuggable="true"
+42        android:extractNativeLibs="false"
+43        android:icon="@mipmap/ic_launcher"
+43-->/Users/ausiasbm/Downloads/Airlity2/app/src/main/AndroidManifest.xml:7:9-43
+44        android:label="@string/app_name"
+44-->/Users/ausiasbm/Downloads/Airlity2/app/src/main/AndroidManifest.xml:8:9-41
+45        android:roundIcon="@mipmap/ic_launcher_round"
+45-->/Users/ausiasbm/Downloads/Airlity2/app/src/main/AndroidManifest.xml:9:9-54
+46        android:supportsRtl="true"
+46-->/Users/ausiasbm/Downloads/Airlity2/app/src/main/AndroidManifest.xml:10:9-35
+47        android:testOnly="true"
+48        android:theme="@style/AppTheme" >
+48-->/Users/ausiasbm/Downloads/Airlity2/app/src/main/AndroidManifest.xml:11:9-40
+49        <activity
+49-->/Users/ausiasbm/Downloads/Airlity2/app/src/main/AndroidManifest.xml:12:9-15:59
+50            android:name="com.airlity.airlity.MenuSlideActivity"
+50-->/Users/ausiasbm/Downloads/Airlity2/app/src/main/AndroidManifest.xml:13:13-46
+51            android:label="@string/title_activity_menu_slide"
+51-->/Users/ausiasbm/Downloads/Airlity2/app/src/main/AndroidManifest.xml:14:13-62
+52            android:theme="@style/AppTheme.NoActionBar" />
+52-->/Users/ausiasbm/Downloads/Airlity2/app/src/main/AndroidManifest.xml:15:13-56
+53        <activity android:name="com.airlity.airlity.MainActivity" >
+53-->/Users/ausiasbm/Downloads/Airlity2/app/src/main/AndroidManifest.xml:16:9-22:20
+53-->/Users/ausiasbm/Downloads/Airlity2/app/src/main/AndroidManifest.xml:16:19-47
+54            <intent-filter>
+54-->/Users/ausiasbm/Downloads/Airlity2/app/src/main/AndroidManifest.xml:17:13-21:29
+55                <action android:name="android.intent.action.MAIN" />
+55-->/Users/ausiasbm/Downloads/Airlity2/app/src/main/AndroidManifest.xml:18:17-69
+55-->/Users/ausiasbm/Downloads/Airlity2/app/src/main/AndroidManifest.xml:18:25-66
+56
+57                <category android:name="android.intent.category.LAUNCHER" />
+57-->/Users/ausiasbm/Downloads/Airlity2/app/src/main/AndroidManifest.xml:20:17-77
+57-->/Users/ausiasbm/Downloads/Airlity2/app/src/main/AndroidManifest.xml:20:27-74
+58            </intent-filter>
+59        </activity>
+60        <activity
+60-->[com.journeyapps:zxing-android-embedded:3.2.0] /Users/ausiasbm/.gradle/caches/transforms-3/61deb229990f41373930c1270974fa54/transformed/jetified-zxing-android-embedded-3.2.0/AndroidManifest.xml:46:9-52:63
+61            android:name="com.journeyapps.barcodescanner.CaptureActivity"
+61-->[com.journeyapps:zxing-android-embedded:3.2.0] /Users/ausiasbm/.gradle/caches/transforms-3/61deb229990f41373930c1270974fa54/transformed/jetified-zxing-android-embedded-3.2.0/AndroidManifest.xml:47:13-74
+62            android:clearTaskOnLaunch="true"
+62-->[com.journeyapps:zxing-android-embedded:3.2.0] /Users/ausiasbm/.gradle/caches/transforms-3/61deb229990f41373930c1270974fa54/transformed/jetified-zxing-android-embedded-3.2.0/AndroidManifest.xml:48:13-45
+63            android:screenOrientation="sensorLandscape"
+63-->[com.journeyapps:zxing-android-embedded:3.2.0] /Users/ausiasbm/.gradle/caches/transforms-3/61deb229990f41373930c1270974fa54/transformed/jetified-zxing-android-embedded-3.2.0/AndroidManifest.xml:49:13-56
+64            android:stateNotNeeded="true"
+64-->[com.journeyapps:zxing-android-embedded:3.2.0] /Users/ausiasbm/.gradle/caches/transforms-3/61deb229990f41373930c1270974fa54/transformed/jetified-zxing-android-embedded-3.2.0/AndroidManifest.xml:50:13-42
+65            android:theme="@style/zxing_CaptureTheme"
+65-->[com.journeyapps:zxing-android-embedded:3.2.0] /Users/ausiasbm/.gradle/caches/transforms-3/61deb229990f41373930c1270974fa54/transformed/jetified-zxing-android-embedded-3.2.0/AndroidManifest.xml:51:13-54
+66            android:windowSoftInputMode="stateAlwaysHidden" /> <!-- Needs to be explicitly declared on P+ -->
+66-->[com.journeyapps:zxing-android-embedded:3.2.0] /Users/ausiasbm/.gradle/caches/transforms-3/61deb229990f41373930c1270974fa54/transformed/jetified-zxing-android-embedded-3.2.0/AndroidManifest.xml:52:13-60
+67        <uses-library
+67-->[com.google.android.gms:play-services-maps:17.0.0] /Users/ausiasbm/.gradle/caches/transforms-3/075522a55ae82583a7d3b553bb99993c/transformed/jetified-play-services-maps-17.0.0/AndroidManifest.xml:33:9-35:40
+68            android:name="org.apache.http.legacy"
+68-->[com.google.android.gms:play-services-maps:17.0.0] /Users/ausiasbm/.gradle/caches/transforms-3/075522a55ae82583a7d3b553bb99993c/transformed/jetified-play-services-maps-17.0.0/AndroidManifest.xml:34:13-50
+69            android:required="false" />
+69-->[com.google.android.gms:play-services-maps:17.0.0] /Users/ausiasbm/.gradle/caches/transforms-3/075522a55ae82583a7d3b553bb99993c/transformed/jetified-play-services-maps-17.0.0/AndroidManifest.xml:35:13-37
+70
+71        <activity
+71-->[com.google.android.gms:play-services-base:17.0.0] /Users/ausiasbm/.gradle/caches/transforms-3/06f08a7c9eb92bee56db18779f31a479/transformed/jetified-play-services-base-17.0.0/AndroidManifest.xml:23:9-26:75
+72            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+72-->[com.google.android.gms:play-services-base:17.0.0] /Users/ausiasbm/.gradle/caches/transforms-3/06f08a7c9eb92bee56db18779f31a479/transformed/jetified-play-services-base-17.0.0/AndroidManifest.xml:24:13-79
+73            android:exported="false"
+73-->[com.google.android.gms:play-services-base:17.0.0] /Users/ausiasbm/.gradle/caches/transforms-3/06f08a7c9eb92bee56db18779f31a479/transformed/jetified-play-services-base-17.0.0/AndroidManifest.xml:25:13-37
+74            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+74-->[com.google.android.gms:play-services-base:17.0.0] /Users/ausiasbm/.gradle/caches/transforms-3/06f08a7c9eb92bee56db18779f31a479/transformed/jetified-play-services-base-17.0.0/AndroidManifest.xml:26:13-72
+75
+76        <meta-data
+76-->[com.google.android.gms:play-services-basement:17.0.0] /Users/ausiasbm/.gradle/caches/transforms-3/5b4a5af03789cf1669cedf0b85ed5f41/transformed/jetified-play-services-basement-17.0.0/AndroidManifest.xml:23:9-25:69
+77            android:name="com.google.android.gms.version"
+77-->[com.google.android.gms:play-services-basement:17.0.0] /Users/ausiasbm/.gradle/caches/transforms-3/5b4a5af03789cf1669cedf0b85ed5f41/transformed/jetified-play-services-basement-17.0.0/AndroidManifest.xml:24:13-58
+78            android:value="@integer/google_play_services_version" />
+78-->[com.google.android.gms:play-services-basement:17.0.0] /Users/ausiasbm/.gradle/caches/transforms-3/5b4a5af03789cf1669cedf0b85ed5f41/transformed/jetified-play-services-basement-17.0.0/AndroidManifest.xml:25:13-66
+79
+80        <provider
+80-->[androidx.lifecycle:lifecycle-process:2.2.0] /Users/ausiasbm/.gradle/caches/transforms-3/d6a794f2398ae3202c9f9867e91bd3a9/transformed/jetified-lifecycle-process-2.2.0/AndroidManifest.xml:25:9-29:43
+81            android:name="androidx.lifecycle.ProcessLifecycleOwnerInitializer"
+81-->[androidx.lifecycle:lifecycle-process:2.2.0] /Users/ausiasbm/.gradle/caches/transforms-3/d6a794f2398ae3202c9f9867e91bd3a9/transformed/jetified-lifecycle-process-2.2.0/AndroidManifest.xml:26:13-79
+82            android:authorities="com.airlity.airlity.lifecycle-process"
+82-->[androidx.lifecycle:lifecycle-process:2.2.0] /Users/ausiasbm/.gradle/caches/transforms-3/d6a794f2398ae3202c9f9867e91bd3a9/transformed/jetified-lifecycle-process-2.2.0/AndroidManifest.xml:27:13-69
+83            android:exported="false"
+83-->[androidx.lifecycle:lifecycle-process:2.2.0] /Users/ausiasbm/.gradle/caches/transforms-3/d6a794f2398ae3202c9f9867e91bd3a9/transformed/jetified-lifecycle-process-2.2.0/AndroidManifest.xml:28:13-37
+84            android:multiprocess="true" />
+84-->[androidx.lifecycle:lifecycle-process:2.2.0] /Users/ausiasbm/.gradle/caches/transforms-3/d6a794f2398ae3202c9f9867e91bd3a9/transformed/jetified-lifecycle-process-2.2.0/AndroidManifest.xml:29:13-40
+85    </application>
+86
+87</manifest>
