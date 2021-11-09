@@ -16,7 +16,7 @@
             android:id="@+id/signin_layoutToolbar"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
-            android:background="@color/colorPrimary"
+            android:background="#FFFFFF"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingStart="15dp"
@@ -35,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:text="Iniciar sesión"
-                android:textColor="@color/colorGrey"
+                android:textColor="#FFFFFF"
                 android:textSize="18dp"
                 android:textStyle="bold"/>
 
@@ -51,48 +51,22 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/signin_layoutToolbar">
 
-            <Button
-                android:id="@+id/bt_signup_signup"
+            <ImageView
+                android:id="@+id/iv_login_logo"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/boton_log_in"
-                android:text="Registrar usuario"
-                android:textColor="#FFFFFF"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="@+id/et_signup_contrasenya"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/et_signup_contrasenya"
-                app:layout_constraintTop_toBottomOf="@+id/et_signup_verificar_contrasenya" />
-
-            <EditText
-                android:id="@+id/et_signup_nombre"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="40dp"
-                android:layout_marginEnd="30dp"
-                android:background="@drawable/formulario_log_in"
-                android:ems="10"
-                android:hint="Nombre de usuario"
-                android:inputType="text"
-                android:padding="5dp"
-                android:paddingStart="20dp"
-                android:textColor="@color/colorPrimary"
-                android:textColorHighlight="@color/colorPrimary"
-                android:textColorHint="@color/colorPrimary"
-                android:textColorLink="@color/colorPrimary"
+                android:layout_marginTop="104dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/iv_login_logo" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/gente" />
 
             <EditText
-                android:id="@+id/et_signup_correo"
+                android:id="@+id/et_login_correo"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="48dp"
                 android:layout_marginEnd="30dp"
                 android:background="@drawable/formulario_log_in"
                 android:ems="10"
@@ -106,14 +80,15 @@
                 android:textColorLink="@color/colorPrimary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/et_signup_nombre" />
+                app:layout_constraintStart_toStartOf="@+id/iv_login_logo"
+                app:layout_constraintTop_toBottomOf="@+id/iv_login_logo" />
 
             <EditText
-                android:id="@+id/et_signup_contrasenya"
+                android:id="@+id/et_login_contrasenya"
                 android:layout_width="0dp"
+                app:passwordToggleEnabled="true"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="32dp"
                 android:background="@drawable/formulario_log_in"
                 android:ems="10"
                 android:hint="Contraseña"
@@ -124,68 +99,76 @@
                 android:textColorHighlight="@color/colorPrimary"
                 android:textColorHint="@color/colorPrimary"
                 android:textColorLink="@color/colorPrimary"
-                app:layout_constraintEnd_toEndOf="@+id/et_signup_correo"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/et_signup_correo"
-                app:layout_constraintTop_toBottomOf="@+id/et_signup_correo" />
+                app:layout_constraintEnd_toEndOf="@+id/et_login_correo"
+                app:layout_constraintStart_toStartOf="@+id/et_login_correo"
+                app:layout_constraintTop_toBottomOf="@+id/et_login_correo" />
 
-            <EditText
-                android:id="@+id/et_signup_verificar_contrasenya"
-                android:layout_width="0dp"
+            <Button
+                android:id="@+id/bt_login_login"
+                android:layout_width="359dp"
+                android:layout_height="56dp"
+                android:layout_marginTop="32dp"
+                android:background="@drawable/boton_log_in"
+                android:text="Iniciar sesión"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/et_login_contrasenya"
+                app:layout_constraintStart_toStartOf="@+id/et_login_contrasenya"
+                app:layout_constraintTop_toBottomOf="@+id/tv_error_login" />
+
+            <TextView
+                android:id="@+id/tv_error_login"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/formulario_log_in"
-                android:ems="10"
-                android:hint="Repetir contraseña"
-                android:inputType="textPassword"
-                android:padding="5dp"
-                android:paddingStart="20dp"
-                android:textColor="@color/colorPrimary"
-                android:textColorHighlight="@color/colorPrimary"
-                android:textColorHint="@color/colorPrimary"
-                android:textColorLink="@color/colorPrimary"
-                app:layout_constraintEnd_toEndOf="@+id/et_signup_correo"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/et_signup_correo"
-                app:layout_constraintTop_toBottomOf="@+id/et_signup_contrasenya" />
+                android:text="TextView"
+                android:textColor="#FF0000"
+                android:textSize="16sp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="@+id/et_login_contrasenya"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="@+id/et_login_contrasenya"
+                app:layout_constraintTop_toBottomOf="@+id/et_login_contrasenya" />
 
-            <ImageView
-                android:id="@+id/iv_login_logo"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="104dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/gente" />
+            <Button
+                android:id="@+id/bt_login_contrasenya_cambio"
+                android:layout_width="30dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/oculto"
+                app:layout_constraintBottom_toBottomOf="@+id/et_login_contrasenya"
+                app:layout_constraintEnd_toEndOf="@+id/et_login_contrasenya"
+                app:layout_constraintTop_toTopOf="@+id/et_login_contrasenya" />
 
             <TextView
-                android:id="@+id/tv_signup_logearse"
+                android:id="@+id/tv_login_registrarse"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
                 android:layout_marginBottom="15dp"
-                android:text="¿Ya tiene cuenta?"
+                android:text="¿Todavia no tiene cuenta?"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/bt_signup_signup"
-                app:layout_constraintHorizontal_bias="0.35"
-                app:layout_constraintStart_toStartOf="@+id/bt_signup_signup"
-                app:layout_constraintTop_toBottomOf="@+id/bt_signup_signup"
-                app:layout_constraintVertical_bias="0.994" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.2"
+                app:layout_constraintStart_toStartOf="@+id/bt_login_login"
+                app:layout_constraintTop_toBottomOf="@+id/bt_login_login"
+                app:layout_constraintVertical_bias="1.0" />
 
             <TextView
-                android:id="@+id/tv_signup_logearse_clickable"
+                android:id="@+id/tv_login_registrarse_clickable"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Iniciar sesión"
+                android:layout_marginStart="5dp"
+                android:clickable="true"
+                android:text="Registrese"
                 android:textColor="@color/colorPrimary"
                 android:textColorHighlight="@color/colorPrimary"
                 android:textColorLink="@color/colorPrimary"
-                app:layout_constraintBottom_toBottomOf="@+id/tv_signup_logearse"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_login_registrarse"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.015"
-                app:layout_constraintStart_toEndOf="@+id/tv_signup_logearse"
-                app:layout_constraintTop_toTopOf="@+id/tv_signup_logearse"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toEndOf="@+id/tv_login_registrarse"
+                app:layout_constraintTop_toTopOf="@+id/tv_login_registrarse"
                 app:layout_constraintVertical_bias="0.0" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
