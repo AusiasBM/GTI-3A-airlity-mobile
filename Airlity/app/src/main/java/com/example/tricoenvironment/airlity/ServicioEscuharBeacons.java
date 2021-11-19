@@ -121,7 +121,7 @@ public class ServicioEscuharBeacons extends Service {
 
         NotificationCompat.Builder notificacion =
                 new NotificationCompat.Builder(this, CANAL_ID)
-                        .setSmallIcon(R.mipmap.logotipo)
+                        .setSmallIcon(R.mipmap.logo)
                         .setContentTitle("Sensor Bluetooth escuchando")
                         .setContentText("Notificación de sensor de bluetooth activo");
 

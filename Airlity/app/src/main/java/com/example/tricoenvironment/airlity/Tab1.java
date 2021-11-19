@@ -218,6 +218,13 @@ public class Tab1 extends Fragment {
                     ctd.start();
                 }
                 Log.d(ETIQUETA_LOG, " boton nuestro dispositivo BTLE Pulsado" );
+                if(esActivo){
+                    ctd.cancel();
+                    ctd.start();
+                }
+                if(sensorNoEncontrado==true){
+                    ctd.start();
+                }
 
                 //Asegurarnos que almenos tenga un campo para filtrar nuestro dispositivo:
                 if(nombreDispositivo.getText().toString().isEmpty()  && macDispositivo.getText().toString().isEmpty() ){
@@ -339,9 +346,9 @@ public class Tab1 extends Fragment {
                 NotificationCompat.Builder notificacion =
                         new NotificationCompat.Builder(getContext(), CANAL_ID)
                                 .setWhen(System.currentTimeMillis() + 1000 * 60 * 60)
-                                .setSmallIcon(R.mipmap.logotipo)
+                                .setSmallIcon(R.mipmap.logo)
                                 .setContentTitle("Datos no encontrados")
-                                .setContentText("El móvil no encuentra ningun dato");
+                                .setContentText("Se ha perdido la conexión con el sensor");
 
                 Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
                 notificacion.setSound(alarmSound);
@@ -351,9 +358,9 @@ public class Tab1 extends Fragment {
                 NotificationCompat.Builder notificacion =
 
                         new NotificationCompat.Builder(getContext(), CANAL_ID)
-                                .setSmallIcon(R.mipmap.logotipo)
-                                .setContentTitle("Humedad ERRONEA")
-                                .setContentText("Se ha producido un error respecto a los valores de humedad");
+                                .setSmallIcon(R.mipmap.logo)
+                                .setContentTitle("Medidas no validas")
+                                .setContentText("Ha habido un problema con la lectura de mediciones");
 
 
                 Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
@@ -363,9 +370,9 @@ public class Tab1 extends Fragment {
             if(nombreNotificacion=="notificacionGasErronea"){
                 NotificationCompat.Builder notificacion =
                         new NotificationCompat.Builder(getContext(), CANAL_ID)
-                                .setSmallIcon(R.mipmap.logotipo)
-                                .setContentTitle("Gas ERRONEA")
-                                .setContentText("Se ha producido un error respecto a los valores de gas");
+                                .setSmallIcon(R.mipmap.logo)
+                                .setContentTitle("Medidas no validas")
+                                .setContentText("Ha habido un problema con la lectura de mediciones");
                 Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
                 notificacion.setSound(alarmSound);
                 notificationManager.notify(NOTIFICACION_ID, notificacion.build());
@@ -373,9 +380,9 @@ public class Tab1 extends Fragment {
             if(nombreNotificacion=="notificacionTemperaturaErronea"){
                 NotificationCompat.Builder notificacion =
                         new NotificationCompat.Builder(getContext(), CANAL_ID)
-                                .setSmallIcon(R.mipmap.logotipo)
-                                .setContentTitle("temperatura ERRONEA")
-                                .setContentText("Se ha producido un error respecto a los valores de temperatura");
+                                .setSmallIcon(R.mipmap.logo)
+                                .setContentTitle("Medidas no validas")
+                                .setContentText("Ha habido un problema con la lectura de mediciones");
                 Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
                 notificacion.setSound(alarmSound);
                 notificationManager.notify(NOTIFICACION_ID, notificacion.build());
@@ -384,8 +391,8 @@ public class Tab1 extends Fragment {
                 NotificationCompat.Builder notificacion =
                         new NotificationCompat.Builder(getContext(), CANAL_ID)
                                 .setSmallIcon(R.mipmap.icon_prec)
-                                .setContentTitle("Calidad del aire pobre")
-                                .setContentText("El valor de gas en esta zona es demasiado alto");
+                                .setContentTitle("Zona no recomendada")
+                                .setContentText("Calidad del aire no recomendada para respirar en periodos largos");
                 Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
                 notificacion.setSound(alarmSound);
                 notificationManager.notify(NOTIFICACION_ID, notificacion.build());
