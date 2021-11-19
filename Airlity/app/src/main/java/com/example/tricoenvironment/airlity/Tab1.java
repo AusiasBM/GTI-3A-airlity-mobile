@@ -16,6 +16,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -326,48 +328,69 @@ public class Tab1 extends Fragment {
                         CANAL_ID, "Mis Notificaciones",
                         NotificationManager.IMPORTANCE_DEFAULT);
                 notificationChannel.setDescription("Descripcion del canal");
+                notificationChannel.setVibrationPattern(new long[]{0, 100, 300, 100});
+                notificationChannel.enableVibration(true);
+
                 notificationManager.createNotificationChannel(notificationChannel);
             }
+
             if(nombreNotificacion=="noReciveIbeacons"){
+
                 NotificationCompat.Builder notificacion =
                         new NotificationCompat.Builder(getContext(), CANAL_ID)
-                                .setSmallIcon(R.mipmap.ic_launcher)
-                                .setContentTitle("Medidas no encontradas")
-                                .setContentText("El sensor no encuentra ninguna medida");
+                                .setWhen(System.currentTimeMillis() + 1000 * 60 * 60)
+                                .setSmallIcon(R.mipmap.logotipo)
+                                .setContentTitle("Datos no encontrados")
+                                .setContentText("El móvil no encuentra ningun dato");
+
+                Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                notificacion.setSound(alarmSound);
                 notificationManager.notify(NOTIFICACION_ID, notificacion.build());
             }
             if(nombreNotificacion=="notificacionHumedadErronea"){
                 NotificationCompat.Builder notificacion =
+
                         new NotificationCompat.Builder(getContext(), CANAL_ID)
-                                .setSmallIcon(R.mipmap.ic_launcher)
+                                .setSmallIcon(R.mipmap.logotipo)
                                 .setContentTitle("Humedad ERRONEA")
                                 .setContentText("Se ha producido un error respecto a los valores de humedad");
+
+
+                Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                notificacion.setSound(alarmSound);
                 notificationManager.notify(NOTIFICACION_ID, notificacion.build());
             }
             if(nombreNotificacion=="notificacionGasErronea"){
                 NotificationCompat.Builder notificacion =
                         new NotificationCompat.Builder(getContext(), CANAL_ID)
-                                .setSmallIcon(R.mipmap.ic_launcher)
+                                .setSmallIcon(R.mipmap.logotipo)
                                 .setContentTitle("Gas ERRONEA")
                                 .setContentText("Se ha producido un error respecto a los valores de gas");
+                Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                notificacion.setSound(alarmSound);
                 notificationManager.notify(NOTIFICACION_ID, notificacion.build());
             }
             if(nombreNotificacion=="notificacionTemperaturaErronea"){
                 NotificationCompat.Builder notificacion =
                         new NotificationCompat.Builder(getContext(), CANAL_ID)
-                                .setSmallIcon(R.mipmap.ic_launcher)
-                                .setContentTitle("Temperatura ERRONEA")
+                                .setSmallIcon(R.mipmap.logotipo)
+                                .setContentTitle("temperatura ERRONEA")
                                 .setContentText("Se ha producido un error respecto a los valores de temperatura");
+                Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                notificacion.setSound(alarmSound);
                 notificationManager.notify(NOTIFICACION_ID, notificacion.build());
             }
-            if(nombreNotificacion=="notificacionLimiteGas"){
+            if(nombreNotificacion=="notificacionLimiteGas") {
                 NotificationCompat.Builder notificacion =
                         new NotificationCompat.Builder(getContext(), CANAL_ID)
-                                .setSmallIcon(R.mipmap.ic_launcher)
+                                .setSmallIcon(R.mipmap.icon_prec)
                                 .setContentTitle("Calidad del aire pobre")
                                 .setContentText("El valor de gas en esta zona es demasiado alto");
+                Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                notificacion.setSound(alarmSound);
                 notificationManager.notify(NOTIFICACION_ID, notificacion.build());
             }
+
         }catch (Exception e){
 
         }

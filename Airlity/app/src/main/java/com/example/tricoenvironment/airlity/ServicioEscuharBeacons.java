@@ -121,7 +121,7 @@ public class ServicioEscuharBeacons extends Service {
 
         NotificationCompat.Builder notificacion =
                 new NotificationCompat.Builder(this, CANAL_ID)
-                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setSmallIcon(R.mipmap.logotipo)
                         .setContentTitle("Sensor Bluetooth escuchando")
                         .setContentText("Notificación de sensor de bluetooth activo");
 
@@ -351,7 +351,8 @@ public class ServicioEscuharBeacons extends Service {
         Log.d(ETIQUETA_LOG, " humedad  = " + Utilidades.bytesToInt(tib.getHumedad()));
         Log.d(ETIQUETA_LOG, " tipoMedicion  = " + Utilidades.bytesToString(tib.getTipoMedicion()));
         Log.d(ETIQUETA_LOG, " txPower  = " + Integer.toHexString(tib.getTxPower()) + " ( " + tib.getTxPower() + " )");
-        Log.d(ETIQUETA_LOG, " ****************************************************");
+        Log.d(ETIQUETA_LOG, " distancia  = " + "(" + distancia(resultado)+ " )");
+        Log.d(ETIQUETA_LOG, " ******************");
 
     } // ()
 
@@ -489,7 +490,24 @@ public class ServicioEscuharBeacons extends Service {
         i.putExtra("Sensor", s.toString());
         sendBroadcast(i);
     }
+    /*
+    * El metodo distancia se emplea àra calcular a que distancia se encuentra el
+    *  sensor que esta tomando medidas respecto de la posicion del movil
+    *
+    * ScanResult resultado ->distancia()->double
+    * */
 
+    public double distancia (ScanResult resultado){
+        byte[] bytes = resultado.getScanRecord().getBytes();
+        int rssi = resultado.getRssi();
+        TramaIBeacon tib = new TramaIBeacon(bytes);
+        int txPower = tib.getTxPower();
+        double n = 4.3;
+        double distancia = Math.pow (10, ((txPower-rssi)/10*n));
+        return distancia;
+
+
+    }
 
 } // class
 // -------------------------------------------------------------------------------------------------
