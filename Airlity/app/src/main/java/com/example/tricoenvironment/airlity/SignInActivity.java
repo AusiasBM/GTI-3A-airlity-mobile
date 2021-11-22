@@ -6,7 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.TextUtils;
@@ -22,11 +24,15 @@ import com.google.android.material.navigation.NavigationView;
 
 public class SignInActivity extends AppCompatActivity {
 
+    private String correoUsuario, contraseñaUsuario;
+    private LogicaFake logicaFake;
+    EditText etCorreoSignIn, etContrasenyaSignIn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
+        logicaFake = new LogicaFake();
         //-------------------------------------------
         //Para el menu
         //Pegar esto en todas las clases de activity
@@ -51,8 +57,8 @@ public class SignInActivity extends AppCompatActivity {
         //Conexión con elementos del layout
         //------------------------------------------------------------
         //------------------------------------------------------------
-        final EditText etCorreoSignIn = findViewById(R.id.et_login_correo);
-        final EditText etContrasenyaSignIn = findViewById(R.id.et_login_contrasenya);
+        etCorreoSignIn = findViewById(R.id.et_login_correo);
+        etContrasenyaSignIn = findViewById(R.id.et_login_contrasenya);
         final Button cambiarVisibilidadContrasenya = findViewById(R.id.bt_login_contrasenya_cambio);
         Button btSignIn = findViewById(R.id.bt_login_login);
         final TextView tvRegistrarse = findViewById(R.id.tv_login_registrarse_clickable);
@@ -89,6 +95,13 @@ public class SignInActivity extends AppCompatActivity {
                         || TextUtils.isEmpty(etContrasenyaSignIn.getText().toString())){
                     tvErrorSignIn.setVisibility(VISIBLE);
                     tvErrorSignIn.setText("Rellene todos los campos");
+                } else{
+                    if(logicaFake.iniciarSesion(correoUsuario, contraseñaUsuario)){
+                        guardarPreferencias();
+                        Intent i = new Intent(getApplicationContext(), MedicionesActivity.class);
+                        startActivity(i);
+
+                    }
                 }
             }
         });
@@ -132,8 +145,17 @@ public class SignInActivity extends AppCompatActivity {
                 break;
             case R.id.menu_signin:
                 break;
+            case R.id.menu_perfilUsuario:
+                lanzarPerfilUsuario();
+                break;
             case R.id.menu_mediciones:
                 lanzarMediciones();
+                break;
+            case R.id.menu_graficas:
+                lanzarGraficas();
+                break;
+            case R.id.menu_soporte_tecnico:
+                lanzarSoporteTecnico();
                 break;
             case R.id.menu_nosotros:
                 lanzarContactanos();
@@ -142,8 +164,22 @@ public class SignInActivity extends AppCompatActivity {
 
     }
 
-    private void lanzarMapa(){
+    private void lanzarSoporteTecnico() {
+    }
 
+    private void lanzarMapa(){
+        Intent i = new Intent(this, MapaActivity.class);
+        startActivity(i);
+    }
+
+    private void lanzarPerfilUsuario(){
+        Intent i = new Intent(this, PerfilUsuario.class);
+        startActivity(i);
+    }
+
+    private void lanzarGraficas(){
+        Intent i = new Intent(this, GraficasActivity.class);
+        startActivity(i);
     }
 
     private void lanzarMediciones(){
@@ -155,5 +191,17 @@ public class SignInActivity extends AppCompatActivity {
 
     }
 
+    private void guardarPreferencias(){
+        SharedPreferences preferences=getSharedPreferences("Credenciales", Context.MODE_PRIVATE);
+
+        String correoUsuario = etCorreoSignIn.getText().toString();
+        String contraseñaUsuario = etContrasenyaSignIn.getText().toString();
+
+        SharedPreferences.Editor editor=preferences.edit();
+        editor.putString("correoUsuario", correoUsuario);
+        editor.putString("contraseñUsuario", contraseñaUsuario);
+
+        editor.commit();
+    }
 
 }
