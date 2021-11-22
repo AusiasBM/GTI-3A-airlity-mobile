@@ -49,6 +49,10 @@
 
         <service android:name=".ServicioEscuharBeacons" />
         <service android:name=".ServicioLogicaFake" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCZCU2KPOv7bCOaxh6jguSW-KpSY_5sU3E" />
     </application>
 
 </manifest>
