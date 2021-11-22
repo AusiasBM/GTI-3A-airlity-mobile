@@ -25,11 +25,14 @@ import org.w3c.dom.Text;
 
 public class SignUpActivity extends AppCompatActivity {
 
+    private String nombreUsuario, correoUsuario, contraseñaUsuario;
+    private LogicaFake logicaFake;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
+        logicaFake = new LogicaFake();
         //-------------------------------------------
         //Para el menu
         //Pegar esto en todas las clases de activity
@@ -104,6 +107,16 @@ public class SignUpActivity extends AppCompatActivity {
                     tvErrorSignUp.setVisibility(VISIBLE);
                     tvErrorSignUp.setText("Las contraseñas no coinciden");
                 }
+                else{
+                    nombreUsuario = etNombreSignUp.getText().toString();
+                    correoUsuario = etCorreoSignUp.getText().toString();
+                    contraseñaUsuario = etContrasenyaSignUp.getText().toString();
+
+                    logicaFake.registrarUsuario(nombreUsuario, correoUsuario, contraseñaUsuario);
+
+                    Intent i = new Intent(getApplicationContext(), MedicionesActivity.class);
+                    startActivity(i);
+                }
 
                 }
         });
@@ -131,8 +144,17 @@ public class SignUpActivity extends AppCompatActivity {
             case R.id.menu_signin:
                 lanzarSignIn();
                 break;
+            case R.id.menu_perfilUsuario:
+                lanzarPerfilUsuario();
+                break;
             case R.id.menu_mediciones:
                 lanzarMediciones();
+                break;
+            case R.id.menu_graficas:
+                lanzarGraficas();
+                break;
+            case R.id.menu_soporte_tecnico:
+                lanzarSoporteTecnico();
                 break;
             case R.id.menu_nosotros:
                 lanzarContactanos();
@@ -141,13 +163,27 @@ public class SignUpActivity extends AppCompatActivity {
 
     }
 
-    private void lanzarSignIn() {
-        Intent i = new Intent(this, SignInActivity.class);
+    private void lanzarGraficas() {
+        Intent i = new Intent(this, GraficasActivity.class);
         startActivity(i);
     }
 
-    private void lanzarMapa(){
+    private void lanzarSoporteTecnico() {
+    }
 
+    private void lanzarMapa(){
+        Intent i = new Intent(this, MapaActivity.class);
+        startActivity(i);
+    }
+
+    private void lanzarPerfilUsuario(){
+        Intent i = new Intent(this, PerfilUsuario.class);
+        startActivity(i);
+    }
+
+    private void lanzarSignIn(){
+        Intent i = new Intent(this, SignInActivity.class);
+        startActivity(i);
     }
 
     private void lanzarMediciones(){

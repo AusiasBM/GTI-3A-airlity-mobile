@@ -2,6 +2,8 @@ package com.example.tricoenvironment.airlity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -67,4 +69,50 @@ public class LogicaFake {
                 }
         );
     }
+
+    /**
+     * registrarUsuario() ejecuta una petición POST al servidor enviando los datos de un Usuario
+     *
+     * registrarUsuario() ->
+     */
+    public static void registrarUsuario(String nombre, String correo, String contraseña) {
+            PeticionarioREST elPeticionario = new PeticionarioREST();
+
+            Usuario usuario = new Usuario(nombre, correo, contraseña);
+
+            elPeticionario.hacerPeticionREST("POST",  "http://192.168.0.107:3500/registrarUsuario",
+                    String.valueOf(usuario),
+                    new PeticionarioREST.RespuestaREST () {
+                        @Override
+                        public void callback(int codigo, String cuerpo) {
+                            Log.d(ETIQUETA_LOG, "codigo respuesta= " + codigo + " <-> \n" + cuerpo);
+                        }
+                    }
+            );
+    }
+
+    public static boolean comprobarSiEsteUsuarioEstaRegistrado(String correo){
+        boolean existe=true;
+        //Comprobar si existe el correo, consulta a la ruta y que devuelva t o f
+        return existe;
+    }
+
+    public static boolean comprobarSiLaContraseñaEsCorrecta(String correo, String contraseña){
+        boolean esCorrecto=true;
+        //Comprobar si la contraseña es correcta
+        return esCorrecto;
+    }
+
+    public boolean iniciarSesion(String correo, String contraseña) {
+        if (comprobarSiEsteUsuarioEstaRegistrado(correo)) {
+            if (comprobarSiLaContraseñaEsCorrecta(correo, contraseña)) {
+                return true;
+            }
+        }else{
+            return false;
+        }
+        return false;
+    }
+
+
 }
