@@ -1,3 +1,12 @@
+/**
+ * Adaptador.java
+ * @fecha: 18/11/2021
+ * @autor: Pere Márquez Barber
+ *
+ * @Descripcion:
+ * Este fichero se encarga del layout Mapa, contiene el API del mapa de google y un botón para el código QR
+ */
+
 package com.example.tricoenvironment.airlity;
 
 import android.Manifest;
@@ -47,7 +56,9 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
 
-
+        /**
+         * Para la cámara QR
+         */
         FloatingActionButton fab = findViewById(R.id.floatingActionButton);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,6 +155,10 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     }
 
+    /**
+     * Método para configurar el mapa y los componentes como posición, vista del mapa, zoom, ubicación actual, ...
+     * @param googleMap
+     */
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         mMap = googleMap;
@@ -173,6 +188,12 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(epsgGandia, 18));
     }
 
+    /**
+     * Método llamado al escanear un QR
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

@@ -1,3 +1,11 @@
+/**
+ * Adaptador.java
+ * @fecha: 18/11/2021
+ * @autor: Pere Márquez Barber
+ *
+ * @Descripcion:
+ * Este fichero se encarga del layout SignIn, contiene los métodos para iniciar sesión y todo el front end de este
+ */
 package com.example.tricoenvironment.airlity;
 
 import android.content.Context;

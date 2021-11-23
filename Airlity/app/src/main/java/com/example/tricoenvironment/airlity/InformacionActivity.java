@@ -1,3 +1,12 @@
+/**
+ * Adaptador.java
+ * @fecha: 23/11/2021
+ * @autor: Natxo Garcia Serquera
+ *
+ * @Descripcion:
+ * Este fichero se encarga del layout Información
+ * Muestra información de la aplicación, como usarla y que contiene
+ */
 package com.example.tricoenvironment.airlity;
 
 import android.content.Intent;
@@ -10,6 +19,11 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
+
+/**
+ * InformaciónActivity.
+ * Página que muestra el layout de información
+ */
 
 public class InformacionActivity extends AppCompatActivity {
 
@@ -37,6 +51,11 @@ public class InformacionActivity extends AppCompatActivity {
         //-------------------------------------------
         //-------------------------------------------
     }
+
+
+    /**
+     * Métodos para el menú
+     */
     private void prepararDrawer(NavigationView navigationView) {
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {

@@ -1,3 +1,12 @@
+/**
+ * GraficasActivity.java
+ * @fecha: 21/11/2021
+ * @autor: Pere Márquez Barber
+ *
+ * @Descripcion:
+ * Este fichero se encarga del layout Gráficas
+ * Muestra una gráfica con las últimas mediciones del sensor e información sobre este
+ */
 package com.example.tricoenvironment.airlity;
 
 import android.content.Intent;
@@ -25,6 +34,12 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 
+/**
+ * Activity Graficas
+ *
+ * Clase que carga el contenido del layout de gráficas
+ * Añade datos a la gráfica
+ */
 public class GraficasActivity extends AppCompatActivity {
 
     private BarChart graficaTemps;
@@ -42,6 +57,7 @@ public class GraficasActivity extends AppCompatActivity {
         //-------------------------------------------
         //Para el menu
         //Pegar esto en todas las clases de activity
+        //Prepara el drawer para la elección de items
         //-------------------------------------------
         final DrawerLayout drawerLayout = findViewById(R.id.graficas_drawerLayout);
         findViewById(R.id.graficas_im_menu).setOnClickListener(new View.OnClickListener() {

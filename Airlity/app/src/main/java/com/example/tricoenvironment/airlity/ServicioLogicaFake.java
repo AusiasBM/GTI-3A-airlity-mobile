@@ -188,9 +188,7 @@ public class ServicioLogicaFake extends IntentService {
             Log.d(ETIQUETA_LOG, "" + str);
             medicionesString.add(str);
 
-
             Log.d(ETIQUETA_LOG, "" + medicionesString.size());
-
         }
     }
 

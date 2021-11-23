@@ -1,3 +1,12 @@
+/**
+ * Adaptador.java
+ * @fecha: 15/11/2021
+ * @autor: Pere Márquez Barber
+ *
+ * @Descripcion:
+ * Este fichero se encarga del layout Perfil Usuario, contiene la información del usuario registra
+ * Esta página solamente saldrá si el usuario está registrado
+ */
 package com.example.tricoenvironment.airlity;
 
 import android.content.Context;

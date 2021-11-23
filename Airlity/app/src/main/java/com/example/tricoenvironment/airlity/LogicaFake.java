@@ -1,3 +1,12 @@
+/**
+ * LogicaFake.java
+ * @fecha: 08/10/2021
+ * @autor: Aitor Benítez Estruch
+ *
+ * @Descripcion:
+ * Este fichero se encarga de la lógica fake de la aplicación, mediciones, sensor y usuarios
+ */
+
 package com.example.tricoenvironment.airlity;
 
 import android.content.Context;
