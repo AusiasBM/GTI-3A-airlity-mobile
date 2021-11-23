@@ -25,11 +25,17 @@
         android:icon="@drawable/gente"
         android:title="Perfil" />
 
+
+
     <item
         android:iconTint="@color/colorGrey"
         android:title="Otros">
 
         <menu>
+            <item
+                android:id="@+id/menu_informacion"
+                android:icon="@drawable/ojo"
+                android:title="Información" />
             <item
                 android:id="@+id/menu_soporte_tecnico"
                 android:icon="@drawable/soporte_tecnico"

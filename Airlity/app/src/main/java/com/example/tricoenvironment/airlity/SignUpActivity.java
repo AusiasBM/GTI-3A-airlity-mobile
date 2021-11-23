@@ -1,17 +1,10 @@
 package com.example.tricoenvironment.airlity;
 
-import static android.view.View.VISIBLE;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.UnderlineSpan;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -19,9 +12,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+
 import com.google.android.material.navigation.NavigationView;
 
-import org.w3c.dom.Text;
+import static android.view.View.VISIBLE;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -153,6 +150,9 @@ public class SignUpActivity extends AppCompatActivity {
             case R.id.menu_graficas:
                 lanzarGraficas();
                 break;
+            case R.id.menu_informacion:
+                lanzarInformacion();
+                break;
             case R.id.menu_soporte_tecnico:
                 lanzarSoporteTecnico();
                 break;
@@ -161,6 +161,11 @@ public class SignUpActivity extends AppCompatActivity {
                 break;
         }
 
+    }
+
+    private void lanzarInformacion() {
+        Intent i = new Intent(this, InformacionActivity.class);
+        startActivity(i);
     }
 
     private void lanzarGraficas() {

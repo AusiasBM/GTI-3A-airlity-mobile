@@ -1,12 +1,5 @@
 package com.example.tricoenvironment.airlity;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -15,6 +8,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -22,8 +22,6 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.navigation.NavigationView;
-
 import com.google.android.material.navigation.NavigationView;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -99,6 +97,10 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
                 lanzarMediciones();
                 break;
             case R.id.menu_graficas:
+                lanzarGraficas();
+                break;
+            case R.id.menu_informacion:
+                lanzarInformacion();
                 break;
             case R.id.menu_soporte_tecnico:
                 lanzarSoporteTecnico();
@@ -108,6 +110,16 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
                 break;
         }
 
+    }
+
+    private void lanzarGraficas() {
+        Intent i = new Intent(this, GraficasActivity.class);
+        startActivity(i);
+    }
+
+    private void lanzarInformacion() {
+        Intent i = new Intent(this, InformacionActivity.class);
+        startActivity(i);
     }
 
     private void lanzarSoporteTecnico() {

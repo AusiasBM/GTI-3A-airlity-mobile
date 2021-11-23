@@ -172,7 +172,6 @@ public class MedicionesActivity extends AppCompatActivity {
 
         switch (itemDrawer.getItemId()) {
             case R.id.menu_mapa:
-                lanzarMapa();
                 break;
             case R.id.menu_signin:
                 lanzarSignIn();
@@ -184,6 +183,9 @@ public class MedicionesActivity extends AppCompatActivity {
                 break;
             case R.id.menu_graficas:
                 lanzarGraficas();
+                break;
+            case R.id.menu_informacion:
+                lanzarInformacion();
                 break;
             case R.id.menu_soporte_tecnico:
                 lanzarSoporteTecnico();
@@ -197,6 +199,11 @@ public class MedicionesActivity extends AppCompatActivity {
 
     private void lanzarGraficas() {
         Intent i = new Intent(this, GraficasActivity.class);
+        startActivity(i);
+    }
+
+    private void lanzarInformacion() {
+        Intent i = new Intent(this, InformacionActivity.class);
         startActivity(i);
     }
 

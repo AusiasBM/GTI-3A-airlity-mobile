@@ -1,11 +1,5 @@
 package com.example.tricoenvironment.airlity;
 
-import static android.view.View.VISIBLE;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,7 +14,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+
 import com.google.android.material.navigation.NavigationView;
+
+import static android.view.View.VISIBLE;
 
 public class SignInActivity extends AppCompatActivity {
 
@@ -141,7 +141,6 @@ public class SignInActivity extends AppCompatActivity {
 
         switch (itemDrawer.getItemId()) {
             case R.id.menu_mapa:
-                lanzarMapa();
                 break;
             case R.id.menu_signin:
                 break;
@@ -154,6 +153,9 @@ public class SignInActivity extends AppCompatActivity {
             case R.id.menu_graficas:
                 lanzarGraficas();
                 break;
+            case R.id.menu_informacion:
+                lanzarInformacion();
+                break;
             case R.id.menu_soporte_tecnico:
                 lanzarSoporteTecnico();
                 break;
@@ -162,6 +164,16 @@ public class SignInActivity extends AppCompatActivity {
                 break;
         }
 
+    }
+
+    private void lanzarGraficas() {
+        Intent i = new Intent(this, GraficasActivity.class);
+        startActivity(i);
+    }
+
+    private void lanzarInformacion() {
+        Intent i = new Intent(this, InformacionActivity.class);
+        startActivity(i);
     }
 
     private void lanzarSoporteTecnico() {
@@ -174,11 +186,6 @@ public class SignInActivity extends AppCompatActivity {
 
     private void lanzarPerfilUsuario(){
         Intent i = new Intent(this, PerfilUsuario.class);
-        startActivity(i);
-    }
-
-    private void lanzarGraficas(){
-        Intent i = new Intent(this, GraficasActivity.class);
         startActivity(i);
     }
 
