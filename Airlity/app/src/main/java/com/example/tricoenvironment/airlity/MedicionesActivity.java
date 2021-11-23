@@ -177,7 +177,16 @@ public class MedicionesActivity extends AppCompatActivity {
             case R.id.menu_signin:
                 lanzarSignIn();
                 break;
+            case R.id.menu_perfilUsuario:
+                lanzarPerfilUsuario();
+                break;
             case R.id.menu_mediciones:
+                break;
+            case R.id.menu_graficas:
+                lanzarGraficas();
+                break;
+            case R.id.menu_soporte_tecnico:
+                lanzarSoporteTecnico();
                 break;
             case R.id.menu_nosotros:
                 lanzarContactanos();
@@ -186,8 +195,22 @@ public class MedicionesActivity extends AppCompatActivity {
 
     }
 
-    private void lanzarMapa(){
+    private void lanzarGraficas() {
+        Intent i = new Intent(this, GraficasActivity.class);
+        startActivity(i);
+    }
 
+    private void lanzarSoporteTecnico() {
+    }
+
+    private void lanzarMapa(){
+        Intent i = new Intent(this, MapaActivity.class);
+        startActivity(i);
+    }
+
+    private void lanzarPerfilUsuario(){
+        Intent i = new Intent(this, PerfilUsuario.class);
+        startActivity(i);
     }
 
     private void lanzarSignIn(){
@@ -198,6 +221,4 @@ public class MedicionesActivity extends AppCompatActivity {
     private void lanzarContactanos(){
 
     }
-
-
 }

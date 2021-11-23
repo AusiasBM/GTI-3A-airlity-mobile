@@ -19,6 +19,21 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".MapaActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".GraficasActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PerfilUsuario"
+            android:exported="false" />
+        <activity
             android:name=".SignUpActivity"
             android:exported="false" />
         <activity
@@ -34,6 +49,10 @@
 
         <service android:name=".ServicioEscuharBeacons" />
         <service android:name=".ServicioLogicaFake" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCZCU2KPOv7bCOaxh6jguSW-KpSY_5sU3E" />
     </application>
 
 </manifest>
