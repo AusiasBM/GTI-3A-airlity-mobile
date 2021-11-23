@@ -502,8 +502,9 @@ public class ServicioEscuharBeacons extends Service {
         int rssi = resultado.getRssi();
         TramaIBeacon tib = new TramaIBeacon(bytes);
         int txPower = tib.getTxPower();
-        double n = 4.3;
-        double distancia = Math.pow (10, ((txPower-rssi)/10*n));
+        int absRssi = Math.abs(rssi);
+        double power = (absRssi - txPower)/(10 * 4.0);
+        double distancia=Math.pow(10,power);
        Intent i=new Intent();
        i.setAction("Nueva_distancia");
        i.putExtra("Distancia",distancia);

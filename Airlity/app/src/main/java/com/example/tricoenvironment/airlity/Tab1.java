@@ -353,11 +353,11 @@ public class Tab1 extends Fragment {
     }
     public void mostarDistancia( double resultado ){
     Log.d("AAAAAAAAAAAAA",""+resultado);
-        if(resultado>3.981071705534969E8 && resultado<0) {
-            Toast.makeText(context, "No se ha podido encontrar el dispositivo",
+        if(resultado<1500 && resultado>1) {
+            Toast.makeText(context, "Nuestro dispositivo se encuentra a menos de 5 metros",
                     Toast.LENGTH_SHORT).show();
 
-        }else if(resultado==0){
+        }else if(resultado>1500){
             Toast.makeText(context, "No se ha podido encontrar el dispositivo",
                     Toast.LENGTH_SHORT).show();
         }

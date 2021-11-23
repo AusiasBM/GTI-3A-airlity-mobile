@@ -167,7 +167,7 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         LatLng epsgGandia = new LatLng(38.9959757, -0.1658417);
         mMap.addMarker(new MarkerOptions()
                 .position(epsgGandia));
-        mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         mMap.setMinZoomPreference(6.0f);
         mMap.setMaxZoomPreference(12.0f);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(epsgGandia, 18));
