@@ -58,6 +58,9 @@ public class Tab1 extends Fragment {
     private IntentFilter intentFilter;
     private Receptor receptor;
 
+    private IntentFilter intentDistanciaSernsor;
+    private ReceptorDistancia receptorDistanciaSensor;
+
     private IntentFilter intentFilterMediciones;
     private ReceptorMediciones receptorMediciones;
 
@@ -66,12 +69,13 @@ public class Tab1 extends Fragment {
     private String nombreNotificacion;
     boolean esActivo = false;
     boolean sensorNoEncontrado = false;
-
+    double distancia;
     private NotificationManager notificationManager;
     static final String CANAL_ID = "mi_canal";
     static final int NOTIFICACION_ID = 2;
 
-
+    ServicioEscuharBeacons servicio= new ServicioEscuharBeacons();
+    Button btn_distancia;
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
@@ -81,6 +85,10 @@ public class Tab1 extends Fragment {
         intentFilter = new IntentFilter();
         intentFilter.addAction("DeteccionSensor");
         receptor = new Receptor();
+
+        intentDistanciaSernsor = new IntentFilter();
+        intentDistanciaSernsor.addAction("Nueva_distancia");
+        receptorDistanciaSensor = new ReceptorDistancia();
 
         intentFilterMediciones = new IntentFilter();
         intentFilterMediciones.addAction("Nueva_Medicion");
@@ -111,7 +119,7 @@ public class Tab1 extends Fragment {
         //Botones
         buscarDispositivo = v.findViewById(R.id.BotonBuscar);
         detenerDispositivo = v.findViewById(R.id.BotonFinalizar);
-
+        btn_distancia=v.findViewById(R.id.boton_distancia);
         intentServicioBLE = new Intent(context, ServicioEscuharBeacons.class);
 
         //Creamos el intent que permitirá lanzar el servicio ServicioLogicaFake
@@ -120,6 +128,8 @@ public class Tab1 extends Fragment {
 
         botonBuscarNuestroDispositivoBTLEPulsado();
         botonDetenerBusquedaDispositivosBTLEPulsado();
+        btn_averiguarDistancia();
+
 
         return v;
     }
@@ -134,6 +144,7 @@ public class Tab1 extends Fragment {
         super.onResume();
         context.registerReceiver(receptor, intentFilter);
         context.registerReceiver(receptorMediciones,intentFilterMediciones);
+        context.registerReceiver(receptorDistanciaSensor,intentDistanciaSernsor);
     }
 
     /**
@@ -244,6 +255,14 @@ public class Tab1 extends Fragment {
         //this.buscarEsteDispositivoBTLE( "GTI-3A-ABENEST" , "C5:BC:C9:2D:5C:D0" );
     } // ()
 
+    public void btn_averiguarDistancia(){
+        btn_distancia.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               mostarDistancia(distancia);
+            }
+        });
+    }
     /**
      * botonDetenerBusquedaDispositivosBTLEPulsado() se encarga de parar el servicio
      * ServicioEscucharBeacons dejando de recibir beacons
@@ -320,6 +339,26 @@ public class Tab1 extends Fragment {
             detectarLecturasErroneas(medicion);
             detectarLimiteGas(medicion);
 
+        }
+    }
+    private class ReceptorDistancia extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+             distancia = intent.getDoubleExtra("Distancia",0.0);
+
+            Log.d("INTENT", "" + distancia);
+
+        }
+    }
+    public void mostarDistancia( double resultado ){
+    Log.d("AAAAAAAAAAAAA",""+resultado);
+        if(resultado>3.981071705534969E8 && resultado<0) {
+            Toast.makeText(context, "No se ha podido encontrar el dispositivo",
+                    Toast.LENGTH_SHORT).show();
+        }else  {
+            Toast.makeText(context, "Nuestro dispositivo se encuentra a menos de 5 metros",
+                    Toast.LENGTH_SHORT).show();
         }
     }
 

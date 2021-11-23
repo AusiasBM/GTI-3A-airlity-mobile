@@ -52,7 +52,6 @@ public class ServicioEscuharBeacons extends Service {
     private NotificationManager notificationManager;
     static final String CANAL_ID = "mi_canal";
     static final int NOTIFICACION_ID = 1;
-
     /**
      * El método onStartCommand se ejecuta al iniciar el servicio
      *
@@ -240,6 +239,8 @@ public class ServicioEscuharBeacons extends Service {
                 mostrarInformacionDispositivoBTLE( resultado );
                 guardarNuevaMedida(resultado);
                 obtenerSensor(resultado);
+                distancia(resultado);
+
             }
 
             @Override
@@ -351,7 +352,6 @@ public class ServicioEscuharBeacons extends Service {
         Log.d(ETIQUETA_LOG, " humedad  = " + Utilidades.bytesToInt(tib.getHumedad()));
         Log.d(ETIQUETA_LOG, " tipoMedicion  = " + Utilidades.bytesToString(tib.getTipoMedicion()));
         Log.d(ETIQUETA_LOG, " txPower  = " + Integer.toHexString(tib.getTxPower()) + " ( " + tib.getTxPower() + " )");
-        Log.d(ETIQUETA_LOG, " distancia  = " + "(" + distancia(resultado)+ " )");
         Log.d(ETIQUETA_LOG, " ******************");
 
     } // ()
@@ -497,17 +497,22 @@ public class ServicioEscuharBeacons extends Service {
     * ScanResult resultado ->distancia()->double
     * */
 
-    public double distancia (ScanResult resultado){
+    public void distancia (ScanResult resultado){
         byte[] bytes = resultado.getScanRecord().getBytes();
         int rssi = resultado.getRssi();
         TramaIBeacon tib = new TramaIBeacon(bytes);
         int txPower = tib.getTxPower();
         double n = 4.3;
         double distancia = Math.pow (10, ((txPower-rssi)/10*n));
-        return distancia;
-
-
+       Intent i=new Intent();
+       i.setAction("Nueva_distancia");
+       i.putExtra("Distancia",distancia);
+        sendBroadcast(i);
+        Log.d("BBBBBBBBBBBBBBBBBB",""+distancia);
     }
+
+
+
 
 } // class
 // -------------------------------------------------------------------------------------------------

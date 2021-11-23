@@ -166,6 +166,12 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="32dp"
                 android:text="Finalizar escucha" />
+
+            <Button
+                android:id="@+id/boton_distancia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Averiguar distancia" />
         </LinearLayout>
     </ScrollView>
 
