@@ -172,6 +172,7 @@ public class MedicionesActivity extends AppCompatActivity {
 
         switch (itemDrawer.getItemId()) {
             case R.id.menu_mapa:
+                lanzarMapa();
                 break;
             case R.id.menu_signin:
                 lanzarSignIn();

@@ -34,10 +34,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
+                android:fontFamily="@font/comfortaa_bold"
                 android:text="Iniciar sesión"
                 android:textColor="#FFFFFF"
                 android:textSize="18dp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -59,6 +60,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/boton_log_in"
+                android:fontFamily="@font/comfortaa_bold"
                 android:text="Registrar usuario"
                 android:textColor="#FFFFFF"
                 android:textStyle="bold"
@@ -76,6 +78,7 @@
                 android:layout_marginEnd="30dp"
                 android:background="@drawable/formulario_log_in"
                 android:ems="10"
+                android:fontFamily="@font/comfortaa"
                 android:hint="Nombre de usuario"
                 android:inputType="text"
                 android:padding="5dp"
@@ -98,6 +101,7 @@
                 android:layout_marginEnd="30dp"
                 android:background="@drawable/formulario_log_in"
                 android:ems="10"
+                android:fontFamily="@font/comfortaa"
                 android:hint="Correo electrónico"
                 android:inputType="textEmailAddress"
                 android:padding="5dp"
@@ -118,6 +122,7 @@
                 android:layout_marginTop="20dp"
                 android:background="@drawable/formulario_log_in"
                 android:ems="10"
+                android:fontFamily="@font/comfortaa"
                 android:hint="Contraseña"
                 android:inputType="textPassword"
                 android:padding="5dp"
@@ -138,6 +143,7 @@
                 android:layout_marginTop="20dp"
                 android:background="@drawable/formulario_log_in"
                 android:ems="10"
+                android:fontFamily="@font/comfortaa"
                 android:hint="Repetir contraseña"
                 android:inputType="textPassword"
                 android:padding="5dp"
@@ -153,33 +159,35 @@
 
             <ImageView
                 android:id="@+id/iv_login_logo"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="104dp"
+                android:layout_width="309dp"
+                android:layout_height="211dp"
+                android:layout_marginTop="52dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/gente" />
+                app:srcCompat="@drawable/logo_vertical" />
 
             <TextView
                 android:id="@+id/tv_signup_logearse"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
+                android:fontFamily="@font/comfortaa"
                 android:text="¿Ya tiene cuenta?"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/bt_signup_signup"
-                app:layout_constraintHorizontal_bias="0.35"
+                app:layout_constraintHorizontal_bias="0.262"
                 app:layout_constraintStart_toStartOf="@+id/bt_signup_signup"
                 app:layout_constraintTop_toBottomOf="@+id/bt_signup_signup"
-                app:layout_constraintVertical_bias="0.994" />
+                app:layout_constraintVertical_bias="1.0" />
 
             <TextView
                 android:id="@+id/tv_signup_logearse_clickable"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:clickable="true"
+                android:fontFamily="@font/comfortaa"
                 android:text="Iniciar sesión"
                 android:textColor="@color/colorPrimary"
                 android:textColorHighlight="@color/colorPrimary"
@@ -196,6 +204,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:fontFamily="@font/comfortaa"
                 android:text="TextView"
                 android:textColor="#FF0000"
                 android:textSize="16sp"

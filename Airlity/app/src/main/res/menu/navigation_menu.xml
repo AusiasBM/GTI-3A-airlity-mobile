@@ -12,20 +12,18 @@
         android:title="Mediciones" />
 
     <item
-        android:id="@+id/menu_graficas"
-        android:icon="@drawable/grafica"
-        android:title="Dashboard"/>
-    <item
         android:id="@+id/menu_signin"
         android:icon="@drawable/iniciar_seion"
         android:title="Iniciar sesión" />
 
     <item
+        android:id="@+id/menu_graficas"
+        android:icon="@drawable/grafica"
+        android:title="Dashboard"/>
+    <item
         android:id="@+id/menu_perfilUsuario"
         android:icon="@drawable/gente"
         android:title="Perfil" />
-
-
 
     <item
         android:iconTint="@color/colorGrey"
@@ -47,4 +45,8 @@
         </menu>
 
     </item>
+    <item
+        android:id="@+id/menu_signout"
+        android:icon="@drawable/iniciar_seion"
+        android:title="Cerrar sesión" />
 </menu>

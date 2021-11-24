@@ -16,7 +16,7 @@
             android:id="@+id/signin_layoutToolbar"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
-            android:background="#FFFFFF"
+            android:background="@color/colorPrimary"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingStart="15dp"
@@ -34,10 +34,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
+                android:fontFamily="@font/comfortaa_bold"
                 android:text="Iniciar sesión"
                 android:textColor="#FFFFFF"
                 android:textSize="18dp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -53,23 +54,23 @@
 
             <ImageView
                 android:id="@+id/iv_login_logo"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="104dp"
+                android:layout_width="309dp"
+                android:layout_height="211dp"
+                android:layout_marginTop="52dp"
+                android:scaleType="fitEnd"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/gente" />
+                app:srcCompat="@drawable/logo_vertical" />
 
             <EditText
                 android:id="@+id/et_login_correo"
-                android:layout_width="0dp"
+                android:layout_width="340dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
                 android:layout_marginTop="48dp"
-                android:layout_marginEnd="30dp"
                 android:background="@drawable/formulario_log_in"
                 android:ems="10"
+                android:fontFamily="@font/comfortaa"
                 android:hint="Correo electrónico"
                 android:inputType="textEmailAddress"
                 android:padding="5dp"
@@ -79,18 +80,18 @@
                 android:textColorHint="@color/colorPrimary"
                 android:textColorLink="@color/colorPrimary"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/iv_login_logo"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/iv_login_logo" />
 
             <EditText
                 android:id="@+id/et_login_contrasenya"
-                android:layout_width="0dp"
-                app:passwordToggleEnabled="true"
+                android:layout_width="340dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
                 android:background="@drawable/formulario_log_in"
                 android:ems="10"
+                android:fontFamily="@font/comfortaa"
                 android:hint="Contraseña"
                 android:inputType="textPassword"
                 android:padding="5dp"
@@ -99,21 +100,24 @@
                 android:textColorHighlight="@color/colorPrimary"
                 android:textColorHint="@color/colorPrimary"
                 android:textColorLink="@color/colorPrimary"
-                app:layout_constraintEnd_toEndOf="@+id/et_login_correo"
-                app:layout_constraintStart_toStartOf="@+id/et_login_correo"
-                app:layout_constraintTop_toBottomOf="@+id/et_login_correo" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_login_correo"
+                app:passwordToggleEnabled="true" />
 
             <Button
                 android:id="@+id/bt_login_login"
-                android:layout_width="359dp"
-                android:layout_height="56dp"
+                android:layout_width="350dp"
+                android:layout_height="50dp"
                 android:layout_marginTop="32dp"
                 android:background="@drawable/boton_log_in"
+                android:fontFamily="@font/comfortaa_bold"
                 android:text="Iniciar sesión"
                 android:textColor="#FFFFFF"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="@+id/et_login_contrasenya"
-                app:layout_constraintStart_toStartOf="@+id/et_login_contrasenya"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_error_login" />
 
             <TextView
@@ -121,6 +125,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:fontFamily="@font/comfortaa"
                 android:text="TextView"
                 android:textColor="#FF0000"
                 android:textSize="16sp"
@@ -144,15 +149,14 @@
                 android:id="@+id/tv_login_registrarse"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
+                android:layout_marginStart="72dp"
                 android:layout_marginBottom="15dp"
+                android:fontFamily="@font/comfortaa"
                 android:text="¿Todavia no tiene cuenta?"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.2"
-                app:layout_constraintStart_toStartOf="@+id/bt_login_login"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/bt_login_login"
-                app:layout_constraintVertical_bias="1.0" />
+                app:layout_constraintVertical_bias="0.992" />
 
             <TextView
                 android:id="@+id/tv_login_registrarse_clickable"
@@ -160,13 +164,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:clickable="true"
+                android:fontFamily="@font/comfortaa"
                 android:text="Registrese"
                 android:textColor="@color/colorPrimary"
                 android:textColorHighlight="@color/colorPrimary"
                 android:textColorLink="@color/colorPrimary"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_login_registrarse"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/tv_login_registrarse"
                 app:layout_constraintTop_toTopOf="@+id/tv_login_registrarse"
                 app:layout_constraintVertical_bias="0.0" />

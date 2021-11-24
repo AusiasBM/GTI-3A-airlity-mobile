@@ -85,7 +85,7 @@ public class LogicaFake {
      *
      * registrarUsuario() ->
      */
-    public static void registrarUsuario(String nombre, String correo, String contraseña, int numero) {
+    public static void registrarUsuario(String nombre, String correo, String contraseña, int numero, final Context context) {
             PeticionarioREST elPeticionario = new PeticionarioREST();
 
             final Usuario usuario = new Usuario(nombre, correo, contraseña, numero);
@@ -97,6 +97,10 @@ public class LogicaFake {
                             Log.d(ETIQUETA_LOG, "codigo respuesta= " + usuario.toString());
                             Log.d(ETIQUETA_LOG, "codigo respuesta= " + codigo + " <-> \n" + cuerpo);
 
+                            Intent i = new Intent();
+                            i.setAction("Get_usuario");
+                            i.putExtra("codigo_usuario", codigo);
+                            context.sendBroadcast(i);
                         }
                     }
             );
