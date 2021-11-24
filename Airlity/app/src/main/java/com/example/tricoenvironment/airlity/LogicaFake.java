@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 
@@ -88,13 +89,14 @@ public class LogicaFake {
             PeticionarioREST elPeticionario = new PeticionarioREST();
 
             final Usuario usuario = new Usuario(nombre, correo, contraseña, numero);
-            elPeticionario.hacerPeticionREST("POST",  "http://localhost:3500/registrarUsuario",
+            elPeticionario.hacerPeticionREST("POST",  "http://192.168.31.98:3500/registrarUsuario",
                     usuario.toString(),
                     new PeticionarioREST.RespuestaREST () {
                         @Override
                         public void callback(int codigo, String cuerpo) {
                             Log.d(ETIQUETA_LOG, "codigo respuesta= " + usuario.toString());
                             Log.d(ETIQUETA_LOG, "codigo respuesta= " + codigo + " <-> \n" + cuerpo);
+
                         }
                     }
             );

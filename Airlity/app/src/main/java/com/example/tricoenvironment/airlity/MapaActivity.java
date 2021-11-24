@@ -10,9 +10,12 @@
 package com.example.tricoenvironment.airlity;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -20,6 +23,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.menu.MenuItemWrapperICS;
 import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -94,6 +98,9 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void seleccionarItem(MenuItem itemDrawer) {
+
+        SharedPreferences preferences=getSharedPreferences("com.example.tricoenvironment.airlity", Context.MODE_PRIVATE);
+        boolean sesionIniciada = preferences.getBoolean("sesionIniciada", false);
 
         switch (itemDrawer.getItemId()) {
             case R.id.menu_mapa:
