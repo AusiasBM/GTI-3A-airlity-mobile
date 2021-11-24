@@ -117,7 +117,8 @@
                         android:layout_marginTop="5dp"
                         android:ems="10"
                         android:hint="Nombre del usuario"
-                        android:inputType="textPersonName" />
+                        android:inputType="textPersonName"
+                        android:minHeight="48dp" />
 
                     <TextView
                         android:id="@+id/textView3"
@@ -133,7 +134,8 @@
                         android:layout_marginTop="5dp"
                         android:ems="10"
                         android:hint="Apellidos del usuario"
-                        android:inputType="textPersonName" />
+                        android:inputType="textPersonName"
+                        android:minHeight="48dp" />
 
                     <TextView
                         android:id="@+id/textView5"
@@ -149,7 +151,8 @@
                         android:layout_marginTop="5dp"
                         android:ems="10"
                         android:hint="Correo electrónico"
-                        android:inputType="textShortMessage" />
+                        android:inputType="textShortMessage"
+                        android:minHeight="48dp" />
 
                     <TextView
                         android:id="@+id/textView6"
@@ -165,7 +168,8 @@
                         android:layout_marginTop="5dp"
                         android:ems="10"
                         android:hint="Teléfono"
-                        android:inputType="textShortMessage|phone" />
+                        android:inputType="textShortMessage|phone"
+                        android:minHeight="48dp" />
 
                     <TextView
                         android:id="@+id/textView7"

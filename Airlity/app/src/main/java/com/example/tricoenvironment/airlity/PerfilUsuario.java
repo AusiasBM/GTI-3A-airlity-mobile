@@ -35,7 +35,7 @@ public class PerfilUsuario extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfil_usuario);
 
-        cargarPreferencias();
+
         //------------------------------------------------------------
         //------------------------------------------------------------
         //Conexión con elementos del layout
@@ -46,6 +46,8 @@ public class PerfilUsuario extends AppCompatActivity {
         et_apellidoUsuario = findViewById(R.id.et_apellidosUsuario_perfilUsuario);
         et_correoElectronico = findViewById(R.id.et_correoUsuario_perfilUsuario);
         et_telefonoUsuario =findViewById(R.id.et_telefonoUsuario_perfilUsuario);
+
+        cargarPreferencias();
         //-------------------------------------------
         //Para el menu
         //Pegar esto en todas las clases de activity
@@ -154,6 +156,6 @@ public class PerfilUsuario extends AppCompatActivity {
         Log.d("HOLA", contraseñaUsuario+"");
         Log.d("HOLA", telefonoUsuario+"");
         Log.d("HOLA", sesionIniciada+"");
-        et_nombreUsuario.setText(nombreUsuario+"");
+        et_nombreUsuario.setText(nombreUsuario + "");
     }
 }
