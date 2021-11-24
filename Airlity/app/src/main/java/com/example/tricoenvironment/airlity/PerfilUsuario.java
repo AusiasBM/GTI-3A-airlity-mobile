@@ -139,12 +139,21 @@ public class PerfilUsuario extends AppCompatActivity {
     }
 
     private void cargarPreferencias(){
-        SharedPreferences preferences=getSharedPreferences("Credenciales", Context.MODE_PRIVATE);
+        SharedPreferences preferences=getSharedPreferences("com.example.tricoenvironment.airlity", Context.MODE_PRIVATE);
 
-        String correoUsuario = preferences.getString("correoUsuario", "HOLA");
-        String contraseñaUsuario = preferences.getString("contraseñaUsuario", "HOLA");
+        String nombreUsuario = preferences.getString("nombreUsuario", "Sesion no iniciada todavia");
+        String correoUsuario = preferences.getString("correoUsuario", "Sesion no iniciada todavia");
+        String contraseñaUsuario = preferences.getString("contraseñaUsuario", "Sesion no iniciada todavia");
+        int telefonoUsuario = preferences.getInt("telefonoUsuario", 00000);
+        boolean sesionIniciada = preferences.getBoolean("sesionIniciada", false);
+
+
 
         Log.d("HOLA", correoUsuario+"");
-        //tv_nombreUsuario.setText(correoUsuario+"");
+        Log.d("HOLA", nombreUsuario+"");
+        Log.d("HOLA", contraseñaUsuario+"");
+        Log.d("HOLA", telefonoUsuario+"");
+        Log.d("HOLA", sesionIniciada+"");
+        et_nombreUsuario.setText(nombreUsuario+"");
     }
 }

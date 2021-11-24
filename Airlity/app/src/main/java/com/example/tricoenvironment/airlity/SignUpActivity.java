@@ -1,6 +1,7 @@
 package com.example.tricoenvironment.airlity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.TextUtils;
@@ -25,6 +26,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     private String nombreUsuario, correoUsuario, contraseñaUsuario, contraseñaVerificada;
     private LogicaFake logicaFake;
+    private PeticionarioREST peticionarioREST;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,26 +110,36 @@ public class SignUpActivity extends AppCompatActivity {
 
                     logicaFake.registrarUsuario(nombreUsuario, correoUsuario, contraseñaUsuario, 10);
 
-                    Log.d("contraseñas", "IGUALES");
-                    Log.d("contraseñas", contraseñaUsuario.equals(contraseñaUsuario)+"");
-                    Log.d("contraseñas", contraseñaUsuario);
-                    Log.d("contraseñasV", contraseñaVerificada);
-                    Intent i = new Intent(getApplicationContext(), MedicionesActivity.class);
+                    guardarPreferencias(nombreUsuario, correoUsuario, contraseñaUsuario, 10, true);
+                    
+                    Toast.makeText(getApplicationContext(), "Usuario registrado, por favor ve a perfil para añadir sus credenciales", Toast.LENGTH_LONG).show();
+                    Intent i = new Intent(getApplicationContext(), MapaActivity.class);
                     startActivity(i);
+
+
+
 
 
                 }
                 else{
                     tvErrorSignUp.setVisibility(VISIBLE);
                     tvErrorSignUp.setText("Las contraseñas no coinciden");
-                    Log.d("contraseñas", "DISTINTAS");
-                    Log.d("contraseñas", contraseñaUsuario.equals(contraseñaUsuario)+"");
-                    Log.d("contraseñas", contraseñaUsuario);
-                    Log.d("contraseñasV", contraseñaVerificada);
                 }
 
                 }
         });
+    }
+
+    private void guardarPreferencias(String nombreUsuario, String correoUsuario, String contraseñaUsuario, int telefonoUsuario, boolean sesionUsuario) {
+        SharedPreferences sharedPreferences=getSharedPreferences("com.example.tricoenvironment.airlity", MODE_PRIVATE);
+        SharedPreferences.Editor editor=sharedPreferences.edit();
+        editor.putString("nombreUsuario", nombreUsuario);
+        editor.putString("correoUsuario", correoUsuario);
+        editor.putString("contraseñaUsuario", contraseñaUsuario);
+        editor.putInt("telefonoUsuario", telefonoUsuario);
+        editor.putBoolean("sesionIniciada", sesionUsuario);
+
+        editor.commit();
     }
 
     private void prepararDrawer(NavigationView navigationView) {
