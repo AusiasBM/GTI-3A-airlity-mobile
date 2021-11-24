@@ -10,7 +10,6 @@
         android:id="@+id/menu_mediciones"
         android:icon="@drawable/mediciones"
         android:title="Mediciones" />
-
     <item
         android:id="@+id/menu_signin"
         android:icon="@drawable/iniciar_seion"
@@ -24,6 +23,12 @@
         android:id="@+id/menu_perfilUsuario"
         android:icon="@drawable/gente"
         android:title="Perfil" />
+    <item
+        android:id="@+id/menu_signout"
+        android:icon="@drawable/iniciar_seion"
+        android:title="Cerrar sesión" />
+
+
 
     <item
         android:iconTint="@color/colorGrey"
@@ -45,8 +50,5 @@
         </menu>
 
     </item>
-    <item
-        android:id="@+id/menu_signout"
-        android:icon="@drawable/iniciar_seion"
-        android:title="Cerrar sesión" />
+
 </menu>

@@ -9,8 +9,11 @@
  */
 package com.example.tricoenvironment.airlity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -27,11 +30,13 @@ import com.google.android.material.navigation.NavigationView;
 
 public class InformacionActivity extends AppCompatActivity {
 
+    boolean usuarioRegistrado;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_informacion);
 
+        cargarPreferencias();
         //-------------------------------------------
         //Para el menu
         //Pegar esto en todas las clases de activity
@@ -46,7 +51,15 @@ public class InformacionActivity extends AppCompatActivity {
 
         NavigationView navigationView = findViewById(R.id.informacion_navigationView);
         navigationView.setItemIconTintList(null);
-
+        if (usuarioRegistrado){
+            Log.d("HOLA", "usus");
+            navigationView.getMenu().getItem(2).setVisible(false);
+        }else{
+            Log.d("HOLA", "susu");
+            navigationView.getMenu().getItem(3).setVisible(false);
+            navigationView.getMenu().getItem(4).setVisible(false);
+            navigationView.getMenu().getItem(5).setVisible(false);
+        }
         prepararDrawer(navigationView);
         //-------------------------------------------
         //-------------------------------------------
@@ -128,6 +141,18 @@ public class InformacionActivity extends AppCompatActivity {
     }
 
     private void lanzarContactanos(){
+
+    }
+    private void cargarPreferencias(){
+        SharedPreferences preferences=getSharedPreferences("com.example.tricoenvironment.airlity", Context.MODE_PRIVATE);
+
+        String nombreUsuario = preferences.getString("nombreUsuario", "Sesion no iniciada todavia");
+        String correoUsuario = preferences.getString("correoUsuario", "Sesion no iniciada todavia");
+        String apellidoUsuario = preferences.getString("apellidoUsuario", "");
+
+        String contraseñaUsuario = preferences.getString("contraseñaUsuario", "Sesion no iniciada todavia");
+        int telefonoUsuario = preferences.getInt("telefonoUsuario", 00000);
+        usuarioRegistrado = preferences.getBoolean("sesionIniciada", false);
 
     }
 }

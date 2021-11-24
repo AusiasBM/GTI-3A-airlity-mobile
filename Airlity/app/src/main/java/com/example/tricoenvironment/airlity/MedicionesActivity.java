@@ -12,7 +12,9 @@ package com.example.tricoenvironment.airlity;
 import android.Manifest;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.le.ScanResult;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -38,7 +40,7 @@ public class MedicionesActivity extends AppCompatActivity {
 
     private String[] nombres = new String[]{"Buscar dispositivo BLE","Listado Últimas Mediciones"};
     private static final int CODIGO_PETICION_PERMISOS = 11223344;
-
+    boolean usuarioRegistrado;
     /**
      * Método onCreate se ejecuta antes de iniciar la actividad MedicionesActivity
      *
@@ -52,6 +54,7 @@ public class MedicionesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mediciones);
 
+        cargarPreferencias();
         //Comprobamos si la app tiene los permisos para utilizar el bluetooth
         permisosBluetooth();
 
@@ -83,7 +86,15 @@ public class MedicionesActivity extends AppCompatActivity {
 
         NavigationView navigationView = findViewById(R.id.mediciones_navigationView);
         navigationView.setItemIconTintList(null);
-
+        if (usuarioRegistrado){
+            Log.d("HOLA", "usus");
+            navigationView.getMenu().getItem(2).setVisible(false);
+        }else{
+            Log.d("HOLA", "susu");
+            navigationView.getMenu().getItem(3).setVisible(false);
+            navigationView.getMenu().getItem(4).setVisible(false);
+            navigationView.getMenu().getItem(5).setVisible(false);
+        }
         prepararDrawer(navigationView);
         //-------------------------------------------
         //-------------------------------------------
@@ -227,6 +238,19 @@ public class MedicionesActivity extends AppCompatActivity {
     }
 
     private void lanzarContactanos(){
+
+    }
+
+    private void cargarPreferencias(){
+        SharedPreferences preferences=getSharedPreferences("com.example.tricoenvironment.airlity", Context.MODE_PRIVATE);
+
+        String nombreUsuario = preferences.getString("nombreUsuario", "Sesion no iniciada todavia");
+        String correoUsuario = preferences.getString("correoUsuario", "Sesion no iniciada todavia");
+        String apellidoUsuario = preferences.getString("apellidoUsuario", "");
+
+        String contraseñaUsuario = preferences.getString("contraseñaUsuario", "Sesion no iniciada todavia");
+        int telefonoUsuario = preferences.getInt("telefonoUsuario", 00000);
+        usuarioRegistrado = preferences.getBoolean("sesionIniciada", false);
 
     }
 }

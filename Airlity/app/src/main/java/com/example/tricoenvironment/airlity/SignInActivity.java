@@ -16,6 +16,7 @@ import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.method.PasswordTransformationMethod;
 import android.text.style.UnderlineSpan;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -55,6 +56,10 @@ public class SignInActivity extends AppCompatActivity {
 
         NavigationView navigationView = findViewById(R.id.signin_navigationView);
         navigationView.setItemIconTintList(null);
+
+        navigationView.getMenu().getItem(3).setVisible(false);
+        navigationView.getMenu().getItem(4).setVisible(false);
+        navigationView.getMenu().getItem(5).setVisible(false);
 
         prepararDrawer(navigationView);
         //-------------------------------------------

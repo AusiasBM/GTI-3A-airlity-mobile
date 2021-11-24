@@ -9,9 +9,12 @@
  */
 package com.example.tricoenvironment.airlity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -46,7 +49,7 @@ public class GraficasActivity extends AppCompatActivity {
     private String[] horas= new String[]{"00-06","06-12", "12-18", "18-24"};
     private int[] temps= new int[]{16, 20, 23, 19};
     private int[] colors= new int[]{Color.rgb(195,206,26), Color.rgb(206, 182, 26), Color.rgb(206, 152, 26), Color.rgb(206, 97, 26)};
-
+    boolean usuarioRegistrado;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +57,10 @@ public class GraficasActivity extends AppCompatActivity {
 
         graficaTemps = (BarChart) findViewById(R.id.graficaTemperatura);
         createCharts();
+        //-------------------------------------------
+        //Carga datos usuario
+        //-------------------------------------------
+        cargarPreferencias();
         //-------------------------------------------
         //Para el menu
         //Pegar esto en todas las clases de activity
@@ -69,7 +76,15 @@ public class GraficasActivity extends AppCompatActivity {
 
         NavigationView navigationView = findViewById(R.id.graficas_navigationView);
         navigationView.setItemIconTintList(null);
-
+        if (usuarioRegistrado){
+            Log.d("HOLA", "usus");
+            navigationView.getMenu().getItem(2).setVisible(false);
+        }else{
+            Log.d("HOLA", "susu");
+            navigationView.getMenu().getItem(3).setVisible(false);
+            navigationView.getMenu().getItem(4).setVisible(false);
+            navigationView.getMenu().getItem(5).setVisible(false);
+        }
         prepararDrawer(navigationView);
         //-------------------------------------------
         //-------------------------------------------
@@ -210,6 +225,18 @@ public class GraficasActivity extends AppCompatActivity {
     }
 
     private void lanzarContactanos() {
+
+    }
+    private void cargarPreferencias(){
+        SharedPreferences preferences=getSharedPreferences("com.example.tricoenvironment.airlity", Context.MODE_PRIVATE);
+
+        String nombreUsuario = preferences.getString("nombreUsuario", "Sesion no iniciada todavia");
+        String correoUsuario = preferences.getString("correoUsuario", "Sesion no iniciada todavia");
+        String apellidoUsuario = preferences.getString("apellidoUsuario", "");
+
+        String contraseñaUsuario = preferences.getString("contraseñaUsuario", "Sesion no iniciada todavia");
+        int telefonoUsuario = preferences.getInt("telefonoUsuario", 00000);
+        usuarioRegistrado = preferences.getBoolean("sesionIniciada", false);
 
     }
 }

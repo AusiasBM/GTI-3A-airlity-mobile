@@ -32,11 +32,12 @@ public class PerfilUsuario extends AppCompatActivity {
     private EditText et_nombreUsuario, et_apellidoUsuario, et_telefonoUsuario;
     boolean usuarioRegistrado;
 
+    Menu menu;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfil_usuario);
-
+        Log.d("HOLA", "ANTES"+usuarioRegistrado);
         //------------------------------------------------------------
         //------------------------------------------------------------
         //Conexión con elementos del layout
@@ -49,14 +50,16 @@ public class PerfilUsuario extends AppCompatActivity {
         et_telefonoUsuario =findViewById(R.id.et_telefonoUsuario_perfilUsuario);
         tv_macSensorUsuario = findViewById(R.id.tv_infoSensor_perfilUsuario);
 
+        //-------------------------------------------
+        //Carga datos usuario
+        //-------------------------------------------
+        cargarPreferencias();
+
         tv_macSensorUsuario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
             }
         });
-        cargarPreferencias();
-
 
         //-------------------------------------------
         //Para el menu
@@ -73,7 +76,17 @@ public class PerfilUsuario extends AppCompatActivity {
         NavigationView navigationView = findViewById(R.id.perfilusuario_navigationView);
         navigationView.setItemIconTintList(null);
 
+        if (usuarioRegistrado){
+            Log.d("HOLA", "usus");
+            navigationView.getMenu().getItem(2).setVisible(false);
+        }else{
+            Log.d("HOLA", "susu");
+            navigationView.getMenu().getItem(3).setVisible(false);
+            navigationView.getMenu().getItem(4).setVisible(false);
+            navigationView.getMenu().getItem(5).setVisible(false);
+        }
         prepararDrawer(navigationView);
+        seleccionarItem(navigationView.getMenu().getItem(4));
         //-------------------------------------------
         //-------------------------------------------
     }
@@ -148,6 +161,9 @@ public class PerfilUsuario extends AppCompatActivity {
     private void lanzarContactanos(){
 
     }
+
+
+
 
     @Override
     protected void onPause() {
