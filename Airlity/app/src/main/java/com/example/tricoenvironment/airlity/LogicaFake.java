@@ -84,16 +84,16 @@ public class LogicaFake {
      *
      * registrarUsuario() ->
      */
-    public static void registrarUsuario(String nombre, String correo, String contraseña) {
+    public static void registrarUsuario(String nombre, String correo, String contraseña, int numero) {
             PeticionarioREST elPeticionario = new PeticionarioREST();
 
-            Usuario usuario = new Usuario(nombre, correo, contraseña);
-
-            elPeticionario.hacerPeticionREST("POST",  "http://192.168.0.107:3500/registrarUsuario",
-                    String.valueOf(usuario),
+            final Usuario usuario = new Usuario(nombre, correo, contraseña, numero);
+            elPeticionario.hacerPeticionREST("POST",  "http://localhost:3500/registrarUsuario",
+                    usuario.toString(),
                     new PeticionarioREST.RespuestaREST () {
                         @Override
                         public void callback(int codigo, String cuerpo) {
+                            Log.d(ETIQUETA_LOG, "codigo respuesta= " + usuario.toString());
                             Log.d(ETIQUETA_LOG, "codigo respuesta= " + codigo + " <-> \n" + cuerpo);
                         }
                     }

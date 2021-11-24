@@ -18,6 +18,13 @@ public class Usuario {
         this.numero = numero;
     }
 
+    public Usuario(String nombreUsuario, String correo, String contraseña, int numero) {
+        this.nombreUsuario = nombreUsuario;
+        this.correo = correo;
+        this.contraseña = contraseña;
+        this.numero = numero;
+    }
+
     public Usuario(String nombreUsuario, String correo, String contraseña) {
         this.nombreUsuario = nombreUsuario;
         this.correo = correo;
@@ -83,13 +90,11 @@ public class Usuario {
 
     @Override
     public String toString() {
-        return "Usuario{" +
-                "_id='" + _id + '\'' +
-                ", nombreUsuario='" + nombreUsuario + '\'' +
-                ", correo='" + correo + '\'' +
-                ", contraseña='" + contraseña + '\'' +
-                ", macSensor='" + macSensor + '\'' +
-                ", numero=" + numero +
-                '}';
+        return "{" +
+                "\"nombreUsuario\":" + "\"" +nombreUsuario + "\"" +
+                ", \"correo\":" +"\"" +correo + "\"" +
+                ", \"contrasenya\":" +"\"" +contraseña + "\"" +
+                ", \"telefono\":"  + numero +
+                "}";
     }
 }

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.UnderlineSpan;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -22,7 +23,7 @@ import static android.view.View.VISIBLE;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    private String nombreUsuario, correoUsuario, contraseñaUsuario;
+    private String nombreUsuario, correoUsuario, contraseñaUsuario, contraseñaVerificada;
     private LogicaFake logicaFake;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +93,10 @@ public class SignUpActivity extends AppCompatActivity {
         btSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "COntraseña: "+ etContrasenyaSignUp.getText()+"..", Toast.LENGTH_LONG).show();
+                nombreUsuario = etNombreSignUp.getText().toString();
+                correoUsuario = etCorreoSignUp.getText().toString();
+                contraseñaUsuario = etContrasenyaSignUp.getText().toString();
+                contraseñaVerificada = etVerificarContrasenyaSignUp.getText().toString();
                 if(TextUtils.isEmpty(etNombreSignUp.getText().toString())
                         || TextUtils.isEmpty(etCorreoSignUp.getText().toString())
                         || TextUtils.isEmpty(etContrasenyaSignUp.getText().toString())
@@ -100,19 +104,26 @@ public class SignUpActivity extends AppCompatActivity {
                     tvErrorSignUp.setVisibility(VISIBLE);
                     tvErrorSignUp.setText("Rellene todos los campos");
                 }
-                else if (!etContrasenyaSignUp.getText().equals(etVerificarContrasenyaSignUp.getText())){
-                    tvErrorSignUp.setVisibility(VISIBLE);
-                    tvErrorSignUp.setText("Las contraseñas no coinciden");
-                }
-                else{
-                    nombreUsuario = etNombreSignUp.getText().toString();
-                    correoUsuario = etCorreoSignUp.getText().toString();
-                    contraseñaUsuario = etContrasenyaSignUp.getText().toString();
+                else if (contraseñaUsuario.equals(contraseñaVerificada)){
 
-                    logicaFake.registrarUsuario(nombreUsuario, correoUsuario, contraseñaUsuario);
+                    logicaFake.registrarUsuario(nombreUsuario, correoUsuario, contraseñaUsuario, 10);
 
+                    Log.d("contraseñas", "IGUALES");
+                    Log.d("contraseñas", contraseñaUsuario.equals(contraseñaUsuario)+"");
+                    Log.d("contraseñas", contraseñaUsuario);
+                    Log.d("contraseñasV", contraseñaVerificada);
                     Intent i = new Intent(getApplicationContext(), MedicionesActivity.class);
                     startActivity(i);
+
+
+                }
+                else{
+                    tvErrorSignUp.setVisibility(VISIBLE);
+                    tvErrorSignUp.setText("Las contraseñas no coinciden");
+                    Log.d("contraseñas", "DISTINTAS");
+                    Log.d("contraseñas", contraseñaUsuario.equals(contraseñaUsuario)+"");
+                    Log.d("contraseñas", contraseñaUsuario);
+                    Log.d("contraseñasV", contraseñaVerificada);
                 }
 
                 }
