@@ -32,7 +32,7 @@ import com.google.android.material.navigation.NavigationView;
 public class PerfilUsuario extends AppCompatActivity {
 
     private TextView tv_nombreUsuario,  tv_correoElectronico, tv_macSensorUsuario;
-    private EditText et_nombreUsuario, et_apellidoUsuario, et_telefonoUsuario;
+    private EditText et_nombreUsuario,  et_telefonoUsuario;
     boolean usuarioRegistrado;
     String macSensor;
 
@@ -49,7 +49,6 @@ public class PerfilUsuario extends AppCompatActivity {
         //------------------------------------------------------------
         tv_nombreUsuario = findViewById(R.id.tv_nombreUsuario_perfilUsuario);
         et_nombreUsuario = findViewById(R.id.et_nombreUsuario_perfilUsuario);
-        et_apellidoUsuario = findViewById(R.id.et_apellidosUsuario_perfilUsuario);
         tv_correoElectronico = findViewById(R.id.et_correoUsuario_perfilUsuario);
         et_telefonoUsuario =findViewById(R.id.et_telefonoUsuario_perfilUsuario);
         tv_macSensorUsuario = findViewById(R.id.tv_infoSensor_perfilUsuario);
@@ -184,8 +183,6 @@ public class PerfilUsuario extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         et_nombreUsuario = findViewById(R.id.et_nombreUsuario_perfilUsuario);
-        et_apellidoUsuario = findViewById(R.id.et_apellidosUsuario_perfilUsuario);
-        guardarPreferencias(et_nombreUsuario+"", et_apellidoUsuario+"");
     }
 
     private void cargarPreferencias(){
@@ -193,7 +190,6 @@ public class PerfilUsuario extends AppCompatActivity {
 
         String nombreUsuario = preferences.getString("nombreUsuario", "Sesion no iniciada todavia");
         String correoUsuario = preferences.getString("correoUsuario", "Sesion no iniciada todavia");
-        String apellidoUsuario = preferences.getString("apellidoUsuario", "");
         macSensor = preferences.getString("macSensor", "null");
 
         String contraseñaUsuario = preferences.getString("contraseñaUsuario", "Sesion no iniciada todavia");
@@ -207,18 +203,17 @@ public class PerfilUsuario extends AppCompatActivity {
         Log.d("HOLA", contraseñaUsuario+"");
         Log.d("HOLA", telefonoUsuario+"");
         Log.d("HOLA", usuarioRegistrado+"");
-        tv_nombreUsuario.setText(nombreUsuario +" "+ apellidoUsuario);
+        tv_nombreUsuario.setText(nombreUsuario +" ");
         et_nombreUsuario.setText(nombreUsuario + "");
         tv_correoElectronico.setText(correoUsuario+"");
         et_telefonoUsuario.setText(telefonoUsuario+"");
 
     }
 
-    private void guardarPreferencias(String nombreUsuario, String apellidoUsuario) {
+    private void guardarPreferencias(String nombreUsuario) {
         SharedPreferences sharedPreferences = getSharedPreferences("com.example.tricoenvironment.airlity2", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("nombreUsuario", nombreUsuario);
-        editor.putString("apellidoUsuario", apellidoUsuario);
 
         editor.commit();
     }

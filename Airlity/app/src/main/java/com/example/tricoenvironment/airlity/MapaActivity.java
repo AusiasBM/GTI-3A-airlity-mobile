@@ -11,18 +11,25 @@ package com.example.tricoenvironment.airlity;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+<<<<<<< HEAD
+=======
+import androidx.appcompat.view.menu.MenuItemWrapperICS;
+>>>>>>> develop
 import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -41,13 +48,18 @@ import com.google.zxing.integration.android.IntentResult;
 public class MapaActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    boolean usuarioRegistrado;
+    boolean usuarioRegistrado, usuarioRegistradoParaMenu;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mapa);
+        SharedPreferences preferences=getSharedPreferences("com.example.tricoenvironment.airlity", Context.MODE_PRIVATE);
 
+        usuarioRegistradoParaMenu = preferences.getBoolean("usuarioRegistradoParaMenu", false);
+
+        Log.d("USUARIO", "1 "+usuarioRegistrado);
         cargarPreferencias();
+        Log.d("USUARIO", "2 "+usuarioRegistrado);
         //-------------------------------------------
         //Para el menu
         //Pegar esto en todas las clases de activity
@@ -78,7 +90,7 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         NavigationView navigationView = findViewById(R.id.mapa_navigationView);
         navigationView.setItemIconTintList(null);
-        if (usuarioRegistrado){
+        if (usuarioRegistrado & usuarioRegistradoParaMenu){
             Log.d("HOLA", "usus");
             navigationView.getMenu().getItem(2).setVisible(false);
         }else{
@@ -90,6 +102,7 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         prepararDrawer(navigationView);
         //-------------------------------------------
         //-------------------------------------------
+        Log.d("USUARIO", "3 "+usuarioRegistrado);
     }
 
     private void prepararDrawer(NavigationView navigationView) {
@@ -134,8 +147,40 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
             case R.id.menu_nosotros:
                 lanzarContactanos();
                 break;
+            case R.id.menu_signout:
+                lanzarSignOut();
+                break;
         }
 
+    }
+
+    private void lanzarSignOut() {
+        AlertDialog.Builder alertDialog=new AlertDialog.Builder(MapaActivity.this);
+        alertDialog.setMessage("¿Segur que desea cerrar sesión?").setCancelable(false)
+                .setPositiveButton("Salir", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Log.d("USUARIO", "4 "+usuarioRegistrado);
+                        SharedPreferences sharedPreferences = getSharedPreferences("com.example.tricoenvironment.airlity", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putBoolean("usuarioRegistradoParaMenu",false);
+
+                        editor.commit();
+
+                        Intent i = new Intent(getApplicationContext(), MapaActivity.class);
+                        startActivity(i);
+                        dialog.cancel();
+                        Log.d("USUARIO", "5 "+usuarioRegistrado);
+                    }
+                }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        AlertDialog titulo = alertDialog.create();
+        titulo.setTitle("Cerrar sesión");
+        titulo.show();
     }
 
     private void lanzarGraficas() {
@@ -219,10 +264,15 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         IntentResult intentResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
 
         String datos = intentResult.getContents();
+        SharedPreferences sharedPreferences = getSharedPreferences("com.example.tricoenvironment.airlity", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("macSensor", datos);
+        editor.commit();
         Toast.makeText(this, "Mac del beacon detectado: "+ datos, Toast.LENGTH_SHORT).show();
     }
 
     private void cargarPreferencias(){
+        Log.d("USUARIO", "6 "+usuarioRegistrado);
         SharedPreferences preferences=getSharedPreferences("com.example.tricoenvironment.airlity", Context.MODE_PRIVATE);
 
         String nombreUsuario = preferences.getString("nombreUsuario", "Sesion no iniciada todavia");
@@ -232,6 +282,8 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         String contraseñaUsuario = preferences.getString("contraseñaUsuario", "Sesion no iniciada todavia");
         int telefonoUsuario = preferences.getInt("telefonoUsuario", 00000);
         usuarioRegistrado = preferences.getBoolean("sesionIniciada", false);
+        Log.d("USUARIO", "7 "+usuarioRegistrado);
+
 
     }
 }
