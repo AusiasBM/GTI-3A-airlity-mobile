@@ -15,9 +15,9 @@ public class Medicion {
 
     private enum TipoMedida{IAQ, SO2, NO2, O3};
     private TipoMedida tipoMedicion;
-    private String macSensor;
-    private int medida, temperatura, humedad; //de moment serà un nº enter
-    private double latitud, longitud;
+    private String macSensor, idUsuario;
+    private int temperatura, humedad; //de moment serà un nº enter
+    private double medida, latitud, longitud;
     private long fecha;
 
     /**
@@ -26,18 +26,13 @@ public class Medicion {
     public Medicion() {
     }
 
-    //Este constructor no lo necesito ahora
-    /*public Medicion( String nombreSensor, String macSensor, String uuidSensor, int medida, double latitud, double longitud, long fecha) {
-        this.tipo = TipoMedida.CONCENTRACION_GAS;
-        this.nombreSensor = nombreSensor;
-        this.macSensor = macSensor;
-        this.uuidSensor = uuidSensor;
-        this.medida = medida;
-        this.latitud = latitud;
-        this.longitud = longitud;
-        this.fecha = fecha;
-    }*/
+    public String getIdUsuario() {
+        return idUsuario;
+    }
 
+    public void setIdUsuario(String idUsuario) {
+        this.idUsuario = idUsuario;
+    }
 
     public int getTemperatura() {
         return temperatura;
@@ -170,30 +165,13 @@ public class Medicion {
     }
 
 
-
-    /**
-     * Método getMedida.
-     *
-     *  Z <- getMedida() <-
-     *
-     * @return medida Devuelve el valor de la medida.
-     */
-    public int getMedida() {
+    public double getMedida() {
         return medida;
     }
 
-
-    /**
-     * Método setMedida.
-     *
-     * Z -> setMedida() ->
-     *
-     * @param  medida Valor de la medida que ha captado el sensor.
-     */
-    public void setMedida(int medida) {
+    public void setMedida(double medida) {
         this.medida = medida;
     }
-
 
     /**
      * Método getMacSensor.
@@ -279,6 +257,7 @@ public class Medicion {
         return "{" +
                 "tipoMedicion=" + tipoMedicion +
                 ", macSensor='" + macSensor + '\'' +
+                ", idUsuario='" + idUsuario + '\'' +
                 ", medida=" + medida +
                 ", temperatura=" + temperatura +
                 ", humedad=" + humedad +
