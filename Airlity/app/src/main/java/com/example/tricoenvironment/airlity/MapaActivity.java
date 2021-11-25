@@ -17,6 +17,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -25,7 +26,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.appcompat.view.menu.MenuItemWrapperICS;
 import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -51,7 +52,7 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         setContentView(R.layout.activity_mapa);
         SharedPreferences preferences=getSharedPreferences("com.example.tricoenvironment.airlity", Context.MODE_PRIVATE);
 
-         usuarioRegistradoParaMenu = preferences.getBoolean("usuarioRegistradoParaMenu", false);
+        usuarioRegistradoParaMenu = preferences.getBoolean("usuarioRegistradoParaMenu", false);
 
         Log.d("USUARIO", "1 "+usuarioRegistrado);
         cargarPreferencias();
@@ -153,22 +154,22 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
     private void lanzarSignOut() {
         AlertDialog.Builder alertDialog=new AlertDialog.Builder(MapaActivity.this);
         alertDialog.setMessage("¿Segur que desea cerrar sesión?").setCancelable(false)
-        .setPositiveButton("Salir", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Log.d("USUARIO", "4 "+usuarioRegistrado);
-                SharedPreferences sharedPreferences = getSharedPreferences("com.example.tricoenvironment.airlity", MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putBoolean("usuarioRegistradoParaMenu",false);
+                .setPositiveButton("Salir", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Log.d("USUARIO", "4 "+usuarioRegistrado);
+                        SharedPreferences sharedPreferences = getSharedPreferences("com.example.tricoenvironment.airlity", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putBoolean("usuarioRegistradoParaMenu",false);
 
-                editor.commit();
+                        editor.commit();
 
-                Intent i = new Intent(getApplicationContext(), MapaActivity.class);
-                startActivity(i);
-                dialog.cancel();
-                Log.d("USUARIO", "5 "+usuarioRegistrado);
-            }
-        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        Intent i = new Intent(getApplicationContext(), MapaActivity.class);
+                        startActivity(i);
+                        dialog.cancel();
+                        Log.d("USUARIO", "5 "+usuarioRegistrado);
+                    }
+                }).setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
@@ -210,7 +211,7 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void lanzarContactanos() {
-        Intent i = new Intent(this, ConstraintLayout.class);
+        Intent i = new Intent(this, ConoceTricoActivity.class);
         startActivity(i);
     }
 
