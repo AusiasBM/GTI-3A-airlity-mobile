@@ -27,9 +27,7 @@ import java.util.List;
 public class LogicaFake {
 
     private static final String ETIQUETA_LOG = ">>>>";
-    private static String url="192.168.31.98";
     //217.76.155.97
-
     private static final String direccionIP = "192.168.0.107";
 
 
@@ -129,7 +127,7 @@ public class LogicaFake {
         } catch (JSONException e)
         { // TODO Auto-generated catch block e.printStackTrace();
         }
-        elPeticionario.hacerPeticionREST("POST",  "http://"+url+":3500/login",
+        elPeticionario.hacerPeticionREST("POST",  "http://"+direccionIP+":3500/login",
                 obj.toString(),
                 new PeticionarioREST.RespuestaREST () {
                     @Override
