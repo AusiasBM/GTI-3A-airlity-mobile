@@ -11,6 +11,680 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="56dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="25px"
+                android:paddingTop="25px"
+                android:paddingEnd="25px"
+                android:paddingBottom="25px">
+
+                <TextView
+                    android:id="@+id/textView48"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:gravity="center"
+                    android:text="Información y recomendaciones sobre gases "
+                    android:textSize="20sp"
+                    android:textStyle="normal|bold|italic" />
+
+                <TextView
+                    android:id="@+id/textView49"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="Grupos de riesgo y personas sensibles en general"
+                    android:textSize="16sp"
+                    android:textStyle="normal|bold|italic" />
+
+                <TextView
+                    android:id="@+id/textView50"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="• Niños de 0-13 años"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/textView51"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="• Personas mayores de 65 años"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/textView52"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="• Embarazadas"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/textView53"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="• Personas con enfermedades respiratorias o cardiovasculares crónicas"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/textView54"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="• Diabéticos"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/textView55"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="• Inmunodeprimidos"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/textView56"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="• Personas que realizan habitualmente trabajos físicos en el exterior "
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/textView57"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="Partículas (PM2,5 y PM10)"
+                    android:textSize="16sp"
+                    android:textStyle="normal|bold|italic" />
+
+                <TextView
+                    android:id="@+id/textView58"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="Como afecta a la salud"
+                    android:textSize="13sp"
+                    android:textStyle="normal|bold|italic" />
+
+                <TextView
+                    android:id="@+id/textView59"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="Las elevadas concentraciones de Partículas en suspensión pueden provocar disminución de la función pulmonar, desencadenar una crisis asmática en las personas que padecen esta enfermedad o empeorar la situación clínica de los pacientes con problemas respiratorios o cardíacos, aumentando el número de urgencias e ingresos hospitalarios."
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/textView60"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="Grupos vulnerables"
+                    android:textSize="13sp"
+                    android:textStyle="normal|bold|italic" />
+
+                <TextView
+                    android:id="@+id/textView61"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="Los grupos más afectados son:"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/textView62"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="▪ Niños."
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/textView63"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="▪ Ancianos."
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/textView64"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="▪ Enfermos con enfermedad respiratoria (asmáticos, bronquíticos crónicos) o cardíaca."
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/textView65"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="Recomendaciones"
+                    android:textSize="13sp"
+                    android:textStyle="normal|bold|italic" />
+
+                <TextView
+                    android:id="@+id/textView66"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="Se recomienda a la población vulnerable que los días con elevada concentración de partículas en el aire evite o reduzca la realización de actividades que supongan esfuerzo físico al aire libre y busque atención sanitaria en caso de necesidad. En casos extremos puede ser prudente para estas personas permanecer en casa mientras dure el episodio de contaminación."
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/textView67"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="Dióxido de nitrógeno (NO2)"
+                    android:textSize="16sp"
+                    android:textStyle="normal|bold|italic" />
+
+                <TextView
+                    android:id="@+id/textView68"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="Como afecta a la salud"
+                    android:textSize="13sp"
+                    android:textStyle="normal|bold|italic" />
+
+                <TextView
+                    android:id="@+id/textView69"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="Los principales síntomas asociados a episodios de alta contaminación por dióxido de nitrógeno son:"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/textView70"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="▪ Picor de ojos, nariz y garganta."
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/textView71"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="▪ Irritación de los bronquios con tos, flemas, dificultad para respirar."
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/textView72"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="Grupos vulnerables"
+                    android:textSize="13sp"
+                    android:textStyle="normal|bold|italic" />
+
+                <TextView
+                    android:id="@+id/textView73"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="Los niveles elevados de NO2 en el aire son perjudiciales para la salud, sobre todo para la de personas especialmente sensibles a este contaminante como: "
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/textView74"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="▪ Niños"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/textView75"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="▪ Ancianos"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/textView76"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="▪ Asmáticos"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/textView77"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="▪ Pacientes con enfermedad cardiaca o respiratoria crónica "
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/textView78"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="Recomendaciones "
+                    android:textSize="13sp"
+                    android:textStyle="normal|bold|italic" />
+
+                <TextView
+                    android:id="@+id/textView79"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="En episodios de alta contaminación, siga las siguientes recomendaciones:"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/textView80"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="▪ Permanezca el menor tiempo posible en las zonas de mayor contaminación como calles con mucho tráfico y zonas industriales."
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/textView81"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="▪ Evite practicar deporte y actividad física al aire libre a última hora de la tarde, cuando los niveles de NO2 son más altos. "
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/textView82"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="▪ Si se agrava su dificultad respiratoria, siente dolor torácico o le cuesta respirar acuda a su centro de salud."
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/textView83"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="Ozono (O3)"
+                    android:textSize="16sp"
+                    android:textStyle="normal|bold|italic" />
+
+                <TextView
+                    android:id="@+id/textView84"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="Como afecta a la salud "
+                    android:textSize="13sp"
+                    android:textStyle="normal|bold|italic" />
+
+                <TextView
+                    android:id="@+id/textView85"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="Los posibles síntomas asociados a episodios de contaminación por ozono, entre otros, son:"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/textView86"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="▪ Irritación ocular y de las vías respiratorias con tos, molestias de garganta, dolor torácico al respirar profundamente."
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/textView87"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="▪ Mayor dificultad para respirar con normalidad, sobre todo al hacer ejercicio."
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/textView88"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="▪ Mayor susceptibilidad a las infecciones respiratorias."
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/textView89"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="▪ Ataques de asma y agravamiento de ésta y otras enfermedades respiratorias, como el enfisema o la bronquitis crónica. "
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/textView90"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="Grupos vulnerables"
+                    android:textSize="13sp"
+                    android:textStyle="normal|bold|italic" />
+
+                <TextView
+                    android:id="@+id/textView91"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="Los efectos nocivos del ozono pueden darse sobre todo en varios grupos de personas: "
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/textView92"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="▪ Niños: al tener un aparato respiratorio todavía inmaduro y pasar una gran parte del tiempo en verano jugando al aire libre."
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/textView93"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="▪ Personas con asma u otras enfermedades de las vías respiratorias: son más vulnerables y por lo general experimentan los efectos nocivos antes y con niveles de ozono más bajos"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/textView94"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="▪ Personas sanas que por razones poco conocidas presentan una mayor susceptibilidad al ozono."
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/textView95"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="▪ Adultos físicamente activos que hacen ejercicio o trabajan al aire libre: están más expuestos al ozono que las personas sedentarias."
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/textView96"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="Recomendaciones"
+                    android:textSize="13sp"
+                    android:textStyle="normal|bold|italic" />
+
+                <TextView
+                    android:id="@+id/textView97"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="En el caso de producirse un episodio de alta contaminación por ozono troposférico deben evitarse o reducirse los esfuerzos físicos al aire libre mientras dure el episodio. Planee las actividades al aire libre cuando los niveles de ozono son menores, generalmente por la mañana. Acuda a un centro de salud en caso de dificultad respiratoria. "
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/textView98"
+                    android:layout_width="match_parent"
+                    android:layout_height="26dp"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="Estas recomendaciones son especialmente importantes para los grupos antes citados."
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/textView110"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="Monóxido de carbono (CO)"
+                    android:textSize="16sp"
+                    android:textStyle="normal|bold|italic" />
+
+                <TextView
+                    android:id="@+id/textView111"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="Como afecta a la salud"
+                    android:textSize="13sp"
+                    android:textStyle="normal|bold|italic" />
+
+                <TextView
+                    android:id="@+id/textView112"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="La inhalación e Intoxicación por monóxido de carbono produce que se emplace al oxígeno en el torrente sanguíneo por este gas. En consecuencia, la falta de oxígeno daña el corazón, el cerebro y otras partes del cuerpo."
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/textView113"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="El principal riesgo de este tipo de intoxicación es que en muchos casos la persona no es consciente de los síntomas (entre ellos están dolor de cabeza, náuseas o vómitos, confusión, pérdida de conocimiento, convulsiones, estado de coma)"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/textView114"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="Grupos vulnerables"
+                    android:textSize="13sp"
+                    android:textStyle="normal|bold|italic" />
+
+                <TextView
+                    android:id="@+id/textView115"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="Los síntomas pueden variar de una persona a otra. Quienes tienen mayor riesgo de intoxicación son: "
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/textView116"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="▪ Niños pequeños"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/textView117"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="▪ Adultos mayores"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/textView118"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="▪ Personas con enfermedades cardíacas y/o pulmonares"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/textView119"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="▪ Fumadores"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/textView120"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="▪ Personas que habitan en zonas de gran altitud"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/textView121"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="Recomendaciones"
+                    android:textSize="13sp"
+                    android:textStyle="normal|bold|italic" />
+
+                <TextView
+                    android:id="@+id/textView122"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="Ante la sospecha de estar sufriendo intoxicación por monóxido de carbono:"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/textView123"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="▪ Abrir ventanas y puertas"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/textView124"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="▪ Salir a tomar aire fresco inmediatamente"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/textView125"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="▪ Apagar los artefactos de gas"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/textView126"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="▪ Concurrir con urgencia a un centro de salud u hospital y/o comunicarse inmediatamente con un servicio de emergencias médicas"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/textView127"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="Dióxido de azufre (SO2)"
+                    android:textSize="16sp"
+                    android:textStyle="normal|bold|italic" />
+
+                <TextView
+                    android:id="@+id/textView128"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="Como afecta a la salud"
+                    android:textSize="13sp"
+                    android:textStyle="normal|bold|italic" />
+
+                <TextView
+                    android:id="@+id/textView129"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="Al respirar aire que contiene dióxido de azufre, éste pasa al interior del cuerpo a través de la nariz y los pulmones. Llega fácil y rápidamente a la corriente sanguínea a través de los pulmones. Una vez dentro del cuerpo, se degrada a sulfato y es excretado en la orina."
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/textView130"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="La exposición a concentraciones más altas produce síntomas más graves, tales como disminución de la frecuencia respiratoria, inflamación o infección de las vías respiratorias y destrucción de áreas del pulmón."
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/textView131"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="Grupos vulnerables"
+                    android:textSize="13sp"
+                    android:textStyle="normal|bold|italic" />
+
+                <TextView
+                    android:id="@+id/textView132"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="Los grupos más vulnerables al SO2 son:"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/textView133"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="▪ Las personas asmáticas que hacen ejercicios físicos"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/textView134"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="▪ Niños"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/textView135"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="Recomendaciones"
+                    android:textSize="13sp"
+                    android:textStyle="normal|bold|italic" />
+
+                <TextView
+                    android:id="@+id/textView136"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="Debido a que la ruta más probable de exposición al dióxido de azufre es respirar aire contaminado, se debe tratar de limitar las actividades al aire libre durante los períodos de mayor contaminación."
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/textView137"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="Aunque los niveles de dióxido de azufre en el aire son normalmente más altos durante los meses de invierno, se ha demostrado que la exposición de los seres humanos es más alta durante los meses de verano."
+                    android:textSize="10sp" />
+            </LinearLayout>
+        </ScrollView>
+
         <LinearLayout
             android:id="@+id/layoutToolbar"
             android:layout_width="match_parent"
@@ -41,18 +715,6 @@
 
         </LinearLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="55dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layoutToolbar">
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -62,5 +724,7 @@
         android:layout_height="match_parent"
         app:headerLayout="@layout/layout_navigation_header"
         app:menu="@menu/navigation_menu"
-        android:layout_gravity="start"/>
+        android:layout_gravity="start">
+
+    </com.google.android.material.navigation.NavigationView>
 </androidx.drawerlayout.widget.DrawerLayout>

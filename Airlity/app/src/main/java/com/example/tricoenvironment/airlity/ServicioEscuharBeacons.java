@@ -494,7 +494,7 @@ public class ServicioEscuharBeacons extends Service {
     * El metodo distancia se emplea àra calcular a que distancia se encuentra el
     *  sensor que esta tomando medidas respecto de la posicion del movil
     *
-    * ScanResult resultado ->distancia()->double
+    * ScanResult resultado ->distancia()->
     * */
 
     public void distancia (ScanResult resultado){
@@ -503,13 +503,15 @@ public class ServicioEscuharBeacons extends Service {
         TramaIBeacon tib = new TramaIBeacon(bytes);
         int txPower = tib.getTxPower();
         int absRssi = Math.abs(rssi);
+        //formula
+        //el 4 es el parametro de condiciones ambientales
         double power = (absRssi - txPower)/(10 * 4.0);
         double distancia=Math.pow(10,power);
        Intent i=new Intent();
        i.setAction("Nueva_distancia");
        i.putExtra("Distancia",distancia);
         sendBroadcast(i);
-        Log.d("BBBBBBBBBBBBBBBBBB",""+distancia);
+        Log.d("Se encuentra a: ",""+distancia);
     }
 
 

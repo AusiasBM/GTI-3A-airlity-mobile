@@ -341,6 +341,10 @@ public class Tab1 extends Fragment {
 
         }
     }
+    /*
+    * Receptor distancia se emplea para recoger el parametro distancia de la clase ServicioEscucharBeacons
+    * */
+
     private class ReceptorDistancia extends BroadcastReceiver {
 
         @Override
@@ -351,8 +355,13 @@ public class Tab1 extends Fragment {
 
         }
     }
+    /*
+    double->mostrarDistancia()->
+    este meetodo se utiliza para que caundo cliques un boton mire si la distancia
+    es superior de 1500 que es valor normal a menos de 5 metros
+        */
     public void mostarDistancia( double resultado ){
-    Log.d("AAAAAAAAAAAAA",""+resultado);
+    Log.d("distancia",""+resultado);
         if(resultado<1500 && resultado>1) {
             Toast.makeText(context, "Nuestro dispositivo se encuentra a menos de 5 metros",
                     Toast.LENGTH_SHORT).show();
@@ -362,7 +371,7 @@ public class Tab1 extends Fragment {
                     Toast.LENGTH_SHORT).show();
         }
         else {
-            Toast.makeText(context, "Nuestro dispositivo se encuentra a menos de 5 metros",
+            Toast.makeText(context, "No se ha podido encontrar el dispositivo",
                     Toast.LENGTH_SHORT).show();
         }
     }

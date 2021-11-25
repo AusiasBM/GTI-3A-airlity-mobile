@@ -193,7 +193,7 @@
                 android:id="@+id/boton_distancia"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Averiguar distancia" />
+                android:text="¿A que distancia esta nuestro Dispositivo?" />
         </LinearLayout>
     </ScrollView>
 
