@@ -131,7 +131,7 @@ public class SignUpActivity extends AppCompatActivity {
                     tvErrorSignUp.setVisibility(VISIBLE);
                     tvErrorSignUp.setText("Rellene todos los campos");
                 } else if (contraseñaUsuario.equals(contraseñaVerificada)) {
-                    logicaFake.registrarUsuario(nombreUsuario, correoUsuario, contraseñaUsuario, 10, getApplicationContext());
+                    logicaFake.registrarUsuario(nombreUsuario, correoUsuario, contraseñaUsuario, 10, "null",getApplicationContext());
                 } else {
                     tvErrorSignUp.setVisibility(VISIBLE);
                     tvErrorSignUp.setText("Las contraseñas no coinciden");
@@ -142,13 +142,13 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
 
-    private void guardarPreferencias(String nombreUsuario, String correoUsuario, String contraseñaUsuario, String apellidoUsuario, int telefonoUsuario, boolean sesionUsuario) {
+    private void guardarPreferencias(String nombreUsuario, String correoUsuario, String contraseñaUsuario, String apellidoUsuario, int telefonoUsuario, String macSensor, boolean sesionUsuario) {
         SharedPreferences sharedPreferences = getSharedPreferences("com.example.tricoenvironment.airlity", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("nombreUsuario", nombreUsuario);
         editor.putString("correoUsuario", correoUsuario);
         editor.putString("contraseñaUsuario", contraseñaUsuario);
-        //editor.putString("apellidoUsuario", apellidoUsuario);
+        editor.putString("macSensor", macSensor);
         editor.putInt("telefonoUsuario", telefonoUsuario);
         editor.putBoolean("sesionIniciada", sesionUsuario);
 
@@ -251,7 +251,7 @@ public class SignUpActivity extends AppCompatActivity {
             TextView tvErrorSignUp = findViewById(R.id.tv_error_signup);
             Log.d("codigo2", codigo+"");
             if (codigo == 200) {
-                guardarPreferencias(nombreUsuario, correoUsuario, contraseñaUsuario, "",10, true);
+                guardarPreferencias(nombreUsuario, correoUsuario, contraseñaUsuario, "",10, "null", true);
 
                 Toast.makeText(getApplicationContext(), "Usuario registrado, por favor ve a perfil para añadir sus credenciales", Toast.LENGTH_LONG).show();
                 Intent i = new Intent(getApplicationContext(), MapaActivity.class);
