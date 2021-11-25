@@ -17,7 +17,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -26,7 +25,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.view.menu.MenuItemWrapperICS;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -191,6 +190,8 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void lanzarSoporteTecnico() {
+        Intent i = new Intent(this, SoporteTecnicoActivity.class);
+        startActivity(i);
     }
 
     private void lanzarPerfilUsuario() {
@@ -209,7 +210,8 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void lanzarContactanos() {
-
+        Intent i = new Intent(this, ConstraintLayout.class);
+        startActivity(i);
     }
 
     /**
