@@ -17,12 +17,16 @@ import android.util.Log;
 import android.widget.Toast;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 
 public class LogicaFake {
 
     private static final String ETIQUETA_LOG = ">>>>";
+    private static String url="192.168.31.98";
+    //217.76.155.97
 
 
     /**
@@ -40,7 +44,7 @@ public class LogicaFake {
             medicionesString.clear();
             //192.168.0.107
             //10.236.29.250
-            elPeticionario.hacerPeticionREST("POST",  "http://217.76.155.97:3500/mediciones",
+            elPeticionario.hacerPeticionREST("POST",  "http://"+url+":3500/mediciones",
                     String.valueOf(jsArray),
                     new PeticionarioREST.RespuestaREST () {
                         @Override
@@ -64,7 +68,7 @@ public class LogicaFake {
         PeticionarioREST elPeticionario = new PeticionarioREST();
         //Direccion ip en UPVNET10.236.29.250
         //Direccion ip en casa 192.168.0.107
-        elPeticionario.hacerPeticionREST("GET",  "http://217.76.155.97:3500/ultimasMediciones/10", null,
+        elPeticionario.hacerPeticionREST("GET",  "http://"+url+":3500/ultimasMediciones/10", null,
                 new PeticionarioREST.RespuestaREST () {
                     @Override
                     public void callback(int codigo, String cuerpo) {
@@ -89,7 +93,7 @@ public class LogicaFake {
             PeticionarioREST elPeticionario = new PeticionarioREST();
 
             final Usuario usuario = new Usuario(nombre, correo, contraseña, numero);
-            elPeticionario.hacerPeticionREST("POST",  "http://217.76.155.97:3500/registrarUsuario",
+            elPeticionario.hacerPeticionREST("POST",  "http://"+url+":3500/registrarUsuario",
                     usuario.toString(),
                     new PeticionarioREST.RespuestaREST () {
                         @Override
@@ -106,6 +110,36 @@ public class LogicaFake {
             );
     }
 
+    /**
+     * registrarUsuario() ejecuta una petición POST al servidor enviando los datos de un Usuario
+     *
+     * registrarUsuario() ->
+     */
+    public static void iniciarSesion(String correo, String contraseña, final Context context) {
+        PeticionarioREST elPeticionario = new PeticionarioREST();
+
+        final JSONObject obj = new JSONObject();
+        try {
+            obj.put("correo", correo+"");
+            obj.put("contrasenya", contraseña+"");
+        } catch (JSONException e)
+        { // TODO Auto-generated catch block e.printStackTrace();
+        }
+        elPeticionario.hacerPeticionREST("POST",  "http://"+url+":3500/login",
+                obj.toString(),
+                new PeticionarioREST.RespuestaREST () {
+                    @Override
+                    public void callback(int codigo, String cuerpo) {
+                        Log.d(ETIQUETA_LOG, "codigo respuesta login= " + codigo + " <-> \n" + obj.toString());
+                        Intent i = new Intent();
+                        i.setAction("Get_usuario_login");
+                        i.putExtra("codigo_usuario_login", codigo);
+                        context.sendBroadcast(i);
+                    }
+                }
+        );
+    }
+
     public static boolean comprobarSiEsteUsuarioEstaRegistrado(String correo){
         boolean existe=true;
         //Comprobar si existe el correo, consulta a la ruta y que devuelva t o f
@@ -116,17 +150,6 @@ public class LogicaFake {
         boolean esCorrecto=true;
         //Comprobar si la contraseña es correcta
         return esCorrecto;
-    }
-
-    public boolean iniciarSesion(String correo, String contraseña) {
-        if (comprobarSiEsteUsuarioEstaRegistrado(correo)) {
-            if (comprobarSiLaContraseñaEsCorrecta(correo, contraseña)) {
-                return true;
-            }
-        }else{
-            return false;
-        }
-        return false;
     }
 
 
