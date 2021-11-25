@@ -40,7 +40,7 @@ public class LogicaFake {
             medicionesString.clear();
             //192.168.0.107
             //10.236.29.250
-            elPeticionario.hacerPeticionREST("POST",  "http://192.168.0.107:3500/mediciones",
+            elPeticionario.hacerPeticionREST("POST",  "http://217.76.155.97:3500/mediciones",
                     String.valueOf(jsArray),
                     new PeticionarioREST.RespuestaREST () {
                         @Override
@@ -64,7 +64,7 @@ public class LogicaFake {
         PeticionarioREST elPeticionario = new PeticionarioREST();
         //Direccion ip en UPVNET10.236.29.250
         //Direccion ip en casa 192.168.0.107
-        elPeticionario.hacerPeticionREST("GET",  "http://192.168.0.107:3500/ultimasMediciones/10", null,
+        elPeticionario.hacerPeticionREST("GET",  "http://217.76.155.97:3500/ultimasMediciones/10", null,
                 new PeticionarioREST.RespuestaREST () {
                     @Override
                     public void callback(int codigo, String cuerpo) {
@@ -85,11 +85,11 @@ public class LogicaFake {
      *
      * registrarUsuario() ->
      */
-    public static void registrarUsuario(String nombre, String correo, String contraseña, int numero, final Context context) {
+    public static void registrarUsuario(String nombre, String correo, String contraseña, int numero, String macSensor, final Context context) {
             PeticionarioREST elPeticionario = new PeticionarioREST();
 
             final Usuario usuario = new Usuario(nombre, correo, contraseña, numero);
-            elPeticionario.hacerPeticionREST("POST",  "http://192.168.31.98:3500/registrarUsuario",
+            elPeticionario.hacerPeticionREST("POST",  "http://217.76.155.97:3500/registrarUsuario",
                     usuario.toString(),
                     new PeticionarioREST.RespuestaREST () {
                         @Override

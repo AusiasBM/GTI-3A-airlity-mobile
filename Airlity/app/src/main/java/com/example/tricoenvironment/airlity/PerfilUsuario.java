@@ -13,6 +13,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,6 +22,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -31,6 +34,7 @@ public class PerfilUsuario extends AppCompatActivity {
     private TextView tv_nombreUsuario,  tv_correoElectronico, tv_macSensorUsuario;
     private EditText et_nombreUsuario, et_apellidoUsuario, et_telefonoUsuario;
     boolean usuarioRegistrado;
+    String macSensor;
 
     Menu menu;
     @Override
@@ -55,11 +59,22 @@ public class PerfilUsuario extends AppCompatActivity {
         //-------------------------------------------
         cargarPreferencias();
 
-        tv_macSensorUsuario.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });
+        if (macSensor!="null"){
+            SpannableString mitextoU = new SpannableString("MAC del sensor");
+            mitextoU.setSpan(new UnderlineSpan(), 0, mitextoU.length(), 0);
+            tv_macSensorUsuario.setText(mitextoU);
+            tv_macSensorUsuario.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AlertDialog.Builder alertDialog=new AlertDialog.Builder(PerfilUsuario.this);
+                    alertDialog.setMessage(macSensor).setCancelable(true);
+                    AlertDialog titulo = alertDialog.create();
+                    titulo.setTitle("MAC del sensor");
+                    titulo.show();
+                }
+            });
+        }
+
 
         //-------------------------------------------
         //Para el menu
@@ -179,6 +194,7 @@ public class PerfilUsuario extends AppCompatActivity {
         String nombreUsuario = preferences.getString("nombreUsuario", "Sesion no iniciada todavia");
         String correoUsuario = preferences.getString("correoUsuario", "Sesion no iniciada todavia");
         String apellidoUsuario = preferences.getString("apellidoUsuario", "");
+        macSensor = preferences.getString("macSensor", "null");
 
         String contraseñaUsuario = preferences.getString("contraseñaUsuario", "Sesion no iniciada todavia");
         int telefonoUsuario = preferences.getInt("telefonoUsuario", 00000);
