@@ -8,8 +8,10 @@
  */
 package com.example.tricoenvironment.airlity;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.SpannableString;
@@ -22,6 +24,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
@@ -33,15 +36,25 @@ import static android.view.View.VISIBLE;
 
 public class SignInActivity extends AppCompatActivity {
 
-    private String correoUsuario, contraseñaUsuario;
-    private LogicaFake logicaFake;
+    String correoUsuario, contraseñaUsuario;
     EditText etCorreoSignIn, etContrasenyaSignIn;
+
+    private int codigo;
+    private LogicaFake logicaFake;
+    private PeticionarioREST peticionarioREST;
+
+    private IntentFilter intentFilter;
+    private SignInActivity.ReceptorGetUsuario receptor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
         logicaFake = new LogicaFake();
+        intentFilter = new IntentFilter();
+        intentFilter.addAction("Get_usuario_login");
+        receptor = new SignInActivity.ReceptorGetUsuario();
+        registerReceiver(receptor, intentFilter);
         //-------------------------------------------
         //Para el menu
         //Pegar esto en todas las clases de activity
@@ -76,13 +89,12 @@ public class SignInActivity extends AppCompatActivity {
         Button btSignIn = findViewById(R.id.bt_login_login);
         final TextView tvRegistrarse = findViewById(R.id.tv_login_registrarse_clickable);
         final TextView tvErrorSignIn = findViewById(R.id.tv_error_login);
+
         //------------------------------------------------------------
         //------------------------------------------------------------
         //Limpiamos campos al iniciar layout
         //------------------------------------------------------------
         //------------------------------------------------------------
-        etCorreoSignIn.setText("");
-        etContrasenyaSignIn.setText("");
 
         //------------------------------------------------------------
         //------------------------------------------------------------
@@ -104,17 +116,24 @@ public class SignInActivity extends AppCompatActivity {
         btSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                correoUsuario = etCorreoSignIn.getText().toString();
+                contraseñaUsuario = etContrasenyaSignIn.getText().toString();
                 if(TextUtils.isEmpty(etCorreoSignIn.getText().toString())
                         || TextUtils.isEmpty(etContrasenyaSignIn.getText().toString())){
                     tvErrorSignIn.setVisibility(VISIBLE);
                     tvErrorSignIn.setText("Rellene todos los campos");
                 } else{
-                    if(logicaFake.iniciarSesion(correoUsuario, contraseñaUsuario)){
-                        guardarPreferencias();
-                        Intent i = new Intent(getApplicationContext(), MedicionesActivity.class);
-                        startActivity(i);
+                    logicaFake.iniciarSesion(correoUsuario, contraseñaUsuario, getApplicationContext());
+                    SharedPreferences sharedPreferences = getSharedPreferences("com.example.tricoenvironment.airlity", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("nombreUsuario", "");
+                    editor.putInt("telefonoUsuario", 10);
+                    editor.putBoolean("sesionIniciada", true);
 
-                    }
+                    Log.d("USUARIO", correoUsuario);
+                    Log.d("USUARIO", contraseñaUsuario);
+                    //Intent i = new Intent(getApplicationContext(), MedicionesActivity.class);
+                    //startActivity(i);
                 }
             }
         });
@@ -212,17 +231,27 @@ public class SignInActivity extends AppCompatActivity {
 
     }
 
-    private void guardarPreferencias(){
-        SharedPreferences preferences=getSharedPreferences("Credenciales", Context.MODE_PRIVATE);
 
-        String correoUsuario = etCorreoSignIn.getText().toString();
-        String contraseñaUsuario = etContrasenyaSignIn.getText().toString();
+    private class ReceptorGetUsuario extends BroadcastReceiver {
 
-        SharedPreferences.Editor editor=preferences.edit();
-        editor.putString("correoUsuario", correoUsuario);
-        editor.putString("contraseñUsuario", contraseñaUsuario);
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            codigo = intent.getIntExtra("codigo_usuario_login", 0);
+            Log.d("codigo2", codigo+"");
+            if (codigo == 200) {
+                Toast.makeText(getApplicationContext(), "Sesión iniciada", Toast.LENGTH_LONG).show();
+                SharedPreferences sharedPreferences = getSharedPreferences("com.example.tricoenvironment.airlity", MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putBoolean("sesionIniciada", true);
+                editor.commit();
+                Intent i = new Intent(getApplicationContext(), MapaActivity.class);
+                startActivity(i);
+            }else{
+                Toast.makeText(getApplicationContext(), "Sesión no iniciada", Toast.LENGTH_LONG).show();
 
-        editor.commit();
+            }
+        }
+
     }
 
 }

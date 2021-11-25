@@ -131,7 +131,11 @@ public class SignUpActivity extends AppCompatActivity {
                     tvErrorSignUp.setVisibility(VISIBLE);
                     tvErrorSignUp.setText("Rellene todos los campos");
                 } else if (contraseñaUsuario.equals(contraseñaVerificada)) {
-                    logicaFake.registrarUsuario(nombreUsuario, correoUsuario, contraseñaUsuario, 10, getApplicationContext());
+                    logicaFake.registrarUsuario(nombreUsuario, correoUsuario, contraseñaUsuario, 10, "null",getApplicationContext());
+                    SharedPreferences sharedPreferences = getSharedPreferences("com.example.tricoenvironment.airlity", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putBoolean("usuarioRegistradoParaMenu", true);
+                    editor.commit();
                 } else {
                     tvErrorSignUp.setVisibility(VISIBLE);
                     tvErrorSignUp.setText("Las contraseñas no coinciden");
@@ -148,7 +152,6 @@ public class SignUpActivity extends AppCompatActivity {
         editor.putString("nombreUsuario", nombreUsuario);
         editor.putString("correoUsuario", correoUsuario);
         editor.putString("contraseñaUsuario", contraseñaUsuario);
-        //editor.putString("apellidoUsuario", apellidoUsuario);
         editor.putInt("telefonoUsuario", telefonoUsuario);
         editor.putBoolean("sesionIniciada", sesionUsuario);
 
@@ -251,8 +254,8 @@ public class SignUpActivity extends AppCompatActivity {
             TextView tvErrorSignUp = findViewById(R.id.tv_error_signup);
             Log.d("codigo2", codigo+"");
             if (codigo == 200) {
+                Toast.makeText(getApplicationContext(), "Sesión iniciada", Toast.LENGTH_LONG).show();
                 guardarPreferencias(nombreUsuario, correoUsuario, contraseñaUsuario, "",10, true);
-
                 Toast.makeText(getApplicationContext(), "Usuario registrado, por favor ve a perfil para añadir sus credenciales", Toast.LENGTH_LONG).show();
                 Intent i = new Intent(getApplicationContext(), MapaActivity.class);
                 startActivity(i);
