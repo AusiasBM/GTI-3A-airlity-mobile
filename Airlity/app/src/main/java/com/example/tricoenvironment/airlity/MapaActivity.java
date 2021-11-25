@@ -23,7 +23,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -170,7 +169,7 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void lanzarContactanos() {
-        Intent i = new Intent(this, ConstraintLayout.class);
+        Intent i = new Intent(this, ConoceTricoActivity.class);
         startActivity(i);
     }
 
