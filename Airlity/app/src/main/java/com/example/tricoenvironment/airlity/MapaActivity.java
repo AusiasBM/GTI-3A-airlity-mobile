@@ -351,7 +351,7 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         IntentResult intentResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         macUsuarioDato = intentResult.getContents();
-        Toast.makeText(this, "Mac del beacon encontrado: "+ datos, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Sensor encontrado", Toast.LENGTH_SHORT).show();
     }
 
      /*

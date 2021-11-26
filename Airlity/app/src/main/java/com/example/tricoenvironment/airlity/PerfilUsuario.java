@@ -55,6 +55,8 @@ public class PerfilUsuario extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfil_usuario);
 
+        Log.d("MAC", macUsuarioDato+", "+macSensor);
+
         /*
         intentFilter = new IntentFilter();
         intentFilter.addAction("DatosUsuario");
@@ -92,7 +94,7 @@ public class PerfilUsuario extends AppCompatActivity {
         nombreCambiado = et_nombreUsuario.getText().toString();
         telefonoCambiado = et_telefonoUsuario.getText().toString();
 
-        if (macUsuarioDato!="null"){
+        if (macUsuarioDato!=null){
             SpannableString mitextoU = new SpannableString("MAC del sensor");
             mitextoU.setSpan(new UnderlineSpan(), 0, mitextoU.length(), 0);
             tv_macSensorUsuario.setText(mitextoU);

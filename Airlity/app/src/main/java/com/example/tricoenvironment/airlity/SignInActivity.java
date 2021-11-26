@@ -43,6 +43,7 @@ public class SignInActivity extends AppCompatActivity {
 
     String correoUsuario, contraseñaUsuario;
     EditText etCorreoSignIn, etContrasenyaSignIn;
+    TextView tv_error;
 
     private int codigo;
     private String cuerpo;
@@ -70,12 +71,14 @@ public class SignInActivity extends AppCompatActivity {
         //Pegar esto en todas las clases de activity
         //-------------------------------------------
         final DrawerLayout drawerLayout = findViewById(R.id.signin_drawerLayout);
+        tv_error = findViewById(R.id.tv_error_login);
         findViewById(R.id.signin_im_menu).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 drawerLayout.openDrawer(GravityCompat.START);
             }
         });
+
 
         NavigationView navigationView = findViewById(R.id.signin_navigationView);
         navigationView.setItemIconTintList(null);
@@ -290,8 +293,8 @@ public class SignInActivity extends AppCompatActivity {
                  */
                 startActivity(i);
             }else{
-                Toast.makeText(getApplicationContext(), "Sesión no iniciada", Toast.LENGTH_LONG).show();
-
+                tv_error.setVisibility(VISIBLE);
+                tv_error.setText("Correo y/o contraseña incorrecto");
             }
         }
 
