@@ -41,54 +41,129 @@
 
         </LinearLayout>
 
-        <ScrollView
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="55dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/layoutToolbar"
+            app:layout_constraintVertical_bias="1.0">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/linearLayout"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:baselineAligned="false">
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/comfortaa_bold"
+                android:text="SOPORTE TÉCNICO"
+                android:textColor="@color/colorPrimary"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
-                    android:id="@+id/imageView9"
-                    android:layout_width="566dp"
-                    android:layout_height="226dp"
-                    app:layout_constraintBottom_toTopOf="@+id/imageView7"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_chainStyle="packed"
-                    app:srcCompat="@drawable/txtinisoport" />
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/comfortaa"
+                android:text="Nuestras características y servicios"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="@+id/textView12"
+                app:layout_constraintHorizontal_bias="0.494"
+                app:layout_constraintStart_toStartOf="@+id/textView12"
+                app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
-                <ImageView
-                    android:id="@+id/imageView7"
-                    android:layout_width="563dp"
-                    android:layout_height="507dp"
-                    app:layout_constraintBottom_toTopOf="@+id/imageView8"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView9"
-                    app:srcCompat="@drawable/soporttecnic" />
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="144dp"
+                android:layout_height="123dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintEnd_toEndOf="@+id/textView13"
+                app:layout_constraintStart_toStartOf="@+id/textView13"
+                app:layout_constraintTop_toBottomOf="@+id/textView13"
+                app:srcCompat="@drawable/soporte" />
 
-                <ImageView
-                    android:id="@+id/imageView8"
-                    android:layout_width="451dp"
-                    android:layout_height="838dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView7"
-                    app:srcCompat="@drawable/soporttecnico" />
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/comfortaa_bold"
+                android:text="Mantenimiento periódico"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="@+id/imageView5"
+                app:layout_constraintHorizontal_bias="0.504"
+                app:layout_constraintStart_toStartOf="@+id/imageView5"
+                app:layout_constraintTop_toBottomOf="@+id/imageView5" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </ScrollView>
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="338dp"
+                android:layout_height="58dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="30dp"
+                android:fontFamily="@font/comfortaa"
+                android:gravity="center_horizontal"
+                android:text="Desde Tricoenviroment nos comprometemos por contrato a un mantenimiento periódico de cada uno de nuestros productos y servicios"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="@+id/textView14"
+                app:layout_constraintHorizontal_bias="0.483"
+                app:layout_constraintStart_toStartOf="@+id/textView14"
+                app:layout_constraintTop_toBottomOf="@+id/textView14" />
+
+            <ImageView
+                android:id="@+id/imageView6"
+                android:layout_width="144dp"
+                android:layout_height="123dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintEnd_toEndOf="@+id/textView15"
+                app:layout_constraintHorizontal_bias="0.479"
+                app:layout_constraintStart_toStartOf="@+id/textView15"
+                app:layout_constraintTop_toBottomOf="@+id/textView15"
+                app:srcCompat="@drawable/apoyo" />
+
+            <TextView
+                android:id="@+id/textView16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/comfortaa_bold"
+                android:text="Atención al cliente"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="@+id/imageView6"
+                app:layout_constraintHorizontal_bias="0.528"
+                app:layout_constraintStart_toStartOf="@+id/imageView6"
+                app:layout_constraintTop_toBottomOf="@+id/imageView6" />
+
+            <TextView
+                android:id="@+id/textView17"
+                android:layout_width="338dp"
+                android:layout_height="58dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/comfortaa"
+                android:gravity="center_horizontal"
+                android:text="Además de un servicio al cliente personalizado y realizado por los encargados de cada proyecto"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="@+id/textView16"
+                app:layout_constraintHorizontal_bias="0.616"
+                app:layout_constraintStart_toStartOf="@+id/textView16"
+                app:layout_constraintTop_toBottomOf="@+id/textView16" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/soporteTecnico_navigationView"
         android:layout_width="wrap_content"
