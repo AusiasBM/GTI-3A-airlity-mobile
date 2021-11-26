@@ -9,14 +9,17 @@
  */
 package com.example.tricoenvironment.airlity;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
@@ -34,8 +37,15 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.DataSet;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.google.android.material.navigation.NavigationView;
+import com.google.gson.Gson;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
+
+import static java.lang.System.currentTimeMillis;
 
 /**
  * Activity Graficas
@@ -45,23 +55,32 @@ import java.util.ArrayList;
  */
 public class GraficasActivity extends AppCompatActivity {
 
-    private BarChart graficaTemps;
-    private String[] horas= new String[]{"00-06","06-12", "12-18", "18-24"};
-    private int[] temps= new int[]{16, 20, 23, 19};
-    private int[] colors= new int[]{Color.rgb(195,206,26), Color.rgb(206, 182, 26), Color.rgb(206, 152, 26), Color.rgb(206, 97, 26)};
+    private BarChart barChart;
     boolean usuarioRegistrado;
     Bundle datos;
+    private IntentFilter intentFilter;
+    private ReceptorDatos receptor;
+    private TextView fechaDia, valorMedio, valorMax, tiempoMidiendo, calidadAire;
+    private long medianoche;
+    private String gas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graficas);
 
-        datos = getIntent().getExtras();
         usuarioRegistrado = datos.getBoolean("sesionIniciada");
-
+        datos = getIntent().getExtras();
         graficaTemps = (BarChart) findViewById(R.id.graficaTemperatura);
         createCharts();
+        barChart = findViewById(R.id.chart);
+        fechaDia = findViewById(R.id.fechaDia);
+        valorMedio = findViewById(R.id.valorMedio);
+        valorMax = findViewById(R.id.valorMax);
+        tiempoMidiendo = findViewById(R.id.tiempoMidiendo);
+        calidadAire = findViewById(R.id.calidadAire);
+
+
         //-------------------------------------------
         //Carga datos usuario
         //-------------------------------------------
@@ -93,79 +112,50 @@ public class GraficasActivity extends AppCompatActivity {
         prepararDrawer(navigationView);
         //-------------------------------------------
         //-------------------------------------------
+
+        //Preparamos el receptor de anuncios
+        intentFilter = new IntentFilter();
+        intentFilter.addAction("DatosEstadisticos");
+        receptor = new ReceptorDatos();
+
+        //Obtenemos la hora 00:00 del dia actual para saber las estadísticas de hoy (desde las 12 de la noche hasta la hora actual)
+        medianoche = fechaHoyMedianoche();
+
+        //Llamamos a los métodos de la lógica fake obtenerEstadisticas y obtenerDatosParaGrafico
+        // para mostrar los datos
+        LogicaFake.obtenerEstadisticas(GraficasActivity.this, currentTimeMillis()-15708000, currentTimeMillis()- 15701000);
+        LogicaFake.obtenerDatosParaGrafico(GraficasActivity.this, medianoche, currentTimeMillis());
     }
 
-    private Chart getSameChart(Chart chart, String description, int textCOlor, int background, int animateY){
-        chart.getDescription().setText(description);
-        chart.getDescription().setTextSize(15);
-        chart.setBackgroundColor(background);
-        chart.animateY(animateY);
-        //legend(chart);
-        return chart;
+    @Override
+    public void onResume() {
+        super.onResume();
+        this.registerReceiver(receptor, intentFilter);
     }
 
-    private void legend(Chart chart){
-        Legend legend=chart.getLegend();
-        legend.setForm(Legend.LegendForm.CIRCLE);
-        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
 
-        ArrayList<LegendEntry> entries = new ArrayList<>();
-        for (int i=0; i<horas.length; i++ ){
-            LegendEntry entry = new LegendEntry();
-            entry.formColor=colors[i];
-            entry.label=horas[i];
-            entries.add(entry);
-        }
-        legend.setCustom(entries);
-    }
-    private ArrayList<BarEntry>getBarEntries(){
-        ArrayList<BarEntry>entries=new ArrayList<>();
-        for (int i = 0;i<temps.length;i++){
-            entries.add(new BarEntry(i, temps[i]));
-        }
-        return entries;
-    }
-    private void axisX(XAxis axis){
-        axis.setGranularityEnabled(true);
-        axis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        axis.setValueFormatter(new IndexAxisValueFormatter(horas));
-    }
-    private void axisLeft(YAxis axis){
-        axis.setSpaceTop(30);
-        axis.setAxisMinimum(0);
-    }
-    private void axisRight(YAxis axis){
-        axis.setEnabled(false);
+    /**
+     * fechaHoyMedianoche()
+     * Descripción:
+     * Método para sacar la fecha en milisegundos del dia a las 00:00
+     *
+     * @return long con la fecha en milisegundos de ese dia a las 00:00
+     */
+    private long fechaHoyMedianoche(){
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.HOUR_OF_DAY, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+        c.set(Calendar.MILLISECOND, 0);
+
+        Date date =  c.getTime();
+        return date.getTime();
     }
 
-    public void createCharts(){
-        graficaTemps=(BarChart)getSameChart(graficaTemps, "Temperaturas del último dia", Color.BLACK, Color.WHITE, 3000 );
-        graficaTemps.setDrawGridBackground(true);
-        graficaTemps.setDrawBarShadow(true);
-        graficaTemps.setData(getBarData());
-        graficaTemps.invalidate();
 
-        axisX(graficaTemps.getXAxis());
-        axisLeft(graficaTemps.getAxisLeft());
-        axisRight(graficaTemps.getAxisRight());
-    }
-
-    private DataSet getData(DataSet dataSet){
-        dataSet.setColors(colors);
-        dataSet.setValueTextColor(Color.WHITE);
-        dataSet.setValueTextSize(10);
-        return dataSet;
-    }
-
-    private BarData getBarData(){
-        BarDataSet barDataSet = (BarDataSet)getData(new BarDataSet(getBarEntries(), ""));
-        barDataSet.setBarShadowColor(Color.GRAY);
-
-        BarData barData=new BarData(barDataSet);
-        barData.setBarWidth(0.45f);
-        return barData;
-    }
-
+    //-----------------------------------------------------------------------------
+    // MENU
+    //-----------------------------------------------------------------------------
     private void prepararDrawer(NavigationView navigationView) {
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
@@ -245,4 +235,57 @@ public class GraficasActivity extends AppCompatActivity {
         usuarioRegistrado = preferences.getBoolean("sesionIniciada", false);
 
     }
+
+    //--------------------------------------------------------------------------------
+    //Receptor de anuncios de los métodos obtenerEstadisticas y obtenerDatosParaGrafico de la clase LógicaFake
+    //--------------------------------------------------------------------------------
+
+    /**
+     * Clase ReceptorDatos
+     */
+    private class ReceptorDatos extends BroadcastReceiver{
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            /**
+             * Esperamos a la respuesta desde el servidor con el resultado de las estadisticas y datos
+             * obtenidos para generar la gráfica
+             */
+            String estadisticas = intent.getStringExtra("Estadisticas");
+            String datosGrafica = intent.getStringExtra("DatosGrafica");
+
+            if(estadisticas != null){
+                //Convertimos los datos estadísticos de JSON a objeto de tipo EstadisticasMediciones
+                Gson gson = new Gson();
+                EstadisticasMediciones estadisticasMediciones = gson.fromJson(estadisticas, EstadisticasMediciones.class);
+
+                //Rellenamos los campos con los datos del objeto obtenido
+                fechaDia.setText("Fecha: " +  new SimpleDateFormat("dd-MM-yyyy").format(currentTimeMillis()));
+                valorMedio.setText(estadisticasMediciones.getMedia() +"");
+                valorMax.setText(estadisticasMediciones.getValorMaximo()+"");
+                calidadAire.setText(estadisticasMediciones.getValoracionCalidadAire());
+
+                gas = estadisticasMediciones.getTipoGas();
+
+                SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+                sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+                tiempoMidiendo.setText(sdf.format(estadisticasMediciones.getTiempo()));
+
+            }
+
+            if(datosGrafica != null){
+                //Convertimos los datos para la gráfica de JSON a objeto de tipo DatosGrafica
+                Gson gson = new Gson();
+                DatosGrafica datos = gson.fromJson(datosGrafica, DatosGrafica.class);
+
+                //Creamos el objeto de tipo GeneradorGrafica y generamos la gráfica con los datos almacenados en el objeto anterior
+                GeneradorGrafica generadorGrafica = new GeneradorGrafica(datos.getMedias(), datos.getFechas(), barChart, gas);
+                generadorGrafica.createChart();
+
+            }
+
+
+        }
+    }
+
 }
