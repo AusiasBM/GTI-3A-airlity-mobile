@@ -11,6 +11,7 @@ package com.example.tricoenvironment.airlity;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -166,18 +167,66 @@ public class PerfilUsuario extends AppCompatActivity {
             case R.id.menu_nosotros:
                 lanzarContactanos();
                 break;
+            case R.id.menu_signout:
+                lanzarSignOut();
+                break;
         }
+    }
+
+    private void lanzarSignOut() {
+        AlertDialog.Builder alertDialog=new AlertDialog.Builder(PerfilUsuario.this);
+        alertDialog.setMessage("¿Segur que desea cerrar sesión?").setCancelable(false)
+                .setPositiveButton("Salir", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        datos=null;
+                        Intent i = new Intent(getApplicationContext(), MapaActivity.class);
+                        startActivity(i);
+                        dialog.cancel();
+                    }
+                }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        AlertDialog titulo = alertDialog.create();
+        titulo.setTitle("Cerrar sesión");
+        titulo.show();
     }
     private void lanzarGraficas() {
         Intent i = new Intent(this, GraficasActivity.class);
+        i.putExtra("sesionIniciada", true);
+        i.putExtra("tokkenUsuario", tokkenUsuarioDato);
+        i.putExtra("idUsuario", idUsuarioDato);
+        i.putExtra("nombrUsuario", nombreUsuarioDato);
+        i.putExtra("correoUsuario", correoUsuarioDato);
+        i.putExtra("telefonoUsuario", telefonoUsuarioDato);
+        i.putExtra("contraseñaUsuario", contraseñaUsuarioDato);
         startActivity(i);
     }
 
     private void lanzarInformacion() {
         Intent i = new Intent(this, InformacionActivity.class);
+        i.putExtra("sesionIniciada", true);
+        i.putExtra("tokkenUsuario", tokkenUsuarioDato);
+        i.putExtra("idUsuario", idUsuarioDato);
+        i.putExtra("nombrUsuario", nombreUsuarioDato);
+        i.putExtra("correoUsuario", correoUsuarioDato);
+        i.putExtra("telefonoUsuario", telefonoUsuarioDato);
+        i.putExtra("contraseñaUsuario", contraseñaUsuarioDato);
         startActivity(i);
     }
     private void lanzarSoporteTecnico() {
+        Intent i = new Intent(this, SoporteTecnicoActivity.class);
+        i.putExtra("sesionIniciada", true);
+        i.putExtra("tokkenUsuario", tokkenUsuarioDato);
+        i.putExtra("idUsuario", idUsuarioDato);
+        i.putExtra("nombrUsuario", nombreUsuarioDato);
+        i.putExtra("correoUsuario", correoUsuarioDato);
+        i.putExtra("telefonoUsuario", telefonoUsuarioDato);
+        i.putExtra("contraseñaUsuario", contraseñaUsuarioDato);
+        startActivity(i);
     }
 
     private void lanzarMapa(){
@@ -194,16 +243,38 @@ public class PerfilUsuario extends AppCompatActivity {
 
     private void lanzarSignIn(){
         Intent i = new Intent(this, SignInActivity.class);
+        i.putExtra("sesionIniciada", true);
+        i.putExtra("tokkenUsuario", tokkenUsuarioDato);
+        i.putExtra("idUsuario", idUsuarioDato);
+        i.putExtra("nombrUsuario", nombreUsuarioDato);
+        i.putExtra("correoUsuario", correoUsuarioDato);
+        i.putExtra("telefonoUsuario", telefonoUsuarioDato);
+        i.putExtra("contraseñaUsuario", contraseñaUsuarioDato);
         startActivity(i);
     }
 
     private void lanzarMediciones(){
         Intent i = new Intent(this, MedicionesActivity.class);
+        i.putExtra("sesionIniciada", true);
+        i.putExtra("tokkenUsuario", tokkenUsuarioDato);
+        i.putExtra("idUsuario", idUsuarioDato);
+        i.putExtra("nombrUsuario", nombreUsuarioDato);
+        i.putExtra("correoUsuario", correoUsuarioDato);
+        i.putExtra("telefonoUsuario", telefonoUsuarioDato);
+        i.putExtra("contraseñaUsuario", contraseñaUsuarioDato);
         startActivity(i);
     }
 
     private void lanzarContactanos(){
-
+        Intent i = new Intent(this, ConoceTricoActivity.class);
+        i.putExtra("sesionIniciada", true);
+        i.putExtra("tokkenUsuario", tokkenUsuarioDato);
+        i.putExtra("idUsuario", idUsuarioDato);
+        i.putExtra("nombrUsuario", nombreUsuarioDato);
+        i.putExtra("correoUsuario", correoUsuarioDato);
+        i.putExtra("telefonoUsuario", telefonoUsuarioDato);
+        i.putExtra("contraseñaUsuario", contraseñaUsuarioDato);
+        startActivity(i);
     }
 
 

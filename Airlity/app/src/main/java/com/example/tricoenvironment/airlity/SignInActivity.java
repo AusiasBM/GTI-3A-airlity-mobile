@@ -220,6 +220,8 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private void lanzarSoporteTecnico() {
+        Intent i = new Intent(this, SoporteTecnicoActivity.class);
+        startActivity(i);
     }
 
     private void lanzarMapa(){
@@ -238,7 +240,8 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private void lanzarContactanos(){
-
+        Intent i = new Intent(this, ConoceTricoActivity.class);
+        startActivity(i);
     }
 
 
@@ -270,6 +273,10 @@ public class SignInActivity extends AppCompatActivity {
                 i.putExtra("correoUsuario", correoUsusarioDato);
                 i.putExtra("telefonoUsuario", telefonoUsuarioDato);
                 i.putExtra("contraseñaUsuario", contraseñaUsuarioDato);
+
+                SharedPreferences sharedPreferences = getSharedPreferences("com.example.tricoenvironment.airlity", MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putBoolean("usuarioLogeado", true);
 
                 Log.d("DATOS", idUsuarioDato+", "+nombreUsuarioDato+", "+correoUsusarioDato
                         + ", "+telefonoUsuarioDato+", "+contraseñaUsuarioDato+", "+tokkenUsuarioDato);

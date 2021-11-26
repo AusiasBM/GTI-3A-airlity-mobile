@@ -135,7 +135,7 @@ public class SignUpActivity extends AppCompatActivity {
                     logicaFake.registrarUsuario(nombreUsuario, correoUsuario, contraseñaUsuario, 10, "null",getApplicationContext());
                     SharedPreferences sharedPreferences = getSharedPreferences("com.example.tricoenvironment.airlity", MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putBoolean("usuarioRegistradoParaMenu", true);
+                    editor.putBoolean("usuarioLogeado", true);
                     editor.commit();
                 } else {
                     tvErrorSignUp.setVisibility(VISIBLE);
@@ -214,6 +214,8 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void lanzarSoporteTecnico() {
+        Intent i = new Intent(this, SoporteTecnicoActivity.class);
+        startActivity(i);
     }
 
     private void lanzarMapa() {
@@ -237,6 +239,8 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void lanzarContactanos() {
+        Intent i = new Intent(this, ConoceTricoActivity.class);
+        startActivity(i);
 
     }
     @Override

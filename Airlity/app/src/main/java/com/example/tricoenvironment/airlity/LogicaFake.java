@@ -27,12 +27,8 @@ import java.util.List;
 public class LogicaFake {
 
     private static final String ETIQUETA_LOG = ">>>>";
-<<<<<<< HEAD
     private static String url="172.20.10.2";
-=======
->>>>>>> develop
     //217.76.155.97
-    private static final String direccionIP = "192.168.0.107";
 
 
     /**
@@ -50,7 +46,7 @@ public class LogicaFake {
             medicionesString.clear();
             //192.168.0.107
             //10.236.29.250
-            elPeticionario.hacerPeticionREST("POST",  "http://"+direccionIP+":3500/mediciones",
+            elPeticionario.hacerPeticionREST("POST",  "http://"+url+":3500/mediciones",
                     String.valueOf(jsArray),
                     new PeticionarioREST.RespuestaREST () {
                         @Override
@@ -74,7 +70,7 @@ public class LogicaFake {
         PeticionarioREST elPeticionario = new PeticionarioREST();
         //Direccion ip en UPVNET10.236.29.250
         //Direccion ip en casa 192.168.0.107
-        elPeticionario.hacerPeticionREST("GET",  "http://"+direccionIP+":3500/ultimasMediciones/10", null,
+        elPeticionario.hacerPeticionREST("GET",  "http://"+url+":3500/ultimasMediciones/10", null,
                 new PeticionarioREST.RespuestaREST () {
                     @Override
                     public void callback(int codigo, String cuerpo) {
@@ -99,7 +95,7 @@ public class LogicaFake {
             PeticionarioREST elPeticionario = new PeticionarioREST();
 
             final Usuario usuario = new Usuario(nombre, correo, contraseña, numero);
-            elPeticionario.hacerPeticionREST("POST",  "http://"+direccionIP+":3500/registrarUsuario",
+            elPeticionario.hacerPeticionREST("POST",  "http://"+url+":3500/registrarUsuario",
                     usuario.toString(),
                     new PeticionarioREST.RespuestaREST () {
                         @Override
@@ -131,7 +127,7 @@ public class LogicaFake {
         } catch (JSONException e)
         { // TODO Auto-generated catch block e.printStackTrace();
         }
-        elPeticionario.hacerPeticionREST("POST",  "http://"+direccionIP+":3500/login",
+        elPeticionario.hacerPeticionREST("POST",  "http://"+url+":3500/login",
                 obj.toString(),
                 new PeticionarioREST.RespuestaREST () {
                     @Override
@@ -146,20 +142,6 @@ public class LogicaFake {
                 }
         );
     }
-
-    public static boolean comprobarSiEsteUsuarioEstaRegistrado(String correo){
-        boolean existe=true;
-        //Comprobar si existe el correo, consulta a la ruta y que devuelva t o f
-        return existe;
-    }
-
-    public static boolean comprobarSiLaContraseñaEsCorrecta(String correo, String contraseña){
-        boolean esCorrecto=true;
-        //Comprobar si la contraseña es correcta
-        return esCorrecto;
-    }
-
-
 
     /**
      * obtenerEstadisticas()
@@ -179,7 +161,7 @@ public class LogicaFake {
         //Direccion ip en UPVNET10.236.29.250
         //Direccion ip en casa 192.168.0.107
         elPeticionario.hacerPeticionREST("GET",
-                "http://"+direccionIP+":3500/estadisticasMedicionesUsuario?fechaIni="+ fechaIni + "&fechaFin="+ fechaFin, null,
+                "http://"+url+":3500/estadisticasMedicionesUsuario?fechaIni="+ fechaIni + "&fechaFin="+ fechaFin, null,
                 new PeticionarioREST.RespuestaREST () {
                     @Override
                     public void callback(int codigo, String cuerpo) {
@@ -226,7 +208,7 @@ public class LogicaFake {
         //Direccion ip en UPVNET10.236.29.250
         //Direccion ip en casa 192.168.0.107
         elPeticionario.hacerPeticionREST("GET",
-                "http://"+direccionIP+":3500/datosGraficaUsuario?fechaIni="+ fechaIni + "&fechaFin="+ fechaFin, null,
+                "http://"+url+":3500/datosGraficaUsuario?fechaIni="+ fechaIni + "&fechaFin="+ fechaFin, null,
                 new PeticionarioREST.RespuestaREST () {
                     @Override
                     public void callback(int codigo, String cuerpo) {

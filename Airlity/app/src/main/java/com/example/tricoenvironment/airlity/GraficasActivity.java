@@ -11,6 +11,7 @@ package com.example.tricoenvironment.airlity;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -20,7 +21,9 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -56,23 +59,22 @@ import static java.lang.System.currentTimeMillis;
 public class GraficasActivity extends AppCompatActivity {
 
     private BarChart barChart;
-    boolean usuarioRegistrado;
-    Bundle datos;
     private IntentFilter intentFilter;
     private ReceptorDatos receptor;
     private TextView fechaDia, valorMedio, valorMax, tiempoMidiendo, calidadAire;
     private long medianoche;
     private String gas;
 
+    Bundle datos;
+    String idUsuarioDato, nombreUsuarioDato, correoUsuarioDato, contraseñaUsuarioDato, tokkenUsuarioDato, telefonoUsuarioDato;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graficas);
-
-        usuarioRegistrado = datos.getBoolean("sesionIniciada");
-        datos = getIntent().getExtras();
-        graficaTemps = (BarChart) findViewById(R.id.graficaTemperatura);
-        createCharts();
+        //graficaTemps = (BarChart) findViewById(R.id.graficaTemperatura);
+        //createCharts();
         barChart = findViewById(R.id.chart);
         fechaDia = findViewById(R.id.fechaDia);
         valorMedio = findViewById(R.id.valorMedio);
@@ -80,11 +82,17 @@ public class GraficasActivity extends AppCompatActivity {
         tiempoMidiendo = findViewById(R.id.tiempoMidiendo);
         calidadAire = findViewById(R.id.calidadAire);
 
+        datos = getIntent().getExtras();
 
-        //-------------------------------------------
-        //Carga datos usuario
-        //-------------------------------------------
-        cargarPreferencias();
+        tokkenUsuarioDato = datos.getString("tokkenUsuario");
+        idUsuarioDato  = datos.getString("idUsuario");
+        nombreUsuarioDato = datos.getString("nombrUsuario");
+        correoUsuarioDato = datos.getString("correoUsuario");
+        telefonoUsuarioDato = datos.getString("telefonoUsuario");
+        contraseñaUsuarioDato = datos.getString("contraseñaUsuario");
+
+        Toast.makeText(this, nombreUsuarioDato+"", Toast.LENGTH_SHORT).show();
+
         //-------------------------------------------
         //Para el menu
         //Pegar esto en todas las clases de activity
@@ -100,15 +108,7 @@ public class GraficasActivity extends AppCompatActivity {
 
         NavigationView navigationView = findViewById(R.id.graficas_navigationView);
         navigationView.setItemIconTintList(null);
-        if (usuarioRegistrado){
-            Log.d("HOLA", "usus");
-            navigationView.getMenu().getItem(2).setVisible(false);
-        }else{
-            Log.d("HOLA", "susu");
-            navigationView.getMenu().getItem(3).setVisible(false);
-            navigationView.getMenu().getItem(4).setVisible(false);
-            navigationView.getMenu().getItem(5).setVisible(false);
-        }
+        navigationView.getMenu().getItem(2).setVisible(false);
         prepararDrawer(navigationView);
         //-------------------------------------------
         //-------------------------------------------
@@ -178,6 +178,9 @@ public class GraficasActivity extends AppCompatActivity {
             case R.id.menu_signin:
                 lanzarSignIn();
                 break;
+            case R.id.menu_signout:
+                lanzarSignOut();
+                break;
             case R.id.menu_perfilUsuario:
                 lanzarPerfilUsuario();
                 break;
@@ -189,6 +192,9 @@ public class GraficasActivity extends AppCompatActivity {
             case R.id.menu_soporte_tecnico:
                 lanzarSoporteTecnico();
                 break;
+            case R.id.menu_informacion:
+                lanzarInformacion();
+                break;
             case R.id.menu_nosotros:
                 lanzarContactanos();
                 break;
@@ -196,44 +202,110 @@ public class GraficasActivity extends AppCompatActivity {
 
     }
 
+    private void lanzarInformacion() {
+        Intent i = new Intent(this, InformacionActivity.class);
+        i.putExtra("sesionIniciada", true);
+        i.putExtra("tokkenUsuario", tokkenUsuarioDato);
+        i.putExtra("idUsuario", idUsuarioDato);
+        i.putExtra("nombrUsuario", nombreUsuarioDato);
+        i.putExtra("correoUsuario", correoUsuarioDato);
+        i.putExtra("telefonoUsuario", telefonoUsuarioDato);
+        i.putExtra("contraseñaUsuario", contraseñaUsuarioDato);
+        startActivity(i);
+    }
+
+    private void lanzarSignOut() {
+        AlertDialog.Builder alertDialog=new AlertDialog.Builder(GraficasActivity.this);
+        alertDialog.setMessage("¿Segur que desea cerrar sesión?").setCancelable(false)
+                .setPositiveButton("Salir", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        datos=null;
+                        Intent i = new Intent(getApplicationContext(), MapaActivity.class);
+                        startActivity(i);
+                        dialog.cancel();
+                    }
+                }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        AlertDialog titulo = alertDialog.create();
+        titulo.setTitle("Cerrar sesión");
+        titulo.show();
+    }
+
     private void lanzarSoporteTecnico() {
+        Intent i = new Intent(this, SoporteTecnicoActivity.class);
+        i.putExtra("sesionIniciada", true);
+        i.putExtra("tokkenUsuario", tokkenUsuarioDato);
+        i.putExtra("idUsuario", idUsuarioDato);
+        i.putExtra("nombrUsuario", nombreUsuarioDato);
+        i.putExtra("correoUsuario", correoUsuarioDato);
+        i.putExtra("telefonoUsuario", telefonoUsuarioDato);
+        i.putExtra("contraseñaUsuario", contraseñaUsuarioDato);
+        startActivity(i);
     }
 
     private void lanzarMapa(){
         Intent i = new Intent(this, MapaActivity.class);
         i.putExtra("sesionIniciada", true);
+        i.putExtra("tokkenUsuario", tokkenUsuarioDato);
+        i.putExtra("idUsuario", idUsuarioDato);
+        i.putExtra("nombrUsuario", nombreUsuarioDato);
+        i.putExtra("correoUsuario", correoUsuarioDato);
+        i.putExtra("telefonoUsuario", telefonoUsuarioDato);
+        i.putExtra("contraseñaUsuario", contraseñaUsuarioDato);
         startActivity(i);
     }
 
     private void lanzarPerfilUsuario(){
         Intent i = new Intent(this, PerfilUsuario.class);
+        i.putExtra("sesionIniciada", true);
+        i.putExtra("tokkenUsuario", tokkenUsuarioDato);
+        i.putExtra("idUsuario", idUsuarioDato);
+        i.putExtra("nombrUsuario", nombreUsuarioDato);
+        i.putExtra("correoUsuario", correoUsuarioDato);
+        i.putExtra("telefonoUsuario", telefonoUsuarioDato);
+        i.putExtra("contraseñaUsuario", contraseñaUsuarioDato);
         startActivity(i);
     }
 
     private void lanzarSignIn(){
         Intent i = new Intent(this, SignInActivity.class);
+        i.putExtra("sesionIniciada", true);
+        i.putExtra("tokkenUsuario", tokkenUsuarioDato);
+        i.putExtra("idUsuario", idUsuarioDato);
+        i.putExtra("nombrUsuario", nombreUsuarioDato);
+        i.putExtra("correoUsuario", correoUsuarioDato);
+        i.putExtra("telefonoUsuario", telefonoUsuarioDato);
+        i.putExtra("contraseñaUsuario", contraseñaUsuarioDato);
         startActivity(i);
     }
 
     private void lanzarMediciones(){
         Intent i = new Intent(this, MedicionesActivity.class);
+        i.putExtra("sesionIniciada", true);
+        i.putExtra("tokkenUsuario", tokkenUsuarioDato);
+        i.putExtra("idUsuario", idUsuarioDato);
+        i.putExtra("nombrUsuario", nombreUsuarioDato);
+        i.putExtra("correoUsuario", correoUsuarioDato);
+        i.putExtra("telefonoUsuario", telefonoUsuarioDato);
+        i.putExtra("contraseñaUsuario", contraseñaUsuarioDato);
         startActivity(i);
     }
 
     private void lanzarContactanos() {
-
-    }
-    private void cargarPreferencias(){
-        SharedPreferences preferences=getSharedPreferences("com.example.tricoenvironment.airlity", Context.MODE_PRIVATE);
-
-        String nombreUsuario = preferences.getString("nombreUsuario", "Sesion no iniciada todavia");
-        String correoUsuario = preferences.getString("correoUsuario", "Sesion no iniciada todavia");
-        String apellidoUsuario = preferences.getString("apellidoUsuario", "");
-
-        String contraseñaUsuario = preferences.getString("contraseñaUsuario", "Sesion no iniciada todavia");
-        int telefonoUsuario = preferences.getInt("telefonoUsuario", 00000);
-        usuarioRegistrado = preferences.getBoolean("sesionIniciada", false);
-
+        Intent i = new Intent(this, ConoceTricoActivity.class);
+        i.putExtra("sesionIniciada", true);
+        i.putExtra("tokkenUsuario", tokkenUsuarioDato);
+        i.putExtra("idUsuario", idUsuarioDato);
+        i.putExtra("nombrUsuario", nombreUsuarioDato);
+        i.putExtra("correoUsuario", correoUsuarioDato);
+        i.putExtra("telefonoUsuario", telefonoUsuarioDato);
+        i.putExtra("contraseñaUsuario", contraseñaUsuarioDato);
+        startActivity(i);
     }
 
     //--------------------------------------------------------------------------------

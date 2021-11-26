@@ -28,10 +28,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-<<<<<<< HEAD
-=======
 import androidx.appcompat.view.menu.MenuItemWrapperICS;
->>>>>>> develop
 import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -50,12 +47,13 @@ import com.google.zxing.integration.android.IntentResult;
 public class MapaActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    boolean usuarioRegistrado;
+    boolean usuarioRegistrado, usuarioLogeado;
     String idUsuarioDato, nombreUsuarioDato, correoUsuarioDato, contraseñaUsuarioDato, tokkenUsuarioDato, telefonoUsuarioDato;
     private IntentFilter intentFilter;
     //private MapaActivity.ReceptorDatosUsuario receptor;
 
     Bundle datos;
+    Boolean usuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +73,15 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
             usuarioRegistrado = false;
         }
 
+        SharedPreferences sharedPreferences = getSharedPreferences("com.example.tricoenvironment.airlity", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        if (usuarioRegistrado){
+            editor.putBoolean("usuarioLogeado", true);
+        }else{
+            editor.putBoolean("usuarioLogeado", false);
+        }
+        editor.commit();
+
         /*
         SharedPreferences preferences=getSharedPreferences("com.example.tricoenvironment.airlity", Context.MODE_PRIVATE);
         usuarioRegistrado = preferences.getBoolean("sesionIniciada", false);
@@ -90,6 +97,10 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         //Para el menu
         //Pegar esto en todas las clases de activity
         //-------------------------------------------
+
+        SharedPreferences preferences=getSharedPreferences("com.example.tricoenvironment.airlity", Context.MODE_PRIVATE);
+        usuario = preferences.getBoolean("usuarioLogeado", false);
+
         final DrawerLayout drawerLayout = findViewById(R.id.mapa_drawerLayout);
         findViewById(R.id.mapa_im_menu).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,7 +111,7 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         NavigationView navigationView = findViewById(R.id.mapa_navigationView);
         navigationView.setItemIconTintList(null);
 
-        if (usuarioRegistrado){
+        if (usuario){
             navigationView.getMenu().getItem(2).setVisible(false);
         }else{
             navigationView.getMenu().getItem(3).setVisible(false);
@@ -198,24 +209,43 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private void lanzarGraficas() {
         Intent i = new Intent(this, GraficasActivity.class);
-        i.putExtra("sesionIniciada", true);
+        i.putExtra("sesionIniciada", usuario);
+        i.putExtra("tokkenUsuario", tokkenUsuarioDato);
+        i.putExtra("idUsuario", idUsuarioDato);
+        i.putExtra("nombrUsuario", nombreUsuarioDato);
+        i.putExtra("correoUsuario", correoUsuarioDato);
+        i.putExtra("telefonoUsuario", telefonoUsuarioDato);
+        i.putExtra("contraseñaUsuario", contraseñaUsuarioDato);
         startActivity(i);
     }
 
     private void lanzarInformacion() {
         Intent i = new Intent(this, InformacionActivity.class);
-        i.putExtra("sesionIniciada", true);
+        i.putExtra("sesionIniciada", usuario);
+        i.putExtra("tokkenUsuario", tokkenUsuarioDato);
+        i.putExtra("idUsuario", idUsuarioDato);
+        i.putExtra("nombrUsuario", nombreUsuarioDato);
+        i.putExtra("correoUsuario", correoUsuarioDato);
+        i.putExtra("telefonoUsuario", telefonoUsuarioDato);
+        i.putExtra("contraseñaUsuario", contraseñaUsuarioDato);
         startActivity(i);
     }
 
     private void lanzarSoporteTecnico() {
         Intent i = new Intent(this, SoporteTecnicoActivity.class);
-        i.putExtra("sesionIniciada", true);
+        i.putExtra("sesionIniciada", usuario);
+        i.putExtra("tokkenUsuario", tokkenUsuarioDato);
+        i.putExtra("idUsuario", idUsuarioDato);
+        i.putExtra("nombrUsuario", nombreUsuarioDato);
+        i.putExtra("correoUsuario", correoUsuarioDato);
+        i.putExtra("telefonoUsuario", telefonoUsuarioDato);
+        i.putExtra("contraseñaUsuario", contraseñaUsuarioDato);
         startActivity(i);
     }
 
     private void lanzarPerfilUsuario() {
         Intent i = new Intent(this, PerfilUsuario.class);
+        i.putExtra("sesionIniciada", usuario);
         i.putExtra("tokkenUsuario", tokkenUsuarioDato);
         i.putExtra("idUsuario", idUsuarioDato);
         i.putExtra("nombrUsuario", nombreUsuarioDato);
@@ -227,18 +257,31 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private void lanzarSignIn() {
         Intent i = new Intent(this, SignInActivity.class);
+        i.putExtra("sesionIniciada", usuario);
         startActivity(i);
     }
 
     private void lanzarMediciones() {
         Intent i = new Intent(this, MedicionesActivity.class);
-        i.putExtra("sesionIniciada", true);
+        i.putExtra("sesionIniciada", usuario);
+        i.putExtra("tokkenUsuario", tokkenUsuarioDato);
+        i.putExtra("idUsuario", idUsuarioDato);
+        i.putExtra("nombrUsuario", nombreUsuarioDato);
+        i.putExtra("correoUsuario", correoUsuarioDato);
+        i.putExtra("telefonoUsuario", telefonoUsuarioDato);
+        i.putExtra("contraseñaUsuario", contraseñaUsuarioDato);
         startActivity(i);
     }
 
     private void lanzarContactanos() {
         Intent i = new Intent(this, ConoceTricoActivity.class);
-        i.putExtra("sesionIniciada", true);
+        i.putExtra("sesionIniciada", usuario);
+        i.putExtra("tokkenUsuario", tokkenUsuarioDato);
+        i.putExtra("idUsuario", idUsuarioDato);
+        i.putExtra("nombrUsuario", nombreUsuarioDato);
+        i.putExtra("correoUsuario", correoUsuarioDato);
+        i.putExtra("telefonoUsuario", telefonoUsuarioDato);
+        i.putExtra("contraseñaUsuario", contraseñaUsuarioDato);
         startActivity(i);
     }
 
