@@ -50,10 +50,15 @@ public class GraficasActivity extends AppCompatActivity {
     private int[] temps= new int[]{16, 20, 23, 19};
     private int[] colors= new int[]{Color.rgb(195,206,26), Color.rgb(206, 182, 26), Color.rgb(206, 152, 26), Color.rgb(206, 97, 26)};
     boolean usuarioRegistrado;
+    Bundle datos;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graficas);
+
+        datos = getIntent().getExtras();
+        usuarioRegistrado = datos.getBoolean("sesionIniciada");
 
         graficaTemps = (BarChart) findViewById(R.id.graficaTemperatura);
         createCharts();
@@ -206,6 +211,7 @@ public class GraficasActivity extends AppCompatActivity {
 
     private void lanzarMapa(){
         Intent i = new Intent(this, MapaActivity.class);
+        i.putExtra("sesionIniciada", true);
         startActivity(i);
     }
 

@@ -35,6 +35,7 @@ public class SignUpActivity extends AppCompatActivity {
     private String contraseñaUsuario;
     private String contraseñaVerificada;
     private int codigo;
+    private String cuerpo;
     private LogicaFake logicaFake;
     private PeticionarioREST peticionarioREST;
 
@@ -144,8 +145,7 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
     }
-
-
+    /*
     private void guardarPreferencias(String nombreUsuario, String correoUsuario, String contraseñaUsuario, String apellidoUsuario, int telefonoUsuario, boolean sesionUsuario) {
         SharedPreferences sharedPreferences = getSharedPreferences("com.example.tricoenvironment.airlity", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -157,6 +157,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         editor.commit();
     }
+     */
 
     private void prepararDrawer(NavigationView navigationView) {
         navigationView.setNavigationItemSelectedListener(
@@ -238,7 +239,6 @@ public class SignUpActivity extends AppCompatActivity {
     private void lanzarContactanos() {
 
     }
-
     @Override
     public void onResume() {
         super.onResume();
@@ -254,8 +254,7 @@ public class SignUpActivity extends AppCompatActivity {
             TextView tvErrorSignUp = findViewById(R.id.tv_error_signup);
             Log.d("codigo2", codigo+"");
             if (codigo == 200) {
-                Toast.makeText(getApplicationContext(), "Sesión iniciada", Toast.LENGTH_LONG).show();
-                guardarPreferencias(nombreUsuario, correoUsuario, contraseñaUsuario, "",10, true);
+                logicaFake.iniciarSesion(correoUsuario, contraseñaUsuario, getApplicationContext());
                 Toast.makeText(getApplicationContext(), "Usuario registrado, por favor ve a perfil para añadir sus credenciales", Toast.LENGTH_LONG).show();
                 Intent i = new Intent(getApplicationContext(), MapaActivity.class);
                 startActivity(i);

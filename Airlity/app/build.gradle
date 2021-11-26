@@ -43,7 +43,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment-ktx:2.2.0-rc03'
     implementation 'androidx.navigation:navigation-ui-ktx:2.2.0-rc03'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
-
+    compile 'com.google.code.gson:gson:2.3'
     //Camara QR
     implementation 'com.journeyapps:zxing-android-embedded:3.2.0'
     implementation 'com.google.zxing:core:3.3.0'

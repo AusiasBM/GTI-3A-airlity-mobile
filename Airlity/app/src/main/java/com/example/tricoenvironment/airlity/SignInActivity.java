@@ -31,8 +31,13 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.gson.Gson;
 
 import static android.view.View.VISIBLE;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class SignInActivity extends AppCompatActivity {
 
@@ -40,11 +45,16 @@ public class SignInActivity extends AppCompatActivity {
     EditText etCorreoSignIn, etContrasenyaSignIn;
 
     private int codigo;
+    private String cuerpo;
     private LogicaFake logicaFake;
     private PeticionarioREST peticionarioREST;
 
     private IntentFilter intentFilter;
     private SignInActivity.ReceptorGetUsuario receptor;
+
+
+    String idUsuarioDato, nombreUsuarioDato, correoUsusarioDato, contraseñaUsuarioDato, tokkenUsuarioDato;
+    int telefonoUsuarioDato;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -237,14 +247,40 @@ public class SignInActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             codigo = intent.getIntExtra("codigo_usuario_login", 0);
+
+            cuerpo = intent.getStringExtra("cuerpo_usuario");
             Log.d("codigo2", codigo+"");
             if (codigo == 200) {
-                Toast.makeText(getApplicationContext(), "Sesión iniciada", Toast.LENGTH_LONG).show();
+                Gson gson = new Gson();
+                Root datosRoot = gson.fromJson(cuerpo, Root.class);
+
+                tokkenUsuarioDato = datosRoot.getData().getToken();
+                idUsuarioDato = datosRoot.getDatosUsuario().getId();
+                nombreUsuarioDato = datosRoot.getDatosUsuario().getNombreUsuario();
+                correoUsusarioDato = datosRoot.getDatosUsuario().getCorreo();
+                telefonoUsuarioDato = datosRoot.getDatosUsuario().getTelefono();
+                contraseñaUsuarioDato = datosRoot.getDatosUsuario().getContrasenya();
+
+                Intent i = new Intent(getApplicationContext(), MapaActivity.class);
+                //i.setAction("DatosUsuario");
+                i.putExtra("sesionIniciada", true);
+                i.putExtra("tokkenUsuario", tokkenUsuarioDato);
+                i.putExtra("idUsuario", idUsuarioDato);
+                i.putExtra("nombrUsuario", nombreUsuarioDato);
+                i.putExtra("correoUsuario", correoUsusarioDato);
+                i.putExtra("telefonoUsuario", telefonoUsuarioDato);
+                i.putExtra("contraseñaUsuario", contraseñaUsuarioDato);
+
+                Log.d("DATOS", idUsuarioDato+", "+nombreUsuarioDato+", "+correoUsusarioDato
+                        + ", "+telefonoUsuarioDato+", "+contraseñaUsuarioDato+", "+tokkenUsuarioDato);
+                Toast.makeText(getApplicationContext(), "Bienvenido, "+ nombreUsuarioDato, Toast.LENGTH_LONG).show();
+
+                /*
                 SharedPreferences sharedPreferences = getSharedPreferences("com.example.tricoenvironment.airlity", MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putBoolean("sesionIniciada", true);
                 editor.commit();
-                Intent i = new Intent(getApplicationContext(), MapaActivity.class);
+                 */
                 startActivity(i);
             }else{
                 Toast.makeText(getApplicationContext(), "Sesión no iniciada", Toast.LENGTH_LONG).show();
@@ -253,5 +289,7 @@ public class SignInActivity extends AppCompatActivity {
         }
 
     }
+
+
 
 }

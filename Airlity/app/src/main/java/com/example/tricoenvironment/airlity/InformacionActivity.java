@@ -31,12 +31,16 @@ import com.google.android.material.navigation.NavigationView;
 public class InformacionActivity extends AppCompatActivity {
 
     boolean usuarioRegistrado;
+    Bundle datos;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_informacion);
 
-        cargarPreferencias();
+        datos = getIntent().getExtras();
+        usuarioRegistrado = datos.getBoolean("sesionIniciada");
+
         //-------------------------------------------
         //Para el menu
         //Pegar esto en todas las clases de activity
@@ -122,6 +126,7 @@ public class InformacionActivity extends AppCompatActivity {
 
     private void lanzarMapa(){
         Intent i = new Intent(this, MapaActivity.class);
+        i.putExtra("sesionIniciada", true);
         startActivity(i);
     }
 

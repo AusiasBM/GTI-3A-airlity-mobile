@@ -25,7 +25,7 @@ import java.util.List;
 public class LogicaFake {
 
     private static final String ETIQUETA_LOG = ">>>>";
-    private static String url="192.168.31.98";
+    private static String url="172.20.10.2";
     //217.76.155.97
 
 
@@ -130,10 +130,11 @@ public class LogicaFake {
                 new PeticionarioREST.RespuestaREST () {
                     @Override
                     public void callback(int codigo, String cuerpo) {
-                        Log.d(ETIQUETA_LOG, "codigo respuesta login= " + codigo + " <-> \n" + obj.toString());
+                        Log.d(ETIQUETA_LOG, "codigo respuesta login= " + codigo + " <-> \n" + cuerpo);
                         Intent i = new Intent();
                         i.setAction("Get_usuario_login");
                         i.putExtra("codigo_usuario_login", codigo);
+                        i.putExtra("cuerpo_usuario", cuerpo);
                         context.sendBroadcast(i);
                     }
                 }

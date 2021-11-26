@@ -10,9 +10,11 @@
 package com.example.tricoenvironment.airlity;
 
 import android.Manifest;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -45,18 +47,42 @@ import com.google.zxing.integration.android.IntentResult;
 public class MapaActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    boolean usuarioRegistrado, usuarioRegistradoParaMenu;
+    boolean usuarioRegistrado;
+    String idUsuarioDato, nombreUsuarioDato, correoUsuarioDato, contraseñaUsuarioDato, tokkenUsuarioDato, telefonoUsuarioDato;
+    private IntentFilter intentFilter;
+    //private MapaActivity.ReceptorDatosUsuario receptor;
+
+    Bundle datos;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mapa);
+
+        datos = getIntent().getExtras();
+        if(datos!=null){
+            usuarioRegistrado = datos.getBoolean("sesionIniciada");
+            tokkenUsuarioDato = datos.getString("tokkenUsuario");
+            idUsuarioDato  = datos.getString("idUsuario");
+            nombreUsuarioDato = datos.getString("nombrUsuario");
+            correoUsuarioDato = datos.getString("correoUsuario");
+            telefonoUsuarioDato = datos.getString("telefonoUsuario");
+            contraseñaUsuarioDato = datos.getString("contraseñaUsuario");
+        }else{
+            usuarioRegistrado = false;
+        }
+
+        /*
         SharedPreferences preferences=getSharedPreferences("com.example.tricoenvironment.airlity", Context.MODE_PRIVATE);
+        usuarioRegistrado = preferences.getBoolean("sesionIniciada", false);
 
-        usuarioRegistradoParaMenu = preferences.getBoolean("usuarioRegistradoParaMenu", false);
 
-        Log.d("USUARIO", "1 "+usuarioRegistrado);
-        cargarPreferencias();
-        Log.d("USUARIO", "2 "+usuarioRegistrado);
+        Intent intent=getIntent();
+        intentFilter = new IntentFilter();
+        intentFilter.addAction("DatosUsuario");
+        receptor = new MapaActivity.ReceptorDatosUsuario();
+         */
+
         //-------------------------------------------
         //Para el menu
         //Pegar esto en todas las clases de activity
@@ -68,6 +94,19 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
                 drawerLayout.openDrawer(GravityCompat.START);
             }
         });
+        NavigationView navigationView = findViewById(R.id.mapa_navigationView);
+        navigationView.setItemIconTintList(null);
+
+        if (usuarioRegistrado){
+            navigationView.getMenu().getItem(2).setVisible(false);
+        }else{
+            navigationView.getMenu().getItem(3).setVisible(false);
+            navigationView.getMenu().getItem(4).setVisible(false);
+            navigationView.getMenu().getItem(5).setVisible(false);
+        }
+        prepararDrawer(navigationView);
+        //-------------------------------------------
+        //-------------------------------------------
 
         /**
          * Para la cámara QR
@@ -84,22 +123,6 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
-        NavigationView navigationView = findViewById(R.id.mapa_navigationView);
-        navigationView.setItemIconTintList(null);
-        if (usuarioRegistrado & usuarioRegistradoParaMenu){
-            Log.d("HOLA", "usus");
-            navigationView.getMenu().getItem(2).setVisible(false);
-        }else{
-            Log.d("HOLA", "susu");
-            navigationView.getMenu().getItem(3).setVisible(false);
-            navigationView.getMenu().getItem(4).setVisible(false);
-            navigationView.getMenu().getItem(5).setVisible(false);
-        }
-        prepararDrawer(navigationView);
-        //-------------------------------------------
-        //-------------------------------------------
-        Log.d("USUARIO", "3 "+usuarioRegistrado);
     }
 
     private void prepararDrawer(NavigationView navigationView) {
@@ -116,9 +139,6 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void seleccionarItem(MenuItem itemDrawer) {
-
-        SharedPreferences preferences=getSharedPreferences("com.example.tricoenvironment.airlity", Context.MODE_PRIVATE);
-        boolean sesionIniciada = preferences.getBoolean("sesionIniciada", false);
 
         switch (itemDrawer.getItemId()) {
             case R.id.menu_mapa:
@@ -157,17 +177,10 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .setPositiveButton("Salir", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Log.d("USUARIO", "4 "+usuarioRegistrado);
-                        SharedPreferences sharedPreferences = getSharedPreferences("com.example.tricoenvironment.airlity", MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putBoolean("usuarioRegistradoParaMenu",false);
-
-                        editor.commit();
-
+                        datos=null;
                         Intent i = new Intent(getApplicationContext(), MapaActivity.class);
                         startActivity(i);
                         dialog.cancel();
-                        Log.d("USUARIO", "5 "+usuarioRegistrado);
                     }
                 }).setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
@@ -182,21 +195,30 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private void lanzarGraficas() {
         Intent i = new Intent(this, GraficasActivity.class);
+        i.putExtra("sesionIniciada", true);
         startActivity(i);
     }
 
     private void lanzarInformacion() {
         Intent i = new Intent(this, InformacionActivity.class);
+        i.putExtra("sesionIniciada", true);
         startActivity(i);
     }
 
     private void lanzarSoporteTecnico() {
         Intent i = new Intent(this, SoporteTecnicoActivity.class);
+        i.putExtra("sesionIniciada", true);
         startActivity(i);
     }
 
     private void lanzarPerfilUsuario() {
         Intent i = new Intent(this, PerfilUsuario.class);
+        i.putExtra("tokkenUsuario", tokkenUsuarioDato);
+        i.putExtra("idUsuario", idUsuarioDato);
+        i.putExtra("nombrUsuario", nombreUsuarioDato);
+        i.putExtra("correoUsuario", correoUsuarioDato);
+        i.putExtra("telefonoUsuario", telefonoUsuarioDato);
+        i.putExtra("contraseñaUsuario", contraseñaUsuarioDato);
         startActivity(i);
     }
 
@@ -207,11 +229,13 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private void lanzarMediciones() {
         Intent i = new Intent(this, MedicionesActivity.class);
+        i.putExtra("sesionIniciada", true);
         startActivity(i);
     }
 
     private void lanzarContactanos() {
         Intent i = new Intent(this, ConoceTricoActivity.class);
+        i.putExtra("sesionIniciada", true);
         startActivity(i);
     }
 
@@ -261,26 +285,31 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         IntentResult intentResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
 
         String datos = intentResult.getContents();
-        SharedPreferences sharedPreferences = getSharedPreferences("com.example.tricoenvironment.airlity", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("macSensor", datos);
-        editor.commit();
-        Toast.makeText(this, "Mac del beacon detectado: "+ datos, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Mac del beacon encontrado: "+ datos, Toast.LENGTH_SHORT).show();
     }
 
-    private void cargarPreferencias(){
-        Log.d("USUARIO", "6 "+usuarioRegistrado);
-        SharedPreferences preferences=getSharedPreferences("com.example.tricoenvironment.airlity", Context.MODE_PRIVATE);
+     /*
+    @Override
+    protected void onResume() {
+        super.onResume();
+        registerReceiver(receptor, intentFilter);
+    }
 
-        String nombreUsuario = preferences.getString("nombreUsuario", "Sesion no iniciada todavia");
-        String correoUsuario = preferences.getString("correoUsuario", "Sesion no iniciada todavia");
-        String apellidoUsuario = preferences.getString("apellidoUsuario", "");
+   private class ReceptorDatosUsuario extends BroadcastReceiver {
 
-        String contraseñaUsuario = preferences.getString("contraseñaUsuario", "Sesion no iniciada todavia");
-        int telefonoUsuario = preferences.getInt("telefonoUsuario", 00000);
-        usuarioRegistrado = preferences.getBoolean("sesionIniciada", false);
-        Log.d("USUARIO", "7 "+usuarioRegistrado);
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            tokkenUsuarioDato = intent.getStringExtra("tokkenUsuario");
+            idUsuarioDato = intent.getStringExtra("idUsuario");
+            nombreUsuarioDato = intent.getStringExtra("nombreUsuario");
+            correoUsuarioDato = intent.getStringExtra("correoUsuario");
+            contraseñaUsuarioDato = intent.getStringExtra("contraseñaUsuario");
+            telefonoUsuarioDato = intent.getStringExtra("telefonoUsuario");
 
+            //Log.d("HOLA4", correoUsuarioDato);
+        }
 
     }
+
+     */
 }

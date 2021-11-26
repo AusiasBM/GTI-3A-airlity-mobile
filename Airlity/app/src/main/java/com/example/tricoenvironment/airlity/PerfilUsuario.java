@@ -9,8 +9,10 @@
  */
 package com.example.tricoenvironment.airlity;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.SpannableString;
@@ -21,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,20 +31,34 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.gson.Gson;
 
 public class PerfilUsuario extends AppCompatActivity {
 
     private TextView tv_nombreUsuario,  tv_correoElectronico, tv_macSensorUsuario;
     private EditText et_nombreUsuario,  et_telefonoUsuario;
-    boolean usuarioRegistrado;
     String macSensor;
+    String nombreCambiado, telefonoCambiado;
+
+    /*
+    private IntentFilter intentFilter;
+    private PerfilUsuario.ReceptorDatosUsuario receptor;
+     */
+    int codigo;
+    String idUsuarioDato, nombreUsuarioDato, correoUsuarioDato, contraseñaUsuarioDato, tokkenUsuarioDato, telefonoUsuarioDato;
 
     Menu menu;
+    Bundle datos;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfil_usuario);
-        Log.d("HOLA", "ANTES"+usuarioRegistrado);
+
+        /*
+        intentFilter = new IntentFilter();
+        intentFilter.addAction("DatosUsuario");
+        receptor = new PerfilUsuario.ReceptorDatosUsuario();
+         */
         //------------------------------------------------------------
         //------------------------------------------------------------
         //Conexión con elementos del layout
@@ -52,11 +69,26 @@ public class PerfilUsuario extends AppCompatActivity {
         tv_correoElectronico = findViewById(R.id.et_correoUsuario_perfilUsuario);
         et_telefonoUsuario =findViewById(R.id.et_telefonoUsuario_perfilUsuario);
         tv_macSensorUsuario = findViewById(R.id.tv_infoSensor_perfilUsuario);
+        tv_macSensorUsuario = findViewById(R.id.tv_infoSensor_perfilUsuario);
 
-        //-------------------------------------------
-        //Carga datos usuario
-        //-------------------------------------------
-        cargarPreferencias();
+        datos = getIntent().getExtras();
+
+        tokkenUsuarioDato = datos.getString("tokkenUsuario");
+        idUsuarioDato  = datos.getString("idUsuario");
+        nombreUsuarioDato = datos.getString("nombrUsuario");
+        correoUsuarioDato = datos.getString("correoUsuario");
+        telefonoUsuarioDato = datos.getString("telefonoUsuario");
+        contraseñaUsuarioDato = datos.getString("contraseñaUsuario");
+
+
+        tv_nombreUsuario.setText(nombreUsuarioDato);
+        et_nombreUsuario.setText(nombreUsuarioDato);
+        tv_correoElectronico.setText(correoUsuarioDato);
+        et_telefonoUsuario.setText(telefonoUsuarioDato);
+
+        //Actualizar información
+        nombreCambiado = et_nombreUsuario.getText().toString();
+        telefonoCambiado = et_telefonoUsuario.getText().toString();
 
         if (macSensor!="null"){
             SpannableString mitextoU = new SpannableString("MAC del sensor");
@@ -89,16 +121,7 @@ public class PerfilUsuario extends AppCompatActivity {
 
         NavigationView navigationView = findViewById(R.id.perfilusuario_navigationView);
         navigationView.setItemIconTintList(null);
-
-        if (usuarioRegistrado){
-            Log.d("HOLA", "usus");
-            navigationView.getMenu().getItem(2).setVisible(false);
-        }else{
-            Log.d("HOLA", "susu");
-            navigationView.getMenu().getItem(3).setVisible(false);
-            navigationView.getMenu().getItem(4).setVisible(false);
-            navigationView.getMenu().getItem(5).setVisible(false);
-        }
+        navigationView.getMenu().getItem(2).setVisible(false);
         prepararDrawer(navigationView);
         seleccionarItem(navigationView.getMenu().getItem(4));
         //-------------------------------------------
@@ -159,6 +182,13 @@ public class PerfilUsuario extends AppCompatActivity {
 
     private void lanzarMapa(){
         Intent i = new Intent(this, MapaActivity.class);
+        i.putExtra("sesionIniciada", true);
+        i.putExtra("tokkenUsuario", tokkenUsuarioDato);
+        i.putExtra("idUsuario", idUsuarioDato);
+        i.putExtra("nombrUsuario", nombreUsuarioDato);
+        i.putExtra("correoUsuario", correoUsuarioDato);
+        i.putExtra("telefonoUsuario", telefonoUsuarioDato);
+        i.putExtra("contraseñaUsuario", contraseñaUsuarioDato);
         startActivity(i);
     }
 
@@ -179,12 +209,12 @@ public class PerfilUsuario extends AppCompatActivity {
 
 
 
+    /*
     @Override
     protected void onPause() {
         super.onPause();
         et_nombreUsuario = findViewById(R.id.et_nombreUsuario_perfilUsuario);
     }
-
     private void cargarPreferencias(){
         SharedPreferences preferences=getSharedPreferences("com.example.tricoenvironment.airlity", Context.MODE_PRIVATE);
 
@@ -194,7 +224,6 @@ public class PerfilUsuario extends AppCompatActivity {
 
         String contraseñaUsuario = preferences.getString("contraseñaUsuario", "Sesion no iniciada todavia");
         int telefonoUsuario = preferences.getInt("telefonoUsuario", 00000);
-        usuarioRegistrado = preferences.getBoolean("sesionIniciada", false);
 
 
 
@@ -202,13 +231,10 @@ public class PerfilUsuario extends AppCompatActivity {
         Log.d("HOLA", nombreUsuario+"");
         Log.d("HOLA", contraseñaUsuario+"");
         Log.d("HOLA", telefonoUsuario+"");
-        Log.d("HOLA", usuarioRegistrado+"");
-        tv_nombreUsuario.setText(nombreUsuario +" ");
-        et_nombreUsuario.setText(nombreUsuario + "");
-        tv_correoElectronico.setText(correoUsuario+"");
-        et_telefonoUsuario.setText(telefonoUsuario+"");
+
 
     }
+
 
     private void guardarPreferencias(String nombreUsuario) {
         SharedPreferences sharedPreferences = getSharedPreferences("com.example.tricoenvironment.airlity2", MODE_PRIVATE);
@@ -217,4 +243,28 @@ public class PerfilUsuario extends AppCompatActivity {
 
         editor.commit();
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        registerReceiver(receptor, intentFilter);
+    }
+
+    private class ReceptorDatosUsuario extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            tokkenUsuarioDato = intent.getStringExtra("tokkenUsuario");
+            idUsuarioDato = intent.getStringExtra("idUsuario");
+            nombreUsuarioDato = intent.getStringExtra("nombreUsuario");
+            correoUsuarioDato = intent.getStringExtra("correoUsuario");
+            contraseñaUsuarioDato = intent.getStringExtra("contraseñaUsuario");
+            telefonoUsuarioDato = intent.getStringExtra("telefonoUsuario");
+
+            Log.d("DATOSSS", tokkenUsuarioDato+", "+correoUsuarioDato);
+        }
+
+    }
+
+     */
 }
