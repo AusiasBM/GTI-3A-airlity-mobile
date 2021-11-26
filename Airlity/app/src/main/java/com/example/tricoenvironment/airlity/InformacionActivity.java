@@ -33,7 +33,7 @@ import com.google.android.material.navigation.NavigationView;
 public class InformacionActivity extends AppCompatActivity {
 
     boolean usuarioRegistrado, usuario;
-    String idUsuarioDato, nombreUsuarioDato, correoUsuarioDato, contraseñaUsuarioDato, tokkenUsuarioDato, telefonoUsuarioDato;
+    String idUsuarioDato, nombreUsuarioDato, correoUsuarioDato, contraseñaUsuarioDato, tokkenUsuarioDato, telefonoUsuarioDato, macUsuarioDato;
 
     Bundle datos;
 
@@ -52,6 +52,7 @@ public class InformacionActivity extends AppCompatActivity {
             correoUsuarioDato = datos.getString("correoUsuario");
             telefonoUsuarioDato = datos.getString("telefonoUsuario");
             contraseñaUsuarioDato = datos.getString("contraseñaUsuario");
+            macUsuarioDato = datos.getString("macUsuario");
         }else{
             usuarioRegistrado = false;
         }
@@ -178,6 +179,9 @@ public class InformacionActivity extends AppCompatActivity {
         i.putExtra("correoUsuario", correoUsuarioDato);
         i.putExtra("telefonoUsuario", telefonoUsuarioDato);
         i.putExtra("contraseñaUsuario", contraseñaUsuarioDato);
+        if (macUsuarioDato!=null){
+            i.putExtra("macUsuario", macUsuarioDato);
+        }
         startActivity(i);
     }
 
@@ -189,6 +193,9 @@ public class InformacionActivity extends AppCompatActivity {
         i.putExtra("correoUsuario", correoUsuarioDato);
         i.putExtra("telefonoUsuario", telefonoUsuarioDato);
         i.putExtra("contraseñaUsuario", contraseñaUsuarioDato);
+        if (macUsuarioDato!=null){
+            i.putExtra("macUsuario", macUsuarioDato);
+        }
         startActivity(i);
     }
 
@@ -201,6 +208,9 @@ public class InformacionActivity extends AppCompatActivity {
         i.putExtra("correoUsuario", correoUsuarioDato);
         i.putExtra("telefonoUsuario", telefonoUsuarioDato);
         i.putExtra("contraseñaUsuario", contraseñaUsuarioDato);
+        if (macUsuarioDato!=null){
+            i.putExtra("macUsuario", macUsuarioDato);
+        }
         startActivity(i);
     }
 
@@ -213,6 +223,9 @@ public class InformacionActivity extends AppCompatActivity {
         i.putExtra("correoUsuario", correoUsuarioDato);
         i.putExtra("telefonoUsuario", telefonoUsuarioDato);
         i.putExtra("contraseñaUsuario", contraseñaUsuarioDato);
+        if (macUsuarioDato!=null){
+            i.putExtra("macUsuario", macUsuarioDato);
+        }
         startActivity(i);
     }
 
@@ -225,6 +238,9 @@ public class InformacionActivity extends AppCompatActivity {
         i.putExtra("correoUsuario", correoUsuarioDato);
         i.putExtra("telefonoUsuario", telefonoUsuarioDato);
         i.putExtra("contraseñaUsuario", contraseñaUsuarioDato);
+        if (macUsuarioDato!=null){
+            i.putExtra("macUsuario", macUsuarioDato);
+        }
         startActivity(i);
     }
 
@@ -237,6 +253,9 @@ public class InformacionActivity extends AppCompatActivity {
         i.putExtra("correoUsuario", correoUsuarioDato);
         i.putExtra("telefonoUsuario", telefonoUsuarioDato);
         i.putExtra("contraseñaUsuario", contraseñaUsuarioDato);
+        if (macUsuarioDato!=null){
+            i.putExtra("macUsuario", macUsuarioDato);
+        }
         startActivity(i);
     }
 
@@ -248,6 +267,9 @@ public class InformacionActivity extends AppCompatActivity {
         i.putExtra("correoUsuario", correoUsuarioDato);
         i.putExtra("telefonoUsuario", telefonoUsuarioDato);
         i.putExtra("contraseñaUsuario", contraseñaUsuarioDato);
+        if (macUsuarioDato!=null){
+            i.putExtra("macUsuario", macUsuarioDato);
+        }
         startActivity(i);
     }
 }

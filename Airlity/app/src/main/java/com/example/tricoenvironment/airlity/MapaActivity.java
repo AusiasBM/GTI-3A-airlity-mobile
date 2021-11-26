@@ -48,7 +48,7 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private GoogleMap mMap;
     boolean usuarioRegistrado, usuarioLogeado;
-    String idUsuarioDato, nombreUsuarioDato, correoUsuarioDato, contraseñaUsuarioDato, tokkenUsuarioDato, telefonoUsuarioDato;
+    String idUsuarioDato, nombreUsuarioDato, correoUsuarioDato, contraseñaUsuarioDato, tokkenUsuarioDato, telefonoUsuarioDato, macUsuarioDato;
     private IntentFilter intentFilter;
     //private MapaActivity.ReceptorDatosUsuario receptor;
 
@@ -59,6 +59,7 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mapa);
+        FloatingActionButton fab = findViewById(R.id.floatingActionButton);
 
         datos = getIntent().getExtras();
         if(datos!=null){
@@ -71,6 +72,7 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
             contraseñaUsuarioDato = datos.getString("contraseñaUsuario");
         }else{
             usuarioRegistrado = false;
+            fab.setVisibility(View.GONE);
         }
 
         SharedPreferences sharedPreferences = getSharedPreferences("com.example.tricoenvironment.airlity", MODE_PRIVATE);
@@ -125,7 +127,7 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         /**
          * Para la cámara QR
          */
-        FloatingActionButton fab = findViewById(R.id.floatingActionButton);
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -216,6 +218,10 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         i.putExtra("correoUsuario", correoUsuarioDato);
         i.putExtra("telefonoUsuario", telefonoUsuarioDato);
         i.putExtra("contraseñaUsuario", contraseñaUsuarioDato);
+        if (macUsuarioDato!=null){
+            i.putExtra("macUsuario", macUsuarioDato);
+        }
+
         startActivity(i);
     }
 
@@ -228,6 +234,9 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         i.putExtra("correoUsuario", correoUsuarioDato);
         i.putExtra("telefonoUsuario", telefonoUsuarioDato);
         i.putExtra("contraseñaUsuario", contraseñaUsuarioDato);
+        if (macUsuarioDato!=null){
+            i.putExtra("macUsuario", macUsuarioDato);
+        }
         startActivity(i);
     }
 
@@ -240,6 +249,9 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         i.putExtra("correoUsuario", correoUsuarioDato);
         i.putExtra("telefonoUsuario", telefonoUsuarioDato);
         i.putExtra("contraseñaUsuario", contraseñaUsuarioDato);
+        if (macUsuarioDato!=null){
+            i.putExtra("macUsuario", macUsuarioDato);
+        }
         startActivity(i);
     }
 
@@ -252,6 +264,9 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         i.putExtra("correoUsuario", correoUsuarioDato);
         i.putExtra("telefonoUsuario", telefonoUsuarioDato);
         i.putExtra("contraseñaUsuario", contraseñaUsuarioDato);
+        if (macUsuarioDato!=null){
+            i.putExtra("macUsuario", macUsuarioDato);
+        }
         startActivity(i);
     }
 
@@ -270,6 +285,9 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         i.putExtra("correoUsuario", correoUsuarioDato);
         i.putExtra("telefonoUsuario", telefonoUsuarioDato);
         i.putExtra("contraseñaUsuario", contraseñaUsuarioDato);
+        if (macUsuarioDato!=null){
+            i.putExtra("macUsuario", macUsuarioDato);
+        }
         startActivity(i);
     }
 
@@ -282,6 +300,9 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         i.putExtra("correoUsuario", correoUsuarioDato);
         i.putExtra("telefonoUsuario", telefonoUsuarioDato);
         i.putExtra("contraseñaUsuario", contraseñaUsuarioDato);
+        if (macUsuarioDato!=null){
+            i.putExtra("macUsuario", macUsuarioDato);
+        }
         startActivity(i);
     }
 
@@ -329,8 +350,7 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         super.onActivityResult(requestCode, resultCode, data);
 
         IntentResult intentResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-
-        String datos = intentResult.getContents();
+        macUsuarioDato = intentResult.getContents();
         Toast.makeText(this, "Mac del beacon encontrado: "+ datos, Toast.LENGTH_SHORT).show();
     }
 

@@ -46,7 +46,7 @@ public class PerfilUsuario extends AppCompatActivity {
     private PerfilUsuario.ReceptorDatosUsuario receptor;
      */
     int codigo;
-    String idUsuarioDato, nombreUsuarioDato, correoUsuarioDato, contraseñaUsuarioDato, tokkenUsuarioDato, telefonoUsuarioDato;
+    String idUsuarioDato, nombreUsuarioDato, correoUsuarioDato, contraseñaUsuarioDato, tokkenUsuarioDato, telefonoUsuarioDato, macUsuarioDato;
 
     Menu menu;
     Bundle datos;
@@ -80,6 +80,7 @@ public class PerfilUsuario extends AppCompatActivity {
         correoUsuarioDato = datos.getString("correoUsuario");
         telefonoUsuarioDato = datos.getString("telefonoUsuario");
         contraseñaUsuarioDato = datos.getString("contraseñaUsuario");
+        macUsuarioDato = datos.getString("macUsuario");
 
 
         tv_nombreUsuario.setText(nombreUsuarioDato);
@@ -91,7 +92,7 @@ public class PerfilUsuario extends AppCompatActivity {
         nombreCambiado = et_nombreUsuario.getText().toString();
         telefonoCambiado = et_telefonoUsuario.getText().toString();
 
-        if (macSensor!="null"){
+        if (macUsuarioDato!="null"){
             SpannableString mitextoU = new SpannableString("MAC del sensor");
             mitextoU.setSpan(new UnderlineSpan(), 0, mitextoU.length(), 0);
             tv_macSensorUsuario.setText(mitextoU);
@@ -99,12 +100,14 @@ public class PerfilUsuario extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     AlertDialog.Builder alertDialog=new AlertDialog.Builder(PerfilUsuario.this);
-                    alertDialog.setMessage(macSensor).setCancelable(true);
+                    alertDialog.setMessage(macUsuarioDato).setCancelable(true);
                     AlertDialog titulo = alertDialog.create();
                     titulo.setTitle("MAC del sensor");
                     titulo.show();
                 }
             });
+        }else{
+            tv_macSensorUsuario.setText("Sensor no vinculado");
         }
 
 
@@ -203,6 +206,9 @@ public class PerfilUsuario extends AppCompatActivity {
         i.putExtra("correoUsuario", correoUsuarioDato);
         i.putExtra("telefonoUsuario", telefonoUsuarioDato);
         i.putExtra("contraseñaUsuario", contraseñaUsuarioDato);
+        if (macUsuarioDato!=null){
+            i.putExtra("macUsuario", macUsuarioDato);
+        }
         startActivity(i);
     }
 
@@ -215,6 +221,9 @@ public class PerfilUsuario extends AppCompatActivity {
         i.putExtra("correoUsuario", correoUsuarioDato);
         i.putExtra("telefonoUsuario", telefonoUsuarioDato);
         i.putExtra("contraseñaUsuario", contraseñaUsuarioDato);
+        if (macUsuarioDato!=null){
+            i.putExtra("macUsuario", macUsuarioDato);
+        }
         startActivity(i);
     }
     private void lanzarSoporteTecnico() {
@@ -226,6 +235,9 @@ public class PerfilUsuario extends AppCompatActivity {
         i.putExtra("correoUsuario", correoUsuarioDato);
         i.putExtra("telefonoUsuario", telefonoUsuarioDato);
         i.putExtra("contraseñaUsuario", contraseñaUsuarioDato);
+        if (macUsuarioDato!=null){
+            i.putExtra("macUsuario", macUsuarioDato);
+        }
         startActivity(i);
     }
 
@@ -238,6 +250,9 @@ public class PerfilUsuario extends AppCompatActivity {
         i.putExtra("correoUsuario", correoUsuarioDato);
         i.putExtra("telefonoUsuario", telefonoUsuarioDato);
         i.putExtra("contraseñaUsuario", contraseñaUsuarioDato);
+        if (macUsuarioDato!=null){
+            i.putExtra("macUsuario", macUsuarioDato);
+        }
         startActivity(i);
     }
 
@@ -250,6 +265,9 @@ public class PerfilUsuario extends AppCompatActivity {
         i.putExtra("correoUsuario", correoUsuarioDato);
         i.putExtra("telefonoUsuario", telefonoUsuarioDato);
         i.putExtra("contraseñaUsuario", contraseñaUsuarioDato);
+        if (macUsuarioDato!=null){
+            i.putExtra("macUsuario", macUsuarioDato);
+        }
         startActivity(i);
     }
 
@@ -262,6 +280,9 @@ public class PerfilUsuario extends AppCompatActivity {
         i.putExtra("correoUsuario", correoUsuarioDato);
         i.putExtra("telefonoUsuario", telefonoUsuarioDato);
         i.putExtra("contraseñaUsuario", contraseñaUsuarioDato);
+        if (macUsuarioDato!=null){
+            i.putExtra("macUsuario", macUsuarioDato);
+        }
         startActivity(i);
     }
 
@@ -274,6 +295,9 @@ public class PerfilUsuario extends AppCompatActivity {
         i.putExtra("correoUsuario", correoUsuarioDato);
         i.putExtra("telefonoUsuario", telefonoUsuarioDato);
         i.putExtra("contraseñaUsuario", contraseñaUsuarioDato);
+        if (macUsuarioDato!=null){
+            i.putExtra("macUsuario", macUsuarioDato);
+        }
         startActivity(i);
     }
 
