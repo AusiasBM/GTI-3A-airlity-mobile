@@ -31,21 +31,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="0dp"
                 android:fontFamily="@font/comfortaa_bold"
                 android:text="Nombre del dispositivo"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/mac"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="8dp"
-                android:fontFamily="@font/comfortaa_bold"
-                android:text="MAC del dispositivo"
                 android:textStyle="bold" />
 
             <EditText
@@ -53,37 +42,55 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginRight="16dp"
                 android:background="@drawable/formulario_log_in"
                 android:ems="10"
                 android:fontFamily="@font/comfortaa"
                 android:hint="Introduce el nombre"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:paddingStart="10dp" />
+
+            <TextView
+                android:id="@+id/mac"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="0dp"
+                android:fontFamily="@font/comfortaa_bold"
+                android:text="MAC del dispositivo"
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/editMAC"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginRight="16dp"
-                android:layout_marginBottom="32dp"
+                android:layout_marginBottom="10dp"
                 android:background="@drawable/formulario_log_in"
                 android:ems="10"
                 android:fontFamily="@font/comfortaa"
                 android:hint="Introduce la MAC"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:paddingStart="10dp" />
 
             <Button
                 android:id="@+id/BotonBuscar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:layout_marginRight="16dp"
-                android:layout_marginBottom="32dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="10dp"
                 android:background="@drawable/boton_log_in"
                 android:fontFamily="@font/comfortaa_bold"
-                android:padding="5dp"
-                android:text="Iniciar búsqueda" />
+                android:paddingStart="30dp"
+                android:paddingEnd="30dp"
+                android:text="Iniciar búsqueda"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold" />
 
             <View
                 android:id="@+id/divider"
@@ -139,7 +146,9 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="16dp"
                 android:background="@drawable/formulario_log_in"
-                android:fontFamily="@font/comfortaa" />
+                android:fontFamily="@font/comfortaa"
+                android:paddingStart="10dp"
+                android:paddingTop="5dp" />
 
             <TextView
                 android:id="@+id/uuidEncontrada"
@@ -158,7 +167,9 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="16dp"
                 android:background="@drawable/formulario_log_in"
-                android:fontFamily="@font/comfortaa" />
+                android:fontFamily="@font/comfortaa"
+                android:paddingStart="10dp"
+                android:paddingTop="5dp" />
 
             <TextView
                 android:id="@+id/ultimaBeacon"
@@ -175,24 +186,36 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:layout_marginBottom="32dp" />
+                android:layout_marginBottom="10dp" />
 
             <Button
                 android:id="@+id/BotonFinalizar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:layout_marginRight="16dp"
-                android:layout_marginBottom="32dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="10dp"
                 android:background="@drawable/boton_log_in"
                 android:fontFamily="@font/comfortaa_bold"
-                android:padding="5dp"
+                android:paddingStart="30dp"
+                android:paddingEnd="30dp"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
                 android:text="Finalizar escucha" />
 
             <Button
                 android:id="@+id/boton_distancia"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/boton_log_in"
+                android:fontFamily="@font/comfortaa_bold"
+                android:paddingStart="30dp"
+                android:paddingEnd="30dp"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
                 android:text="¿A que distancia esta nuestro Dispositivo?" />
         </LinearLayout>
     </ScrollView>
