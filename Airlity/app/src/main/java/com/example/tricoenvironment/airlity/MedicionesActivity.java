@@ -41,6 +41,7 @@ public class MedicionesActivity extends AppCompatActivity {
     private String[] nombres = new String[]{"Buscar dispositivo BLE","Listado Últimas Mediciones"};
     private static final int CODIGO_PETICION_PERMISOS = 11223344;
     boolean usuarioRegistrado;
+    Bundle datos;
     /**
      * Método onCreate se ejecuta antes de iniciar la actividad MedicionesActivity
      *
@@ -54,6 +55,8 @@ public class MedicionesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mediciones);
 
+        datos = getIntent().getExtras();
+        usuarioRegistrado = datos.getBoolean("sesionIniciada");
         cargarPreferencias();
         //Comprobamos si la app tiene los permisos para utilizar el bluetooth
         permisosBluetooth();
@@ -224,6 +227,7 @@ public class MedicionesActivity extends AppCompatActivity {
 
     private void lanzarMapa(){
         Intent i = new Intent(this, MapaActivity.class);
+        i.putExtra("sesionIniciada", true);
         startActivity(i);
     }
 
