@@ -121,8 +121,7 @@ public class SignInActivity extends AppCompatActivity {
         tvRegistrarse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), SignUpActivity.class);
-                startActivity(i);
+                startActivity(new Intent(SignInActivity.this, PopUpRegistro.class));
             }
         });
 
@@ -280,6 +279,9 @@ public class SignInActivity extends AppCompatActivity {
                 SharedPreferences sharedPreferences = getSharedPreferences("com.example.tricoenvironment.airlity", MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putBoolean("usuarioLogeado", true);
+                editor.putString("tokkenUsuario", tokkenUsuarioDato);
+                editor.putString("idUsuario", idUsuarioDato );
+                editor.commit();
 
                 Log.d("DATOS", idUsuarioDato+", "+nombreUsuarioDato+", "+correoUsusarioDato
                         + ", "+telefonoUsuarioDato+", "+contraseñaUsuarioDato+", "+tokkenUsuarioDato);

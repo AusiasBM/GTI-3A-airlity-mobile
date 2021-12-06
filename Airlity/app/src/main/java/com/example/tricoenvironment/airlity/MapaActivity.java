@@ -352,6 +352,10 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         IntentResult intentResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         macUsuarioDato = intentResult.getContents();
         Toast.makeText(this, "Sensor encontrado", Toast.LENGTH_SHORT).show();
+
+        Intent i = new Intent(this, SignUpActivity.class);
+        i.putExtra("macUsuario", macUsuarioDato);
+        startActivity(i);
     }
 
      /*
