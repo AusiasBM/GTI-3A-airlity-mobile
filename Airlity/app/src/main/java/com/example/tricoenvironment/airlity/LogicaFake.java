@@ -108,6 +108,8 @@ public class LogicaFake {
                             Intent i = new Intent();
                             i.setAction("Get_usuario");
                             i.putExtra("codigo_usuario", codigo);
+
+                            i.putExtra("cuerpo_usuario", cuerpo);
                             context.sendBroadcast(i);
                         }
                     }

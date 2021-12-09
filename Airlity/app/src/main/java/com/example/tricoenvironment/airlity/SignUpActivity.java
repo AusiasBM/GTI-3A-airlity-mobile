@@ -263,7 +263,11 @@ public class SignUpActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             codigo = intent.getIntExtra("codigo_usuario", 0);
             TextView tvErrorSignUp = findViewById(R.id.tv_error_signup);
-            Log.d("codigo2", codigo+"");
+            //cuerpo = intent.getStringExtra("cuerpo_usuario");
+
+            cuerpo = intent.getStringExtra("cuerpo_usuario");
+
+            Log.d("codigo3", codigo+", "+cuerpo);
             if (codigo == 200) {
                 logicaFake.iniciarSesion(correoUsuario, contraseñaUsuario, getApplicationContext());
                 Toast.makeText(getApplicationContext(), "Usuario registrado, por favor ve a perfil para añadir sus credenciales", Toast.LENGTH_LONG).show();
