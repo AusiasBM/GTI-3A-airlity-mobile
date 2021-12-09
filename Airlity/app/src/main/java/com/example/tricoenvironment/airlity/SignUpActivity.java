@@ -30,7 +30,7 @@ import java.util.ArrayList;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    private String nombreUsuario;
+    private String nombreUsuario, macSensorUsuario;
     private String correoUsuario;
     private String contraseñaUsuario;
     private String contraseñaVerificada;
@@ -42,12 +42,19 @@ public class SignUpActivity extends AppCompatActivity {
     private IntentFilter intentFilter;
     private ReceptorGetUsuario receptor;
 
+    Bundle dato;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
         logicaFake = new LogicaFake();
+
+        dato = getIntent().getExtras();
+        macSensorUsuario = dato.getString("macUsuario");
+
+        Log.d("Sensor", macSensorUsuario+"");
 
         intentFilter = new IntentFilter();
         intentFilter.addAction("Get_usuario");
@@ -132,7 +139,7 @@ public class SignUpActivity extends AppCompatActivity {
                     tvErrorSignUp.setVisibility(VISIBLE);
                     tvErrorSignUp.setText("Rellene todos los campos");
                 } else if (contraseñaUsuario.equals(contraseñaVerificada)) {
-                    logicaFake.registrarUsuario(nombreUsuario, correoUsuario, contraseñaUsuario, 10, "null",getApplicationContext());
+                    logicaFake.registrarUsuario(nombreUsuario, correoUsuario, contraseñaUsuario, 10, macSensorUsuario,getApplicationContext());
                     SharedPreferences sharedPreferences = getSharedPreferences("com.example.tricoenvironment.airlity", MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putBoolean("usuarioLogeado", true);

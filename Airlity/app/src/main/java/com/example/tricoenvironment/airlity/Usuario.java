@@ -1,7 +1,7 @@
 package com.example.tricoenvironment.airlity;
 
 public class Usuario {
-    private String _id, nombreUsuario, correo, contraseña, macSensor;
+    private String _id, nombreUsuario, correo, contraseña;
     private int numero;
 
     public Usuario() {
@@ -31,12 +31,11 @@ public class Usuario {
         this.contraseña = contraseña;
     }
 
-    public Usuario(String _id, String nombreUsuario, String correo, String contraseña, String macSensor, int numero) {
+    public Usuario(String _id, String nombreUsuario, String correo, String contraseña, int numero) {
         this._id = _id;
         this.nombreUsuario = nombreUsuario;
         this.correo = correo;
         this.contraseña = contraseña;
-        this.macSensor = macSensor;
         this.numero = numero;
     }
 
@@ -70,14 +69,6 @@ public class Usuario {
 
     public void setContraseña(String contraseña) {
         this.contraseña = contraseña;
-    }
-
-    public String getMacSensor() {
-        return macSensor;
-    }
-
-    public void setMacSensor(String macSensor) {
-        this.macSensor = macSensor;
     }
 
     public int getNumero() {
