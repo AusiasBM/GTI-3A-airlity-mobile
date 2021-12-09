@@ -22,44 +22,23 @@ public class ConoceTricoActivity extends AppCompatActivity {
     String idUsuarioDato, nombreUsuarioDato, correoUsuarioDato, contraseñaUsuarioDato, tokkenUsuarioDato, telefonoUsuarioDato, macUsuarioDato;
 
     Bundle datos;
+    Boolean sesionInicidad;
+    String cuerpo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conoce_trico);
 
-        datos = getIntent().getExtras();
-        if(datos!=null){
-            usuarioRegistrado = datos.getBoolean("sesionIniciada");
-            tokkenUsuarioDato = datos.getString("tokkenUsuario");
-            idUsuarioDato  = datos.getString("idUsuario");
-            nombreUsuarioDato = datos.getString("nombrUsuario");
-            correoUsuarioDato = datos.getString("correoUsuario");
-            telefonoUsuarioDato = datos.getString("telefonoUsuario");
-            contraseñaUsuarioDato = datos.getString("contraseñaUsuario");
-            macUsuarioDato = datos.getString("macUsuario");
-        }else{
-            usuarioRegistrado = false;
-        }
-
-        SharedPreferences sharedPreferences = getSharedPreferences("com.example.tricoenvironment.airlity", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        if (usuarioRegistrado){
-            editor.putBoolean("usuarioLogeado", true);
-        }else{
-            editor.putBoolean("usuarioLogeado", false);
-        }
-        editor.commit();
+        SharedPreferences preferences=getSharedPreferences("com.example.tricoenvironment.airlity", Context.MODE_PRIVATE);
+        sesionInicidad = preferences.getBoolean("usuarioLogeado", false);
+        cuerpo = preferences.getString("cuerpoUsuario", null);
 
         //-------------------------------------------
         //Para el menu
         //Pegar esto en todas las clases de activity
         //Prepara el drawer para la elección de items
         //-------------------------------------------
-
-        SharedPreferences preferences=getSharedPreferences("com.example.tricoenvironment.airlity", Context.MODE_PRIVATE);
-        usuario = preferences.getBoolean("usuarioLogeado", false);
-
         final DrawerLayout drawerLayout = findViewById(R.id.conocenos_drawerLayout);
         findViewById(R.id.conocenos_im_menu).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,7 +49,7 @@ public class ConoceTricoActivity extends AppCompatActivity {
 
         NavigationView navigationView = findViewById(R.id.conocenos_navigationView);
         navigationView.setItemIconTintList(null);
-        if (usuario){
+        if (sesionInicidad && cuerpo!=null){
             navigationView.getMenu().getItem(2).setVisible(false);
         }else{
             navigationView.getMenu().getItem(3).setVisible(false);
@@ -154,106 +133,36 @@ public class ConoceTricoActivity extends AppCompatActivity {
 
         private void lanzarInformacion(){
             Intent i = new Intent(this, InformacionActivity.class);
-            i.putExtra("sesionIniciada", usuario);
-            i.putExtra("tokkenUsuario", tokkenUsuarioDato);
-            i.putExtra("idUsuario", idUsuarioDato);
-            i.putExtra("nombrUsuario", nombreUsuarioDato);
-            i.putExtra("correoUsuario", correoUsuarioDato);
-            i.putExtra("telefonoUsuario", telefonoUsuarioDato);
-            i.putExtra("contraseñaUsuario", contraseñaUsuarioDato);
-            if (macUsuarioDato!=null){
-                i.putExtra("macUsuario", macUsuarioDato);
-            }
             startActivity(i);
         }
 
         private void lanzarSoporteTecnico() {
             Intent i = new Intent(this, SoporteTecnicoActivity.class);
-            i.putExtra("sesionIniciada", usuario);
-            i.putExtra("tokkenUsuario", tokkenUsuarioDato);
-            i.putExtra("idUsuario", idUsuarioDato);
-            i.putExtra("nombrUsuario", nombreUsuarioDato);
-            i.putExtra("correoUsuario", correoUsuarioDato);
-            i.putExtra("telefonoUsuario", telefonoUsuarioDato);
-            i.putExtra("contraseñaUsuario", contraseñaUsuarioDato);
-            if (macUsuarioDato!=null){
-                i.putExtra("macUsuario", macUsuarioDato);
-            }
             startActivity(i);
         }
 
         private void lanzarGraficas(){
             Intent i = new Intent(this, GraficasActivity.class);
-            i.putExtra("sesionIniciada", usuario);
-            i.putExtra("tokkenUsuario", tokkenUsuarioDato);
-            i.putExtra("idUsuario", idUsuarioDato);
-            i.putExtra("nombrUsuario", nombreUsuarioDato);
-            i.putExtra("correoUsuario", correoUsuarioDato);
-            i.putExtra("telefonoUsuario", telefonoUsuarioDato);
-            i.putExtra("contraseñaUsuario", contraseñaUsuarioDato);
-            if (macUsuarioDato!=null){
-                i.putExtra("macUsuario", macUsuarioDato);
-            }
             startActivity(i);
         }
 
         private void lanzarMapa(){
             Intent i = new Intent(this, MapaActivity.class);
-            i.putExtra("sesionIniciada", usuario);
-            i.putExtra("tokkenUsuario", tokkenUsuarioDato);
-            i.putExtra("idUsuario", idUsuarioDato);
-            i.putExtra("nombrUsuario", nombreUsuarioDato);
-            i.putExtra("correoUsuario", correoUsuarioDato);
-            i.putExtra("telefonoUsuario", telefonoUsuarioDato);
-            i.putExtra("contraseñaUsuario", contraseñaUsuarioDato);
-            if (macUsuarioDato!=null){
-                i.putExtra("macUsuario", macUsuarioDato);
-            }
             startActivity(i);
         }
 
         private void lanzarPerfilUsuario(){
             Intent i = new Intent(this, PerfilUsuario.class);
-            i.putExtra("sesionIniciada", usuario);
-            i.putExtra("tokkenUsuario", tokkenUsuarioDato);
-            i.putExtra("idUsuario", idUsuarioDato);
-            i.putExtra("nombrUsuario", nombreUsuarioDato);
-            i.putExtra("correoUsuario", correoUsuarioDato);
-            i.putExtra("telefonoUsuario", telefonoUsuarioDato);
-            i.putExtra("contraseñaUsuario", contraseñaUsuarioDato);
-            if (macUsuarioDato!=null){
-                i.putExtra("macUsuario", macUsuarioDato);
-            }
             startActivity(i);
         }
 
         private void lanzarSignIn(){
             Intent i = new Intent(this, SignInActivity.class);
-            i.putExtra("sesionIniciada", usuario);
-            i.putExtra("tokkenUsuario", tokkenUsuarioDato);
-            i.putExtra("idUsuario", idUsuarioDato);
-            i.putExtra("nombrUsuario", nombreUsuarioDato);
-            i.putExtra("correoUsuario", correoUsuarioDato);
-            i.putExtra("telefonoUsuario", telefonoUsuarioDato);
-            i.putExtra("contraseñaUsuario", contraseñaUsuarioDato);
-            if (macUsuarioDato!=null){
-                i.putExtra("macUsuario", macUsuarioDato);
-            }
             startActivity(i);
         }
 
         private void lanzarMediciones(){
             Intent i = new Intent(this, MedicionesActivity.class);
-            i.putExtra("sesionIniciada", usuario);
-            i.putExtra("tokkenUsuario", tokkenUsuarioDato);
-            i.putExtra("idUsuario", idUsuarioDato);
-            i.putExtra("nombrUsuario", nombreUsuarioDato);
-            i.putExtra("correoUsuario", correoUsuarioDato);
-            i.putExtra("telefonoUsuario", telefonoUsuarioDato);
-            i.putExtra("contraseñaUsuario", contraseñaUsuarioDato);
-            if (macUsuarioDato!=null){
-                i.putExtra("macUsuario", macUsuarioDato);
-            }
             startActivity(i);
         }
 
