@@ -3,7 +3,7 @@ package com.example.tricoenvironment.airlity;
 import static java.lang.System.currentTimeMillis;
 
 public class Sensor {
-    private String nombre, mac, uuid;
+    private String nombre, mac, uuid, tipoMedicion;
     private long fecha;
 
 
@@ -56,13 +56,27 @@ public class Sensor {
         this.fecha = fecha;
     }
 
+    public String getTipoMedicion() {
+        return tipoMedicion;
+    }
+
+    public void setTipoMedicion(String tipoMedicion) {
+        this.tipoMedicion = tipoMedicion;
+    }
+
+    public Sensor() {
+    }
+
+    public Sensor(String mac, String tipoMedicion) {
+        this.mac = mac;
+        this.tipoMedicion = tipoMedicion;
+    }
+
     @Override
     public String toString() {
         return "{" +
-                "nombre='" + nombre + '\'' +
-                ", mac='" + mac + '\'' +
-                ", uuid='" + uuid + '\'' +
-                ", fecha=" + fecha +
+                " \"macSensor\":"+ "\""+ mac + '\"' +
+                ", \"tipoMedicion\": " + "\""+ tipoMedicion + '\"' +
                 '}';
     }
 }

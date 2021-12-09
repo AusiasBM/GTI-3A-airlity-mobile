@@ -27,8 +27,8 @@ import java.util.List;
 public class LogicaFake {
 
     private static final String ETIQUETA_LOG = ">>>>";
-    private static String url="217.76.155.97";
-    //217.76.155.97
+    private static String url="192.168.31.98";
+    //IP SERVIDOR: 217.76.155.97
 
 
     /**
@@ -95,17 +95,21 @@ public class LogicaFake {
             PeticionarioREST elPeticionario = new PeticionarioREST();
 
             final Usuario usuario = new Usuario(nombre, correo, contraseña, numero);
-            elPeticionario.hacerPeticionREST("POST",  "http://"+url+":3500/registrarUsuario",
-                    usuario.toString(),
+            final Sensor sensor = new Sensor(macSensor, "C02");
+            final DatosRegistro datosRegistro = new DatosRegistro(usuario, sensor);
+            elPeticionario.hacerPeticionREST("POST",  "http://"+url+":3500/registrar",
+                    datosRegistro.toString(),
                     new PeticionarioREST.RespuestaREST () {
                         @Override
                         public void callback(int codigo, String cuerpo) {
-                            Log.d(ETIQUETA_LOG, "codigo respuesta= " + usuario.toString());
+                            Log.d(ETIQUETA_LOG, "codigo respuesta= " + datosRegistro.toString());
                             Log.d(ETIQUETA_LOG, "codigo respuesta= " + codigo + " <-> \n" + cuerpo);
 
                             Intent i = new Intent();
                             i.setAction("Get_usuario");
                             i.putExtra("codigo_usuario", codigo);
+
+                            //i.putExtra("cuerpo_usuario", cuerpo);
                             context.sendBroadcast(i);
                         }
                     }
@@ -137,6 +141,7 @@ public class LogicaFake {
                         i.setAction("Get_usuario_login");
                         i.putExtra("codigo_usuario_login", codigo);
                         i.putExtra("cuerpo_usuario", cuerpo);
+
                         context.sendBroadcast(i);
                     }
                 }

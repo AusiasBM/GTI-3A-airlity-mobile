@@ -9,6 +9,7 @@ public class DatosUsuario {
     private String contrasenya;
     private Integer telefono;
     private Object macSensor;
+    private String rol;
 
     public String getId() {
         return id;
@@ -45,5 +46,11 @@ public class DatosUsuario {
     }
     public void setMacSensor(Object macSensor) {
         this.macSensor = macSensor;
+    }
+    public String getRol() {
+        return rol;
+    }
+    public void setRol(String rol) {
+        this.rol = rol;
     }
 }

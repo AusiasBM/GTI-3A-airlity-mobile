@@ -121,8 +121,7 @@ public class SignInActivity extends AppCompatActivity {
         tvRegistrarse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), SignUpActivity.class);
-                startActivity(i);
+                startActivity(new Intent(SignInActivity.this, PopUpRegistro.class));
             }
         });
 
@@ -255,7 +254,6 @@ public class SignInActivity extends AppCompatActivity {
             codigo = intent.getIntExtra("codigo_usuario_login", 0);
 
             cuerpo = intent.getStringExtra("cuerpo_usuario");
-            Log.d("codigo2", codigo+"");
             if (codigo == 200) {
                 Gson gson = new Gson();
                 Root datosRoot = gson.fromJson(cuerpo, Root.class);
@@ -263,34 +261,15 @@ public class SignInActivity extends AppCompatActivity {
                 tokkenUsuarioDato = datosRoot.getData().getToken();
                 idUsuarioDato = datosRoot.getDatosUsuario().getId();
                 nombreUsuarioDato = datosRoot.getDatosUsuario().getNombreUsuario();
-                correoUsusarioDato = datosRoot.getDatosUsuario().getCorreo();
-                telefonoUsuarioDato = datosRoot.getDatosUsuario().getTelefono();
-                contraseñaUsuarioDato = datosRoot.getDatosUsuario().getContrasenya();
-
-                Intent i = new Intent(getApplicationContext(), MapaActivity.class);
-                //i.setAction("DatosUsuario");
-                i.putExtra("sesionIniciada", true);
-                i.putExtra("tokkenUsuario", tokkenUsuarioDato);
-                i.putExtra("idUsuario", idUsuarioDato);
-                i.putExtra("nombrUsuario", nombreUsuarioDato);
-                i.putExtra("correoUsuario", correoUsusarioDato);
-                i.putExtra("telefonoUsuario", telefonoUsuarioDato);
-                i.putExtra("contraseñaUsuario", contraseñaUsuarioDato);
 
                 SharedPreferences sharedPreferences = getSharedPreferences("com.example.tricoenvironment.airlity", MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putBoolean("usuarioLogeado", true);
-
-                Log.d("DATOS", idUsuarioDato+", "+nombreUsuarioDato+", "+correoUsusarioDato
-                        + ", "+telefonoUsuarioDato+", "+contraseñaUsuarioDato+", "+tokkenUsuarioDato);
-                Toast.makeText(getApplicationContext(), "Bienvenido, "+ nombreUsuarioDato, Toast.LENGTH_LONG).show();
-
-                /*
-                SharedPreferences sharedPreferences = getSharedPreferences("com.example.tricoenvironment.airlity", MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putBoolean("sesionIniciada", true);
+                editor.putString("cuerpoUsuario", cuerpo);
                 editor.commit();
-                 */
+
+                Intent i = new Intent(getApplicationContext(), MapaActivity.class);
+                Toast.makeText(getApplicationContext(), "Bienvenido, "+ nombreUsuarioDato, Toast.LENGTH_LONG).show();
                 startActivity(i);
             }else{
                 tv_error.setVisibility(VISIBLE);

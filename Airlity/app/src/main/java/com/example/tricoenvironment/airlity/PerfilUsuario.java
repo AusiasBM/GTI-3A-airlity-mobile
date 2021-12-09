@@ -46,6 +46,8 @@ public class PerfilUsuario extends AppCompatActivity {
     private PerfilUsuario.ReceptorDatosUsuario receptor;
      */
     int codigo;
+    Boolean sesionInicidad;
+    String cuerpo;
     String idUsuarioDato, nombreUsuarioDato, correoUsuarioDato, contraseñaUsuarioDato, tokkenUsuarioDato, telefonoUsuarioDato, macUsuarioDato;
 
     Menu menu;
@@ -55,13 +57,9 @@ public class PerfilUsuario extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfil_usuario);
 
-        Log.d("MAC", macUsuarioDato+", "+macSensor);
-
-        /*
-        intentFilter = new IntentFilter();
-        intentFilter.addAction("DatosUsuario");
-        receptor = new PerfilUsuario.ReceptorDatosUsuario();
-         */
+        SharedPreferences preferences=getSharedPreferences("com.example.tricoenvironment.airlity", Context.MODE_PRIVATE);
+        cuerpo = preferences.getString("cuerpoUsuario", null);
+        Log.d("Cuerpo",cuerpo+"");
         //------------------------------------------------------------
         //------------------------------------------------------------
         //Conexión con elementos del layout
@@ -74,43 +72,35 @@ public class PerfilUsuario extends AppCompatActivity {
         tv_macSensorUsuario = findViewById(R.id.tv_infoSensor_perfilUsuario);
         tv_macSensorUsuario = findViewById(R.id.tv_infoSensor_perfilUsuario);
 
-        datos = getIntent().getExtras();
+        Gson gson = new Gson();
+        Root datosRoot = gson.fromJson(cuerpo, Root.class);
 
-        tokkenUsuarioDato = datos.getString("tokkenUsuario");
-        idUsuarioDato  = datos.getString("idUsuario");
-        nombreUsuarioDato = datos.getString("nombrUsuario");
-        correoUsuarioDato = datos.getString("correoUsuario");
-        telefonoUsuarioDato = datos.getString("telefonoUsuario");
-        contraseñaUsuarioDato = datos.getString("contraseñaUsuario");
-        macUsuarioDato = datos.getString("macUsuario");
-
+        tokkenUsuarioDato = datosRoot.getData().getToken();
+        idUsuarioDato = datosRoot.getDatosUsuario().getId();
+        nombreUsuarioDato = datosRoot.getDatosUsuario().getNombreUsuario();
+        correoUsuarioDato = datosRoot.getDatosUsuario().getCorreo();
+        telefonoUsuarioDato = datosRoot.getDatosUsuario().getTelefono().toString();
+        macUsuarioDato = datosRoot.getDatosUsuario().getMacSensor().toString();
 
         tv_nombreUsuario.setText(nombreUsuarioDato);
         et_nombreUsuario.setText(nombreUsuarioDato);
         tv_correoElectronico.setText(correoUsuarioDato);
         et_telefonoUsuario.setText(telefonoUsuarioDato);
 
-        //Actualizar información
-        nombreCambiado = et_nombreUsuario.getText().toString();
-        telefonoCambiado = et_telefonoUsuario.getText().toString();
 
-        if (macUsuarioDato!=null){
-            SpannableString mitextoU = new SpannableString("MAC del sensor");
-            mitextoU.setSpan(new UnderlineSpan(), 0, mitextoU.length(), 0);
-            tv_macSensorUsuario.setText(mitextoU);
-            tv_macSensorUsuario.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    AlertDialog.Builder alertDialog=new AlertDialog.Builder(PerfilUsuario.this);
-                    alertDialog.setMessage(macUsuarioDato).setCancelable(true);
-                    AlertDialog titulo = alertDialog.create();
-                    titulo.setTitle("MAC del sensor");
-                    titulo.show();
-                }
-            });
-        }else{
-            tv_macSensorUsuario.setText("Sensor no vinculado");
-        }
+        SpannableString mitextoU = new SpannableString("MAC del sensor");
+        mitextoU.setSpan(new UnderlineSpan(), 0, mitextoU.length(), 0);
+        tv_macSensorUsuario.setText(mitextoU);
+        tv_macSensorUsuario.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(PerfilUsuario.this);
+                alertDialog.setMessage(macUsuarioDato).setCancelable(true);
+                AlertDialog titulo = alertDialog.create();
+                titulo.setTitle("MAC del sensor");
+                titulo.show();
+            }
+        });
 
 
         //-------------------------------------------
@@ -186,6 +176,8 @@ public class PerfilUsuario extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         datos=null;
                         Intent i = new Intent(getApplicationContext(), MapaActivity.class);
+                        SharedPreferences settings = getSharedPreferences("com.example.tricoenvironment.airlity", Context.MODE_PRIVATE);
+                        settings.edit().clear().commit();
                         startActivity(i);
                         dialog.cancel();
                     }
@@ -201,167 +193,35 @@ public class PerfilUsuario extends AppCompatActivity {
     }
     private void lanzarGraficas() {
         Intent i = new Intent(this, GraficasActivity.class);
-        i.putExtra("sesionIniciada", true);
-        i.putExtra("tokkenUsuario", tokkenUsuarioDato);
-        i.putExtra("idUsuario", idUsuarioDato);
-        i.putExtra("nombrUsuario", nombreUsuarioDato);
-        i.putExtra("correoUsuario", correoUsuarioDato);
-        i.putExtra("telefonoUsuario", telefonoUsuarioDato);
-        i.putExtra("contraseñaUsuario", contraseñaUsuarioDato);
-        if (macUsuarioDato!=null){
-            i.putExtra("macUsuario", macUsuarioDato);
-        }
         startActivity(i);
     }
 
     private void lanzarInformacion() {
         Intent i = new Intent(this, InformacionActivity.class);
-        i.putExtra("sesionIniciada", true);
-        i.putExtra("tokkenUsuario", tokkenUsuarioDato);
-        i.putExtra("idUsuario", idUsuarioDato);
-        i.putExtra("nombrUsuario", nombreUsuarioDato);
-        i.putExtra("correoUsuario", correoUsuarioDato);
-        i.putExtra("telefonoUsuario", telefonoUsuarioDato);
-        i.putExtra("contraseñaUsuario", contraseñaUsuarioDato);
-        if (macUsuarioDato!=null){
-            i.putExtra("macUsuario", macUsuarioDato);
-        }
         startActivity(i);
     }
     private void lanzarSoporteTecnico() {
         Intent i = new Intent(this, SoporteTecnicoActivity.class);
-        i.putExtra("sesionIniciada", true);
-        i.putExtra("tokkenUsuario", tokkenUsuarioDato);
-        i.putExtra("idUsuario", idUsuarioDato);
-        i.putExtra("nombrUsuario", nombreUsuarioDato);
-        i.putExtra("correoUsuario", correoUsuarioDato);
-        i.putExtra("telefonoUsuario", telefonoUsuarioDato);
-        i.putExtra("contraseñaUsuario", contraseñaUsuarioDato);
-        if (macUsuarioDato!=null){
-            i.putExtra("macUsuario", macUsuarioDato);
-        }
         startActivity(i);
     }
 
     private void lanzarMapa(){
         Intent i = new Intent(this, MapaActivity.class);
-        i.putExtra("sesionIniciada", true);
-        i.putExtra("tokkenUsuario", tokkenUsuarioDato);
-        i.putExtra("idUsuario", idUsuarioDato);
-        i.putExtra("nombrUsuario", nombreUsuarioDato);
-        i.putExtra("correoUsuario", correoUsuarioDato);
-        i.putExtra("telefonoUsuario", telefonoUsuarioDato);
-        i.putExtra("contraseñaUsuario", contraseñaUsuarioDato);
-        if (macUsuarioDato!=null){
-            i.putExtra("macUsuario", macUsuarioDato);
-        }
         startActivity(i);
     }
 
     private void lanzarSignIn(){
         Intent i = new Intent(this, SignInActivity.class);
-        i.putExtra("sesionIniciada", true);
-        i.putExtra("tokkenUsuario", tokkenUsuarioDato);
-        i.putExtra("idUsuario", idUsuarioDato);
-        i.putExtra("nombrUsuario", nombreUsuarioDato);
-        i.putExtra("correoUsuario", correoUsuarioDato);
-        i.putExtra("telefonoUsuario", telefonoUsuarioDato);
-        i.putExtra("contraseñaUsuario", contraseñaUsuarioDato);
-        if (macUsuarioDato!=null){
-            i.putExtra("macUsuario", macUsuarioDato);
-        }
         startActivity(i);
     }
 
     private void lanzarMediciones(){
         Intent i = new Intent(this, MedicionesActivity.class);
-        i.putExtra("sesionIniciada", true);
-        i.putExtra("tokkenUsuario", tokkenUsuarioDato);
-        i.putExtra("idUsuario", idUsuarioDato);
-        i.putExtra("nombrUsuario", nombreUsuarioDato);
-        i.putExtra("correoUsuario", correoUsuarioDato);
-        i.putExtra("telefonoUsuario", telefonoUsuarioDato);
-        i.putExtra("contraseñaUsuario", contraseñaUsuarioDato);
-        if (macUsuarioDato!=null){
-            i.putExtra("macUsuario", macUsuarioDato);
-        }
         startActivity(i);
     }
 
     private void lanzarContactanos(){
         Intent i = new Intent(this, ConoceTricoActivity.class);
-        i.putExtra("sesionIniciada", true);
-        i.putExtra("tokkenUsuario", tokkenUsuarioDato);
-        i.putExtra("idUsuario", idUsuarioDato);
-        i.putExtra("nombrUsuario", nombreUsuarioDato);
-        i.putExtra("correoUsuario", correoUsuarioDato);
-        i.putExtra("telefonoUsuario", telefonoUsuarioDato);
-        i.putExtra("contraseñaUsuario", contraseñaUsuarioDato);
-        if (macUsuarioDato!=null){
-            i.putExtra("macUsuario", macUsuarioDato);
-        }
         startActivity(i);
     }
-
-
-
-
-    /*
-    @Override
-    protected void onPause() {
-        super.onPause();
-        et_nombreUsuario = findViewById(R.id.et_nombreUsuario_perfilUsuario);
-    }
-    private void cargarPreferencias(){
-        SharedPreferences preferences=getSharedPreferences("com.example.tricoenvironment.airlity", Context.MODE_PRIVATE);
-
-        String nombreUsuario = preferences.getString("nombreUsuario", "Sesion no iniciada todavia");
-        String correoUsuario = preferences.getString("correoUsuario", "Sesion no iniciada todavia");
-        macSensor = preferences.getString("macSensor", "null");
-
-        String contraseñaUsuario = preferences.getString("contraseñaUsuario", "Sesion no iniciada todavia");
-        int telefonoUsuario = preferences.getInt("telefonoUsuario", 00000);
-
-
-
-        Log.d("HOLA", correoUsuario+"");
-        Log.d("HOLA", nombreUsuario+"");
-        Log.d("HOLA", contraseñaUsuario+"");
-        Log.d("HOLA", telefonoUsuario+"");
-
-
-    }
-
-
-    private void guardarPreferencias(String nombreUsuario) {
-        SharedPreferences sharedPreferences = getSharedPreferences("com.example.tricoenvironment.airlity2", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("nombreUsuario", nombreUsuario);
-
-        editor.commit();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        registerReceiver(receptor, intentFilter);
-    }
-
-    private class ReceptorDatosUsuario extends BroadcastReceiver {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            tokkenUsuarioDato = intent.getStringExtra("tokkenUsuario");
-            idUsuarioDato = intent.getStringExtra("idUsuario");
-            nombreUsuarioDato = intent.getStringExtra("nombreUsuario");
-            correoUsuarioDato = intent.getStringExtra("correoUsuario");
-            contraseñaUsuarioDato = intent.getStringExtra("contraseñaUsuario");
-            telefonoUsuarioDato = intent.getStringExtra("telefonoUsuario");
-
-            Log.d("DATOSSS", tokkenUsuarioDato+", "+correoUsuarioDato);
-        }
-
-    }
-
-     */
 }
