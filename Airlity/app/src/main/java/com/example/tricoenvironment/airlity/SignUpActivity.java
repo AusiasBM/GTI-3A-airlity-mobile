@@ -264,18 +264,25 @@ public class SignUpActivity extends AppCompatActivity {
             codigo = intent.getIntExtra("codigo_usuario", 0);
             TextView tvErrorSignUp = findViewById(R.id.tv_error_signup);
             //cuerpo = intent.getStringExtra("cuerpo_usuario");
-
             cuerpo = intent.getStringExtra("cuerpo_usuario");
 
             Log.d("codigo3", codigo+", "+cuerpo);
             if (codigo == 200) {
                 logicaFake.iniciarSesion(correoUsuario, contraseñaUsuario, getApplicationContext());
+                SharedPreferences sharedPreferences = getSharedPreferences("com.example.tricoenvironment.airlity", MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putBoolean("usuarioLogeado", true);
+                editor.putString("cuerpoUsuario", cuerpo);
+                editor.commit();
                 Toast.makeText(getApplicationContext(), "Usuario registrado, por favor ve a perfil para añadir sus credenciales", Toast.LENGTH_LONG).show();
                 Intent i = new Intent(getApplicationContext(), MapaActivity.class);
                 startActivity(i);
+            } else if(codigo == 403){
+                tvErrorSignUp.setVisibility(VISIBLE);
+                tvErrorSignUp.setText("Sensor ya registrado");
             } else {
                 tvErrorSignUp.setVisibility(VISIBLE);
-                tvErrorSignUp.setText("Correo ya registrado");
+                tvErrorSignUp.setText("Usuario ya registrado");
             }
         }
 

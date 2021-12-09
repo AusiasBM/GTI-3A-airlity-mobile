@@ -109,7 +109,7 @@ public class LogicaFake {
                             i.setAction("Get_usuario");
                             i.putExtra("codigo_usuario", codigo);
 
-                            i.putExtra("cuerpo_usuario", cuerpo);
+                            //i.putExtra("cuerpo_usuario", cuerpo);
                             context.sendBroadcast(i);
                         }
                     }

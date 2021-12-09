@@ -54,6 +54,7 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     Bundle datos;
     Boolean sesionInicidad;
+    String cuerpo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,11 +62,13 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         setContentView(R.layout.activity_mapa);
         FloatingActionButton fab = findViewById(R.id.floatingActionButton);
 
-        Log.d("sesionIniciada1", sesionInicidad+"");
+
         SharedPreferences preferences=getSharedPreferences("com.example.tricoenvironment.airlity", Context.MODE_PRIVATE);
         sesionInicidad = preferences.getBoolean("usuarioLogeado", false);
-        Log.d("sesionIniciada1", sesionInicidad+"");
-        if(sesionInicidad){
+        cuerpo = preferences.getString("cuerpoUsuario", null);
+        Log.d("sesion", sesionInicidad+"");
+        Log.d("sesion", sesionInicidad+", "+cuerpo);
+        if(sesionInicidad && cuerpo!=null){
             fab.setVisibility(View.GONE);
         }
 
@@ -84,7 +87,7 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         NavigationView navigationView = findViewById(R.id.mapa_navigationView);
         navigationView.setItemIconTintList(null);
 
-        if (sesionInicidad){
+        if (sesionInicidad && cuerpo!=null){
             navigationView.getMenu().getItem(2).setVisible(false);
         }else{
             navigationView.getMenu().getItem(3).setVisible(false);
