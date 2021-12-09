@@ -112,6 +112,8 @@ public class SoporteTecnicoActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Intent i = new Intent(getApplicationContext(), MapaActivity.class);
+                        SharedPreferences settings = getSharedPreferences("com.example.tricoenvironment.airlity", Context.MODE_PRIVATE);
+                        settings.edit().clear().commit();
                         startActivity(i);
                         dialog.cancel();
                     }

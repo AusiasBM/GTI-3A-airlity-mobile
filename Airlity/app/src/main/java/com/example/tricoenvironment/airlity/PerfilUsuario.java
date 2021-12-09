@@ -72,12 +72,20 @@ public class PerfilUsuario extends AppCompatActivity {
         tv_macSensorUsuario = findViewById(R.id.tv_infoSensor_perfilUsuario);
         tv_macSensorUsuario = findViewById(R.id.tv_infoSensor_perfilUsuario);
 
-        /*
+        Gson gson = new Gson();
+        Root datosRoot = gson.fromJson(cuerpo, Root.class);
+
+        tokkenUsuarioDato = datosRoot.getData().getToken();
+        idUsuarioDato = datosRoot.getDatosUsuario().getId();
+        nombreUsuarioDato = datosRoot.getDatosUsuario().getNombreUsuario();
+        correoUsuarioDato = datosRoot.getDatosUsuario().getCorreo();
+        telefonoUsuarioDato = datosRoot.getDatosUsuario().getTelefono().toString();
+        macUsuarioDato = datosRoot.getDatosUsuario().getMacSensor().toString();
+
         tv_nombreUsuario.setText(nombreUsuarioDato);
         et_nombreUsuario.setText(nombreUsuarioDato);
         tv_correoElectronico.setText(correoUsuarioDato);
         et_telefonoUsuario.setText(telefonoUsuarioDato);
-         */
 
 
         SpannableString mitextoU = new SpannableString("MAC del sensor");
@@ -168,6 +176,8 @@ public class PerfilUsuario extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         datos=null;
                         Intent i = new Intent(getApplicationContext(), MapaActivity.class);
+                        SharedPreferences settings = getSharedPreferences("com.example.tricoenvironment.airlity", Context.MODE_PRIVATE);
+                        settings.edit().clear().commit();
                         startActivity(i);
                         dialog.cancel();
                     }

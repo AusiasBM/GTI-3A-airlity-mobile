@@ -281,7 +281,6 @@ public class SignUpActivity extends AppCompatActivity {
                 editor.putBoolean("usuarioLogeado", true);
                 editor.putString("cuerpoUsuario", cuerpo);
                 editor.commit();
-                Toast.makeText(getApplicationContext(), "Usuario registrado, por favor ve a perfil para añadir sus credenciales", Toast.LENGTH_LONG).show();
                 Intent i = new Intent(getApplicationContext(), MapaActivity.class);
                 startActivity(i);
             } else if(codigo == 403){
