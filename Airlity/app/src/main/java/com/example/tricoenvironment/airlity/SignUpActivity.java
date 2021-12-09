@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.UnderlineSpan;
@@ -34,6 +35,7 @@ public class SignUpActivity extends AppCompatActivity {
     private String correoUsuario;
     private String contraseñaUsuario;
     private String contraseñaVerificada;
+    private String telefonoUsuario;
     private int codigo;
     private String cuerpo;
     private LogicaFake logicaFake;
@@ -97,6 +99,7 @@ public class SignUpActivity extends AppCompatActivity {
         final TextView tvLogearse = (TextView) findViewById(R.id.tv_signup_logearse_clickable);
         Button btSignUp = (Button) findViewById(R.id.bt_signup_signup);
         final TextView tvErrorSignUp = findViewById(R.id.tv_error_signup);
+        final EditText etTelefonoSignUp = findViewById(R.id.et_signup_telefono);
 
         //------------------------------------------------------------
         //------------------------------------------------------------
@@ -107,6 +110,7 @@ public class SignUpActivity extends AppCompatActivity {
         etCorreoSignUp.setText("");
         etContrasenyaSignUp.setText("");
         etVerificarContrasenyaSignUp.setText("");
+        etTelefonoSignUp.setText("");
 
         //------------------------------------------------------------
         //------------------------------------------------------------
@@ -132,14 +136,17 @@ public class SignUpActivity extends AppCompatActivity {
                 correoUsuario = etCorreoSignUp.getText().toString();
                 contraseñaUsuario = etContrasenyaSignUp.getText().toString();
                 contraseñaVerificada = etVerificarContrasenyaSignUp.getText().toString();
+                telefonoUsuario = etTelefonoSignUp.getText().toString();
+                int telefonoUsuarioInt = Integer.parseInt(telefonoUsuario);
                 if (TextUtils.isEmpty(etNombreSignUp.getText().toString())
                         || TextUtils.isEmpty(etCorreoSignUp.getText().toString())
+                        || TextUtils.isEmpty(etTelefonoSignUp.getText().toString())
                         || TextUtils.isEmpty(etContrasenyaSignUp.getText().toString())
                         || TextUtils.isEmpty(etVerificarContrasenyaSignUp.getText().toString())) {
                     tvErrorSignUp.setVisibility(VISIBLE);
                     tvErrorSignUp.setText("Rellene todos los campos");
                 } else if (contraseñaUsuario.equals(contraseñaVerificada)) {
-                    logicaFake.registrarUsuario(nombreUsuario, correoUsuario, contraseñaUsuario, 10, macSensorUsuario,getApplicationContext());
+                    logicaFake.registrarUsuario(nombreUsuario, correoUsuario, contraseñaUsuario, telefonoUsuarioInt, macSensorUsuario,getApplicationContext());
                     SharedPreferences sharedPreferences = getSharedPreferences("com.example.tricoenvironment.airlity", MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putBoolean("usuarioLogeado", true);

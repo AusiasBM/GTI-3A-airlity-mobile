@@ -116,6 +116,29 @@
                 app:layout_constraintTop_toBottomOf="@+id/et_signup_nombre" />
 
             <EditText
+                android:id="@+id/et_signup_telefono"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="30dp"
+                android:background="@drawable/formulario_log_in"
+                android:ems="10"
+                android:fontFamily="@font/comfortaa"
+                android:hint="Teléfono de contacto"
+                android:inputType="phone"
+                android:padding="5dp"
+                android:paddingStart="20dp"
+                android:textColor="@color/colorPrimary"
+                android:textColorHighlight="@color/colorPrimary"
+                android:textColorHint="@color/colorPrimary"
+                android:textColorLink="@color/colorPrimary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_signup_correo" />
+
+            <EditText
                 android:id="@+id/et_signup_contrasenya"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -134,7 +157,7 @@
                 app:layout_constraintEnd_toEndOf="@+id/et_signup_correo"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/et_signup_correo"
-                app:layout_constraintTop_toBottomOf="@+id/et_signup_correo" />
+                app:layout_constraintTop_toBottomOf="@+id/et_signup_telefono" />
 
             <EditText
                 android:id="@+id/et_signup_verificar_contrasenya"
