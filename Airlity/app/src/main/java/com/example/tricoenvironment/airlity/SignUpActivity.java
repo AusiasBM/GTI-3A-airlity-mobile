@@ -79,6 +79,7 @@ public class SignUpActivity extends AppCompatActivity {
         NavigationView navigationView = findViewById(R.id.signup_navigationView);
         navigationView.setItemIconTintList(null);
 
+        navigationView.getMenu().getItem(1).setVisible(false);
         navigationView.getMenu().getItem(3).setVisible(false);
         navigationView.getMenu().getItem(4).setVisible(false);
         navigationView.getMenu().getItem(5).setVisible(false);

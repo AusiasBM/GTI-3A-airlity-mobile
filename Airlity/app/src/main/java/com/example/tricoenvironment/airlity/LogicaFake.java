@@ -27,7 +27,7 @@ import java.util.List;
 public class LogicaFake {
 
     private static final String ETIQUETA_LOG = ">>>>";
-    private static String url="10.236.50.31";
+    private static String url="172.20.10.2";
     //IP SERVIDOR: 217.76.155.97
 
 
@@ -233,5 +233,17 @@ public class LogicaFake {
         );
     }
 
+    public static void sensoresInactivos(String acces_token){
+        PeticionarioREST elPeticionario = new PeticionarioREST();
+        elPeticionario.hacerPeticionRESTConTokken("GET",
+                "http://"+url+":3500/sensoresInactivos", null,acces_token,
+                new PeticionarioREST.RespuestaREST () {
+                    @Override
+                    public void callback(int codigo, String cuerpo) {
+                        Log.d("Sensores_inactivos", "sensores que se encuentran desconetados 24 h = " + codigo + ", "+ cuerpo);
+                    }
+                }
+        );
+    }
 
 }

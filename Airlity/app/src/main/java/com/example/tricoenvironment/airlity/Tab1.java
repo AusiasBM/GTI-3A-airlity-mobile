@@ -16,6 +16,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
@@ -77,11 +78,12 @@ public class Tab1 extends Fragment {
     static final String CANAL_ID = "mi_canal";
     static final int NOTIFICACION_ID = 2;
 
+
+
     ServicioEscuharBeacons servicio= new ServicioEscuharBeacons();
     Button btn_distancia;
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         context = getActivity();
 

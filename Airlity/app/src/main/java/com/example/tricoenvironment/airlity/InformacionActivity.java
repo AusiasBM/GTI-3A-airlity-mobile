@@ -63,6 +63,8 @@ public class InformacionActivity extends AppCompatActivity {
             navigationView.getMenu().getItem(2).setVisible(false);
         }else{
             Log.d("HOLA", "susu");
+
+            navigationView.getMenu().getItem(1).setVisible(false);
             navigationView.getMenu().getItem(3).setVisible(false);
             navigationView.getMenu().getItem(4).setVisible(false);
             navigationView.getMenu().getItem(5).setVisible(false);
