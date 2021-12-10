@@ -106,11 +106,14 @@ public class PeticionarioREST extends AsyncTask<Void, Void, Boolean> {
 
         try {
             Log.d("clienterestandroid", "doInBackground() me conecto a >" + urlDestino + "< " + elCuerpo);
+            Log.d("Sensores_inactivos", tokken+"");
 
             URL url = new URL(this.urlDestino);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestProperty( "Content-Type", "application/json" );
-            connection.setRequestProperty ("Authorization", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxYjIxYzk4YzI3Njc3YzY2YzI1ODJhNyIsInJvbCI6IlVzdWFyaW8iLCJpYXQiOjE2MzkxMzI5ODEsImV4cCI6MTYzOTEzNDc4MX0.5IrWc6m5YUbW2lcFpBo7yaDWU6Gz0VDw3dYRbT0F6U0");
+            connection.setRequestProperty ("Authorization", tokken+"");
+
+            //connection.setRequestProperty ("Authorization", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxYjIxYzk4YzI3Njc3YzY2YzI1ODJhNyIsInJvbCI6IlVzdWFyaW8iLCJpYXQiOjE2MzkxMzI5ODEsImV4cCI6MTYzOTEzNDc4MX0.5IrWc6m5YUbW2lcFpBo7yaDWU6Gz0VDw3dYRbT0F6U0");
             connection.setRequestMethod(this.elMetodo);
             // connection.setRequestProperty("Accept", "*/*);
 

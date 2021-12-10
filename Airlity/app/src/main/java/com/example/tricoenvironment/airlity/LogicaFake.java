@@ -28,6 +28,8 @@ public class LogicaFake {
 
     private static final String ETIQUETA_LOG = ">>>>";
     private static String url="172.20.10.2";
+    //IP Pere red iphone 172.20.10.2
+    //IP Pere en UPVNET 10.236.50.31
     //IP SERVIDOR: 217.76.155.97
 
 
