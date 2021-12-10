@@ -90,6 +90,8 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         if (sesionInicidad && cuerpo!=null){
             navigationView.getMenu().getItem(2).setVisible(false);
         }else{
+
+            navigationView.getMenu().getItem(1).setVisible(false);
             navigationView.getMenu().getItem(3).setVisible(false);
             navigationView.getMenu().getItem(4).setVisible(false);
             navigationView.getMenu().getItem(5).setVisible(false);
