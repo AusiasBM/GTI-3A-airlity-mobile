@@ -43,6 +43,7 @@ public class PeticionarioREST extends AsyncTask<Void, Void, Boolean> {
     private String urlDestino;
     private String elCuerpo = null;
     private RespuestaREST laRespuesta;
+    private String tokken;
 
     private int codigoRespuesta;
     private String cuerpoRespuesta = "";
@@ -67,6 +68,16 @@ public class PeticionarioREST extends AsyncTask<Void, Void, Boolean> {
         this.elMetodo = metodo;
         this.urlDestino = urlDestino;
         this.elCuerpo = cuerpo;
+        this.laRespuesta = laRespuesta;
+
+        this.execute(); // otro thread ejecutará doInBackground()
+    }
+
+    public void hacerPeticionRESTConTokken (String metodo, String urlDestino, String cuerpo, String tokken, RespuestaREST  laRespuesta) {
+        this.elMetodo = metodo;
+        this.urlDestino = urlDestino;
+        this.elCuerpo = cuerpo;
+        this.tokken= tokken;
         this.laRespuesta = laRespuesta;
 
         this.execute(); // otro thread ejecutará doInBackground()
@@ -99,6 +110,7 @@ public class PeticionarioREST extends AsyncTask<Void, Void, Boolean> {
             URL url = new URL(this.urlDestino);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestProperty( "Content-Type", "application/json" );
+            connection.setRequestProperty ("Authorization", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxYjIxYzk4YzI3Njc3YzY2YzI1ODJhNyIsInJvbCI6IlVzdWFyaW8iLCJpYXQiOjE2MzkxMzI5ODEsImV4cCI6MTYzOTEzNDc4MX0.5IrWc6m5YUbW2lcFpBo7yaDWU6Gz0VDw3dYRbT0F6U0");
             connection.setRequestMethod(this.elMetodo);
             // connection.setRequestProperty("Accept", "*/*);
 

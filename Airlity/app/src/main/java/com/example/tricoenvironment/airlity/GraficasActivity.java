@@ -64,6 +64,10 @@ public class GraficasActivity extends AppCompatActivity {
     private TextView fechaDia, valorMedio, valorMax, tiempoMidiendo, calidadAire;
     private long medianoche;
     private String gas;
+    private LogicaFake logicaFake;
+
+    Boolean sesionInicidad;
+    String cuerpo, tokkenUsuarioDato;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +81,18 @@ public class GraficasActivity extends AppCompatActivity {
         valorMax = findViewById(R.id.valorMax);
         tiempoMidiendo = findViewById(R.id.tiempoMidiendo);
         calidadAire = findViewById(R.id.calidadAire);
+
+        logicaFake = new LogicaFake();
+
+        SharedPreferences preferences=getSharedPreferences("com.example.tricoenvironment.airlity", Context.MODE_PRIVATE);
+        sesionInicidad = preferences.getBoolean("usuarioLogeado", false);
+        cuerpo = preferences.getString("cuerpoUsuario", null);
+        Gson gson = new Gson();
+        Root datosRoot = gson.fromJson(cuerpo, Root.class);
+
+        tokkenUsuarioDato = datosRoot.getData().getToken();
+
+        logicaFake.sensoresInactivos(tokkenUsuarioDato);
 
         //-------------------------------------------
         //Para el menu

@@ -233,5 +233,17 @@ public class LogicaFake {
         );
     }
 
+    public static void sensoresInactivos(String acces_token){
+        PeticionarioREST elPeticionario = new PeticionarioREST();
+        elPeticionario.hacerPeticionRESTConTokken("GET",
+                "http://"+url+":3500/sensoresInactivos", null,acces_token,
+                new PeticionarioREST.RespuestaREST () {
+                    @Override
+                    public void callback(int codigo, String cuerpo) {
+                        Log.d("Sensores_inactivos", "sensores que se encuentran desconetados 24 h = " + codigo + ", "+ cuerpo);
+                    }
+                }
+        );
+    }
 
 }
