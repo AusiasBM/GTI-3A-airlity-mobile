@@ -27,6 +27,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,6 +51,8 @@ public class Tab1 extends Fragment {
 
     private Button buscarDispositivo;
     private Button detenerDispositivo;
+
+    private ProgressBar progressBar;
 
     private Context context;
     private Intent intentServicioBLE = null;
@@ -106,28 +109,16 @@ public class Tab1 extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.tab1, container, false);
 
-        //Textviews donde se mostrará la información del dispositivo una vez se ha conectado
-        textNombreDispositivo = v.findViewById(R.id.textNombreDelDispositivo);
-        textNMacDispositivo = v.findViewById(R.id.textMacDelDispositivo);
-        textUuidDispositivo = v.findViewById(R.id.textUuidDelDispositivo);
-        textFechaDispositivo = v.findViewById(R.id.textFechaUltimoBeacon);
-
-        //EditText donde poner los filtros para buscar nuestro dispositivo
-        nombreDispositivo = v.findViewById(R.id.editNombre);
-        macDispositivo = v.findViewById(R.id.editMAC);
-
-        //Botones
-        buscarDispositivo = v.findViewById(R.id.BotonBuscar);
-        detenerDispositivo = v.findViewById(R.id.BotonFinalizar);
-        btn_distancia=v.findViewById(R.id.boton_distancia);
+        progressBar = v.findViewById(R.id.progressBar2);
+        btn_distancia = v.findViewById(R.id.boton_distancia2);
         intentServicioBLE = new Intent(context, ServicioEscuharBeacons.class);
 
         //Creamos el intent que permitirá lanzar el servicio ServicioLogicaFake
         intentServicioREST = new Intent(context, ServicioLogicaFake.class);
         context.startService(intentServicioREST);
 
-        botonBuscarNuestroDispositivoBTLEPulsado();
-        botonDetenerBusquedaDispositivosBTLEPulsado();
+        //botonBuscarNuestroDispositivoBTLEPulsado();
+        //botonDetenerBusquedaDispositivosBTLEPulsado();
         btn_averiguarDistancia();
 
 
@@ -219,6 +210,7 @@ public class Tab1 extends Fragment {
      * botonBuscarNuestroDispositivoBTLEPulsado() ->
      */
 
+    /*
     public void botonBuscarNuestroDispositivoBTLEPulsado() {
 
         //this.buscarEsteDispositivoBTLE( Utilidades.stringToUUID( "EPSG-GTI-PROY-3A" ) ); GTI-3A-ABENEST C5:BC:C9:2D:5C:D0
@@ -255,6 +247,8 @@ public class Tab1 extends Fragment {
         //this.buscarEsteDispositivoBTLE( "GTI-3A-ABENEST" , "C5:BC:C9:2D:5C:D0" );
     } // ()
 
+     */
+
     public void btn_averiguarDistancia(){
         btn_distancia.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -269,6 +263,7 @@ public class Tab1 extends Fragment {
      *
      * botonBuscarNuestroDispositivoBTLEPulsado() ->
      */
+    /*
     public void botonDetenerBusquedaDispositivosBTLEPulsado() {
         detenerDispositivo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -279,13 +274,11 @@ public class Tab1 extends Fragment {
                     //Parar servicio escucha BLE
                     context.stopService(intentServicioBLE);
                     ctd.cancel();
-                    /*//Parar servicio rest
                     Intent stopIntent = new Intent();
                     stopIntent.setAction(ServicioLogicaFake.StopServicioREST.ACTION_STOP);
-                    context.sendBroadcast(stopIntent);*/
+                    context.sendBroadcast(stopIntent);
 
-                    Toast.makeText(context,"Servicio bluetooth detenido",
-                            Toast.LENGTH_SHORT).show();
+
                 }catch (Exception e){
                     Log.d(ETIQUETA_LOG, "" + e );
                 }
@@ -293,6 +286,9 @@ public class Tab1 extends Fragment {
             }
         });
     } // ()
+
+     */
+
 
 
     /**
@@ -342,7 +338,7 @@ public class Tab1 extends Fragment {
         }
     }
     /*
-    * Receptor distancia se emplea para recoger el parametro distancia de la clase ServicioEscucharBeacons
+    * Receptor distancia se emplea pra recoger el parametro distancia de la clase ServicioEscucharBeacons
     * */
 
     private class ReceptorDistancia extends BroadcastReceiver {
@@ -360,20 +356,29 @@ public class Tab1 extends Fragment {
     este meetodo se utiliza para que caundo cliques un boton mire si la distancia
     es superior de 1500 que es valor normal a menos de 5 metros
         */
-    public void mostarDistancia( double resultado ){
-    Log.d("distancia",""+resultado);
-        if(resultado<1500 && resultado>1) {
-            Toast.makeText(context, "Nuestro dispositivo se encuentra a menos de 5 metros",
+    public void mostarDistancia( double resultado ) {
+        Log.d("distancia", "" + resultado);
+        resultado=1;
+        if (resultado < 0.1) {
+            Toast.makeText(context, "Error al rastrear el sensor, vuelva a intentarlo",
                     Toast.LENGTH_SHORT).show();
-
-        }else if(resultado>1500){
-            Toast.makeText(context, "No se ha podido encontrar el dispositivo",
-                    Toast.LENGTH_SHORT).show();
+            progressBar.setProgress(0);
+        }else if(resultado>=0.1 && resultado<500){
+            progressBar.setProgress(1);
+        } else if (resultado >= 500 && resultado < 1200) {
+            progressBar.setProgress(6);
+        }else if(resultado>=1200 && resultado<2500){
+            progressBar.setProgress(7);
+        }
+        else if(resultado>=2500){
+            progressBar.setProgress(9);
         }
         else {
             Toast.makeText(context, "No se ha podido encontrar el dispositivo",
                     Toast.LENGTH_SHORT).show();
+            progressBar.setProgress(0);
         }
+
     }
 
 

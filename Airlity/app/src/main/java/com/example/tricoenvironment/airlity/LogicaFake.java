@@ -27,7 +27,7 @@ import java.util.List;
 public class LogicaFake {
 
     private static final String ETIQUETA_LOG = ">>>>";
-    private static String url="192.168.31.98";
+    private static String url="10.236.50.31";
     //IP SERVIDOR: 217.76.155.97
 
 

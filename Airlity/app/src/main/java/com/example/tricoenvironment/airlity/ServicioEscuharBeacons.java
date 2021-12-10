@@ -507,9 +507,9 @@ public class ServicioEscuharBeacons extends Service {
         //el 4 es el parametro de condiciones ambientales
         double power = (absRssi - txPower)/(10 * 4.0);
         double distancia=Math.pow(10,power);
-       Intent i=new Intent();
-       i.setAction("Nueva_distancia");
-       i.putExtra("Distancia",distancia);
+        Intent i=new Intent();
+        i.setAction("Nueva_distancia");
+        i.putExtra("Distancia",distancia);
         sendBroadcast(i);
         Log.d("Se encuentra a: ",""+distancia);
     }
