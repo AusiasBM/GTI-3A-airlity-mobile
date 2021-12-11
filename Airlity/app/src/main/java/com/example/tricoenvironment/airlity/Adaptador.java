@@ -72,7 +72,7 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.ViewHolder>{
             //Poner en cada textView que tiene el layout elementos_recyclerview.xml
             // el dato que corresponda.
             txtvalor.setText("" + medicion.getMedida());
-            txtTipo.setText("" +medicion.getTipoMedida());
+            txtTipo.setText("" +medicion.getTipoMedicion());
             txtTemp.setText("" + medicion.getTemperatura());
             txtHum.setText("" + medicion.getHumedad());
 

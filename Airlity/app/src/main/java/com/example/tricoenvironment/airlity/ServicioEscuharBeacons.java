@@ -432,7 +432,7 @@ public class ServicioEscuharBeacons extends Service {
         for (Medicion medicion : this.mediciones){
             //Si el tipo de medición coincide y la fecha se diferencia por menos de 5 segundos, la
             // medición ya está incluida y devuelve True
-            if(m.getTipoMedida().equals(medicion.getTipoMedida()) && (m.getFecha() < medicion.getFecha()+5000)){
+            if(m.getTipoMedicion().equals(medicion.getTipoMedicion()) && (m.getFecha() < medicion.getFecha()+5000)){
                 return true;
             }
         }
