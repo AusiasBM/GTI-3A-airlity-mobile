@@ -14,7 +14,7 @@ import static java.lang.System.currentTimeMillis;
 public class Medicion {
 
     private enum TipoMedida{IAQ, SO2, NO2, O3};
-    private TipoMedida tipoMedicion;
+    private String tipoMedicion;
     private String macSensor, idUsuario;
     private int temperatura, humedad; //de moment serà un nº enter
     private double medida, latitud, longitud;
@@ -85,85 +85,13 @@ public class Medicion {
         this.fecha = fecha;
     }
 
-    /**
-     * Método getTipo.
-     *
-     *  Texto <- getTipo() <-
-     *
-     * @return tipo.name(). Devuelve el nombre del tipo de medida de la que es cada medición.
-     */
-    public String getTipoMedida() {
-        /*try{
-
-        }catch (Exception e){
-            return tipoMedicion.IAQ.name();
-        }*/
-
-        return tipoMedicion.name();
-
+    public String getTipoMedicion() {
+        return tipoMedicion;
     }
 
-
-    /**
-     * Método setTipo. Determina el tipo de medición que es cada objeto según un el texto que se
-     * le pasa como parámetro. Se utilizará para saber el tipo cuando se convierta un JSON a objeto
-     * de tipo Medicion
-     *
-     *  tipoM : Texto -> setTipo() ->
-     *
-     * @param tipoM Texto que identifica el tipo de medida.
-     */
-    public void setTipoMedicion(String tipoM) {
-        switch (tipoM) {
-            case "IAQ":
-                this.tipoMedicion = tipoMedicion.IAQ;
-                break;
-            case "SO2":
-                this.tipoMedicion = tipoMedicion.SO2;
-                break;
-            case "NO2":
-                this.tipoMedicion = tipoMedicion.NO2;
-                break;
-            case "_O3":
-                this.tipoMedicion = tipoMedicion.O3;
-                break;
-
-            default:
-                // Como se ha cambiado el tipo CO2 por GAS, poner default GAS
-                this.tipoMedicion = tipoMedicion.IAQ;
-                break;
-        }
+    public void setTipoMedicion(String tipoMedicion) {
+        this.tipoMedicion = tipoMedicion;
     }
-
-    /**
-     * Método setTipo. Determina el tipo de medición que es cada objeto según un identificador (entero)
-     *
-     *  identificador : N -> setTipo() ->
-     *
-     * @param identificador Número entero
-     *
-     */
-    public void setTipoMedicion(int identificador) {
-        switch (identificador) {
-            case 0:
-                this.tipoMedicion = tipoMedicion.IAQ;
-                break;
-            case 1:
-                this.tipoMedicion = tipoMedicion.SO2;
-                break;
-            case 2:
-                this.tipoMedicion = tipoMedicion.NO2;
-                break;
-            case 3:
-                this.tipoMedicion = tipoMedicion.O3;
-                break;
-            default:
-                // Como se ha cambiado el tipo CO2 por GAS, poner default GAS
-                this.tipoMedicion = tipoMedicion.IAQ;
-                break;
-        }
-    }
-
 
     public double getMedida() {
         return medida;

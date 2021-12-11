@@ -9,6 +9,8 @@
 
 package com.example.tricoenvironment.airlity;
 
+import static android.view.View.VISIBLE;
+
 import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -37,24 +39,32 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+
+import org.json.JSONObject;
 
 public class MapaActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     boolean usuarioRegistrado, usuarioLogeado;
     String idUsuarioDato, nombreUsuarioDato, correoUsuarioDato, contraseñaUsuarioDato, tokkenUsuarioDato, telefonoUsuarioDato, macUsuarioDato;
+
     private IntentFilter intentFilter;
+    private MapaActivity.ReceptorGetMedicion receptor;
     //private MapaActivity.ReceptorDatosUsuario receptor;
 
     Bundle datos;
     Boolean sesionInicidad;
     String cuerpo;
+    LogicaFake logicaFake;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +72,14 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         setContentView(R.layout.activity_mapa);
         FloatingActionButton fab = findViewById(R.id.floatingActionButton);
 
+        intentFilter = new IntentFilter();
+        intentFilter.addAction("Get_Mediciones");
+        receptor = new MapaActivity.ReceptorGetMedicion();
+        registerReceiver(receptor, intentFilter);
+
+        logicaFake = new LogicaFake();
+
+        logicaFake.obtenerUltimasMediciones(this);
 
         SharedPreferences preferences=getSharedPreferences("com.example.tricoenvironment.airlity", Context.MODE_PRIVATE);
         sesionInicidad = preferences.getBoolean("usuarioLogeado", false);
@@ -115,6 +133,7 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
     }
 
     private void prepararDrawer(NavigationView navigationView) {
@@ -247,11 +266,9 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap.getUiSettings().setZoomControlsEnabled(true);
         // Add a marker in Sydney and move the camera
         LatLng epsgGandia = new LatLng(38.9959757, -0.1658417);
-        mMap.addMarker(new MarkerOptions()
-                .position(epsgGandia));
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         mMap.setMinZoomPreference(6.0f);
-        mMap.setMaxZoomPreference(12.0f);
+        mMap.setMaxZoomPreference(25.0f);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(epsgGandia, 18));
     }
 
@@ -273,5 +290,58 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         Intent i = new Intent(this, SignUpActivity.class);
         i.putExtra("macUsuario", macUsuarioDato);
         startActivity(i);
+    }
+
+    private class ReceptorGetMedicion extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            int codigo = intent.getIntExtra("codigoMedicion", 0);
+
+            cuerpo = intent.getStringExtra("Mediciones");
+            if (codigo == 200) {
+                Gson gson = new Gson();
+                Medicion[] mediciones = gson.fromJson(cuerpo, Medicion[].class);
+                for(Medicion medicion: mediciones){
+                    MarkerOptions marker = new MarkerOptions();
+                    LatLng coordenada = new LatLng(medicion.getLatitud(), medicion.getLongitud());
+                    String tipoMedicion = medicion.getTipoMedicion();
+
+                    double valorMedicion = medicion.getMedida();
+                    int valorTemperatura = medicion.getTemperatura();
+                    int valorHumedad = medicion.getHumedad();
+
+                    JsonObject datos = new JsonObject();
+
+                    if (tipoMedicion.equals("O2")){
+                        datos.addProperty("Valor 02", valorMedicion);
+                        marker = marker.position(coordenada).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)); //.title(medicion.getTipoMedida());
+                    }else if(tipoMedicion.equals("CO2")){
+                        datos.addProperty("Valor C02", valorMedicion);
+                        marker = marker.position(coordenada).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)); //.title(medicion.getTipoMedida());
+                    }else if(tipoMedicion.equals("03")){
+                        datos.addProperty("Valor 03", valorMedicion);
+                        marker = marker.position(coordenada).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)); //.title(medicion.getTipoMedida());
+                    }else if(tipoMedicion.equals("NO2")){
+                        datos.addProperty("Valor NO2", valorMedicion);
+                        marker = marker.position(coordenada).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA)); //.title(medicion.getTipoMedida());
+                    }else {
+                        datos.addProperty("Valor", valorMedicion);
+                        marker = marker.position(coordenada).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)); //.title(medicion.getTipoMedida());
+                    }
+
+                    datos.addProperty("Temperatura(ºC)", valorTemperatura);
+                    datos.addProperty("Humedad(%)", valorHumedad);
+                    mMap.addMarker(marker).setTitle(datos+"");
+
+
+
+                }
+
+            } else {
+                Toast.makeText(MapaActivity.this, "Fallo al recibir mediciones", Toast.LENGTH_LONG).show();
+            }
+        }
     }
 }

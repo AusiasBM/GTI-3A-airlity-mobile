@@ -27,7 +27,8 @@ import java.util.List;
 public class LogicaFake {
 
     private static final String ETIQUETA_LOG = ">>>>";
-    private static String url="172.20.10.2";
+    private static String url="192.168.31.98";
+    //IP Pere casa 192.168.31.98
     //IP Pere red iphone 172.20.10.2
     //IP Pere en UPVNET 10.236.50.31
     //IP SERVIDOR: 217.76.155.97
@@ -80,6 +81,7 @@ public class LogicaFake {
 
                         Intent i = new Intent();
                         i.setAction("Get_Mediciones");
+                        i.putExtra("codigoMedicion", codigo);
                         i.putExtra("Mediciones", cuerpo);
                         context.sendBroadcast(i);
 
