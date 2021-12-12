@@ -24,6 +24,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -61,6 +62,7 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
     private MapaActivity.ReceptorGetMedicion receptor;
     //private MapaActivity.ReceptorDatosUsuario receptor;
 
+    TextView tv_scan;
     Bundle datos;
     Boolean sesionInicidad;
     String cuerpo;
@@ -71,6 +73,7 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mapa);
         FloatingActionButton fab = findViewById(R.id.floatingActionButton);
+        tv_scan = findViewById(R.id.tv_scan);
 
         intentFilter = new IntentFilter();
         intentFilter.addAction("Get_Mediciones");
@@ -86,8 +89,9 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         cuerpo = preferences.getString("cuerpoUsuario", null);
         Log.d("sesion", sesionInicidad+"");
         Log.d("sesion", sesionInicidad+", "+cuerpo);
-        if(sesionInicidad && cuerpo!=null){
+        if(sesionInicidad==false && cuerpo==null){
             fab.setVisibility(View.GONE);
+            tv_scan.setVisibility(View.GONE);
         }
 
 
@@ -125,8 +129,8 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "Escanee el QR de un beacon", Toast.LENGTH_LONG).show();
-                new IntentIntegrator(MapaActivity.this).initiateScan();
+                //Toast.makeText(getApplicationContext(), "Escanee el QR de un beacon", Toast.LENGTH_LONG).show();
+                //new IntentIntegrator(MapaActivity.this).initiateScan();
             }
         });
 
@@ -270,26 +274,6 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap.setMinZoomPreference(6.0f);
         mMap.setMaxZoomPreference(25.0f);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(epsgGandia, 18));
-    }
-
-    /**
-     * Método llamado al escanear un QR, al escanearlo pasa a la actividad registrar usuario y guarda
-     * la mac escaneada para guardarla con el usuario
-     * @param requestCode
-     * @param resultCode
-     * @param data
-     */
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        IntentResult intentResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        macUsuarioDato = intentResult.getContents();
-        Toast.makeText(this, "Sensor encontrado", Toast.LENGTH_SHORT).show();
-
-        Intent i = new Intent(this, SignUpActivity.class);
-        i.putExtra("macUsuario", macUsuarioDato);
-        startActivity(i);
     }
 
     private class ReceptorGetMedicion extends BroadcastReceiver {
