@@ -42,6 +42,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -52,7 +53,7 @@ import com.google.zxing.integration.android.IntentResult;
 
 import org.json.JSONObject;
 
-public class MapaActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class MapaActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     private GoogleMap mMap;
     boolean usuarioRegistrado, usuarioLogeado;
@@ -73,6 +74,7 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mapa);
         FloatingActionButton fab = findViewById(R.id.floatingActionButton);
+        FloatingActionButton fabFiltros = findViewById(R.id.fab_filtro);
         tv_scan = findViewById(R.id.tv_scan);
 
         intentFilter = new IntentFilter();
@@ -92,6 +94,7 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         if(sesionInicidad==false && cuerpo==null){
             fab.setVisibility(View.GONE);
             tv_scan.setVisibility(View.GONE);
+            fabFiltros.setVisibility(View.GONE);
         }
 
 
@@ -267,13 +270,23 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
             return;
         }
         mMap.setMyLocationEnabled(true);
-        mMap.getUiSettings().setZoomControlsEnabled(true);
+        mMap.getUiSettings().setZoomControlsEnabled(false);
         // Add a marker in Sydney and move the camera
         LatLng epsgGandia = new LatLng(38.9959757, -0.1658417);
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         mMap.setMinZoomPreference(6.0f);
         mMap.setMaxZoomPreference(25.0f);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(epsgGandia, 18));
+    }
+
+    @Override
+    public boolean onMarkerClick(@NonNull Marker marker) {
+        return false;
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
     }
 
     private class ReceptorGetMedicion extends BroadcastReceiver {
@@ -314,13 +327,9 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
                         datos.addProperty("Valor", valorMedicion);
                         marker = marker.position(coordenada).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)); //.title(medicion.getTipoMedida());
                     }
-
                     datos.addProperty("Temperatura(ºC)", valorTemperatura);
                     datos.addProperty("Humedad(%)", valorHumedad);
                     mMap.addMarker(marker).setTitle(datos+"");
-
-
-
                 }
 
             } else {

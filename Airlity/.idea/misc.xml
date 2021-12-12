@@ -18,7 +18,7 @@
         <entry key="app/src/main/res/layout/activity_informacion.xml" value="0.1712962962962963" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.24375" />
         <entry key="app/src/main/res/layout/activity_map.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_mapa.xml" value="0.1444712158746438" />
+        <entry key="app/src/main/res/layout/activity_mapa.xml" value="0.2380546075085324" />
         <entry key="app/src/main/res/layout/activity_mediciones.xml" value="0.2578125" />
         <entry key="app/src/main/res/layout/activity_perfil_usuario.xml" value="0.278810611151432" />
         <entry key="app/src/main/res/layout/activity_pop_up_registro.xml" value="0.2578125" />
@@ -34,6 +34,8 @@
         <entry key="app/src/main/res/layout/layout_navigation_header.xml" value="0.19375" />
         <entry key="app/src/main/res/layout/tab1.xml" value="0.21416498295831649" />
         <entry key="app/src/main/res/layout/tab2.xml" value="0.1712962962962963" />
+        <entry key="app/src/main/res/menu/filtros.xml" value="0.25384615384615383" />
+        <entry key="app/src/main/res/menu/filtros_menu.xml" value="0.20520833333333333" />
         <entry key="app/src/main/res/menu/menu_actividad_principal.xml" value="0.18981481481481483" />
         <entry key="app/src/main/res/menu/menu_drawer.xml" value="0.29796511627906974" />
         <entry key="app/src/main/res/menu/navigation_menu.xml" value="0.19375" />
