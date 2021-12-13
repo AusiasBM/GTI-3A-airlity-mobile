@@ -72,7 +72,6 @@ public class ServicioEscuharBeacons extends Service {
 
         super.onStartCommand( elIntent, losFlags, startId );
 
-        nombreBLE = elIntent.getStringExtra("nombreDispositivo");
         macBLE = elIntent.getStringExtra("macDispositivo");
 
         Log.d(ETIQUETA_LOG, "Que retorna: "+ nombreBLE + "     " + macBLE);
@@ -83,7 +82,7 @@ public class ServicioEscuharBeacons extends Service {
             inicializarBlueTooth();
 
             //Buscamos el dispositivo que deseamos a través de su nombre y/o bien su MAC
-            buscarEsteDispositivoBTLE(nombreBLE, macBLE);
+            buscarEsteDispositivoBTLE(macBLE);
         }catch (Exception e){
             //En caso de haber algún error como que no esté aún activado el bluetooth mostramos un toast
             Toast.makeText(this, "Activado bluetooth del dispositivo",
@@ -215,14 +214,11 @@ public class ServicioEscuharBeacons extends Service {
      * El método buscarEsteDispositivoBTLE inicia la búsqueda de un dispositivo concreto filtrando
      * por su nombre y/o MAC
      *
-     * dispositivoBuscado: Texto,
      * dispositivoMac: Texto -> buscarEsteDispositivoBTLE() ->
-     *
-     * @param dispositivoBuscado Texto con el nombre del dispositivo que se desea buscar
      * @param dispositivoMAC Texto con la MAC del dispositivo que se desea buscar
      *
      */
-    private void buscarEsteDispositivoBTLE(final String dispositivoBuscado, final String dispositivoMAC ) {
+    private void buscarEsteDispositivoBTLE(final String dispositivoMAC ) {
 
         this.detenerBusquedaDispositivosBTLE();
         Log.d(ETIQUETA_LOG, " buscarEsteDispositivoBTLE(): empieza ");
@@ -258,12 +254,11 @@ public class ServicioEscuharBeacons extends Service {
             }
         };
 
-        Log.d(ETIQUETA_LOG, "  buscarEsteDispositivoBTLE(): empezamos a escanear buscando: " + dispositivoBuscado );
         Log.d(ETIQUETA_LOG, "  buscarEsteDispositivoBTLE(): también escanear buscando: " + dispositivoMAC );
 
         //Configuramos los filtros de búsqueda del dispositivo
         ArrayList<ScanFilter> filters = new ArrayList<ScanFilter>();
-        filters = (ArrayList<ScanFilter>) filtrarDispositivos(dispositivoBuscado, dispositivoMAC);
+        filters = (ArrayList<ScanFilter>) filtrarDispositivos(dispositivoMAC);
 
         //Configuramos el tipo de búsqueda
         ScanSettings settings = new ScanSettings.Builder().setScanMode(ScanSettings.SCAN_MODE_LOW_POWER).build();
@@ -282,25 +277,18 @@ public class ServicioEscuharBeacons extends Service {
      * dispositivoMac: Texto -> filtrarDispositivos() ->
      * [ScanFilter] <-
      *
-     * @param nombreDispositivo Texto con el nombre del dispositivo que se desea buscar
      * @param macDispositivo Texto con la MAC del dispositivo que se desea buscar
      *
      * @return filtos Lista de ScanFilter con los filtros que queremos para buscar
      *
      * ArrayList<ScanFilter> filtros = new ArrayList<ScanFilter>();
-     * ScanFilter scanFilterName = new ScanFilter.Builder().setDeviceName(nombreDispositivo).build();
-     * filtros.add(scanFilterName);
      * ScanSettings settings = new ScanSettings.Builder().setScanMode(ScanSettings.SCAN_MODE_LOW_POWER).build();
      * this.elEscanner.startScan(filters, settings, this.callbackDelEscaneo );
      *
      */
-    private List<ScanFilter> filtrarDispositivos(String nombreDispositivo, String macDispositivo){
+    private List<ScanFilter> filtrarDispositivos(String macDispositivo){
         ArrayList<ScanFilter> filtros = new ArrayList<ScanFilter>();
 
-        if(nombreDispositivo.length() > 0){
-            ScanFilter scanFilterName = new ScanFilter.Builder().setDeviceName(nombreDispositivo).build();
-            filtros.add(scanFilterName);
-        }
         if(macDispositivo.length() > 0){
             ScanFilter scanFilterMAC = new ScanFilter.Builder().setDeviceAddress(macDispositivo).build();
             filtros.add(scanFilterMAC);

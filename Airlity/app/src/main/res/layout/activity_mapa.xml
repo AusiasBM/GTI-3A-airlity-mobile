@@ -34,7 +34,7 @@
                 app:layout_constraintStart_toStartOf="@+id/map"
                 app:layout_constraintTop_toTopOf="@+id/map"
                 app:layout_constraintVertical_bias="0.974"
-                app:srcCompat="@drawable/boton_escaner"
+                app:srcCompat="@drawable/play"
                 tools:ignore="SpeakableTextPresentCheck" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton

@@ -20,6 +20,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -70,8 +71,10 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     Bundle datos;
     Boolean sesionInicidad;
-    String cuerpo;
+    String cuerpo, macSensor;
     LogicaFake logicaFake;
+
+    TextView tv_scan;
 
     LatLng posicionGandia = new LatLng(38.96797739, -0.19109882);
     LatLng posicionAlzira = new LatLng(39.14996506, -0.45786026);
@@ -80,12 +83,18 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     ArrayList<Estacion> estacionesOficiales = new ArrayList<Estacion>();
 
+    private Intent intentServicioBLE = null;
+    private boolean bluetoothActivo = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mapa);
-        FloatingActionButton fab = findViewById(R.id.floatingActionButton);
+        final FloatingActionButton fab = findViewById(R.id.floatingActionButton);
         FloatingActionButton fabFiltros = findViewById(R.id.fab_filtro);
+        tv_scan=findViewById(R.id.tv_scan);
+
+        intentServicioBLE = new Intent(this, ServicioEscuharBeacons.class);
 
         intentFilter = new IntentFilter();
         intentFilter.addAction("Get_Mediciones");
@@ -105,6 +114,11 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
             fab.setVisibility(View.GONE);
             fabFiltros.setVisibility(View.GONE);
         }
+
+        Gson gson = new Gson();
+        Root datosRoot = gson.fromJson(cuerpo, Root.class);
+
+        macUsuarioDato = datosRoot.getDatosUsuario().getMacSensor().toString();
 
         Estacion estacionGandia = new Estacion("Gandia", "https://webcat-web.gva.es/webcat_web/img/Estaciones/ES_00005.jpg", posicionGandia, "46131002");
         Estacion estacionAlcoi = new Estacion("Alcoi - Verge dels Lliris", "https://webcat-web.gva.es/webcat_web/img/Estaciones/ES_00278.jpg", posicionAlcoi, "03009006");
@@ -144,8 +158,22 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Toast.makeText(getApplicationContext(), "Escanee el QR de un beacon", Toast.LENGTH_LONG).show();
-                //new IntentIntegrator(MapaActivity.this).initiateScan();
+                if(!bluetoothActivo){
+                    Log.d("Escaner", " Inicio del servicio" );
+                    //ServicioEscucharBeacons
+                    intentServicioBLE.putExtra("macDispositivo", macSensor);
+                    getApplicationContext().startService(intentServicioBLE);
+                    fab.setImageResource(R.drawable.pausa);
+                    tv_scan.setVisibility(View.GONE);
+                    bluetoothActivo=true;
+
+
+                }else{
+                    getApplicationContext().stopService(intentServicioBLE);
+                    fab.setImageResource(R.drawable.play);
+                    tv_scan.setVisibility(VISIBLE);
+                    bluetoothActivo=false;
+                }
             }
         });
 
@@ -384,4 +412,5 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         }
     }
+
 }
