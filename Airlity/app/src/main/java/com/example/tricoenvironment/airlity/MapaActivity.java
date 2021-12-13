@@ -113,12 +113,15 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         if(sesionInicidad==false && cuerpo==null){
             fab.setVisibility(View.GONE);
             fabFiltros.setVisibility(View.GONE);
+            tv_scan.setVisibility(View.GONE);
+        }else {
+            Gson gson = new Gson();
+            Root datosRoot = gson.fromJson(cuerpo, Root.class);
+
+            macUsuarioDato = datosRoot.getDatosUsuario().getMacSensor().toString();
         }
 
-        Gson gson = new Gson();
-        Root datosRoot = gson.fromJson(cuerpo, Root.class);
 
-        macUsuarioDato = datosRoot.getDatosUsuario().getMacSensor().toString();
 
         Estacion estacionGandia = new Estacion("Gandia", "https://webcat-web.gva.es/webcat_web/img/Estaciones/ES_00005.jpg", posicionGandia, "46131002");
         Estacion estacionAlcoi = new Estacion("Alcoi - Verge dels Lliris", "https://webcat-web.gva.es/webcat_web/img/Estaciones/ES_00278.jpg", posicionAlcoi, "03009006");
