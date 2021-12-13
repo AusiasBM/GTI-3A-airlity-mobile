@@ -86,12 +86,18 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
     private Intent intentServicioBLE = null;
     private boolean bluetoothActivo = false;
 
+    int autorMediciones = 0;
+    long fechaInicio = 0;
+    long fechaFin = 0;
+
+    Medicion mediciones[] = new Medicion[0];
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mapa);
         final FloatingActionButton fab = findViewById(R.id.floatingActionButton);
-        FloatingActionButton fabFiltros = findViewById(R.id.fab_filtro);
+        ImageView iv_filtros = findViewById(R.id.iv_filtros);
         tv_scan=findViewById(R.id.tv_scan);
 
         intentServicioBLE = new Intent(this, ServicioEscuharBeacons.class);
@@ -112,7 +118,7 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         Log.d("sesion", sesionInicidad+", "+cuerpo);
         if(sesionInicidad==false && cuerpo==null){
             fab.setVisibility(View.GONE);
-            fabFiltros.setVisibility(View.GONE);
+            iv_filtros.setVisibility(View.GONE);
             tv_scan.setVisibility(View.GONE);
         }else {
             Gson gson = new Gson();
@@ -175,6 +181,7 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
                     getApplicationContext().stopService(intentServicioBLE);
                     fab.setImageResource(R.drawable.play);
                     tv_scan.setVisibility(VISIBLE);
+                    Toast.makeText(getApplicationContext(), "Se ha detenido la búsqueda de beacons", Toast.LENGTH_SHORT).show();
                     bluetoothActivo=false;
                 }
             }
@@ -183,6 +190,18 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        iv_filtros.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), FiltrosActivity.class);
+                intent.putExtra("autorMediciones", autorMediciones);
+                intent.putExtra("fechaInicio", fechaInicio);
+                intent.putExtra("fechaFin", fechaFin);
+                startActivityForResult(intent, 200);
+
+            }
+        });
     }
 
     private void prepararDrawer(NavigationView navigationView) {
@@ -377,43 +396,75 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
             cuerpo = intent.getStringExtra("Mediciones");
             if (codigo == 200) {
                 Gson gson = new Gson();
-                Medicion[] mediciones = gson.fromJson(cuerpo, Medicion[].class);
-                for(Medicion medicion: mediciones){
-                    MarkerOptions marker = new MarkerOptions();
-                    LatLng coordenada = new LatLng(medicion.getLatitud(), medicion.getLongitud());
-                    String tipoMedicion = medicion.getTipoMedicion();
-
-                    double valorMedicion = medicion.getMedida();
-                    int valorTemperatura = medicion.getTemperatura();
-                    int valorHumedad = medicion.getHumedad();
-
-                    JsonObject datos = new JsonObject();
-
-                    if (tipoMedicion.equals("O2")){
-                        datos.addProperty("Valor 02", valorMedicion);
-                        marker = marker.position(coordenada).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)); //.title(medicion.getTipoMedida());
-                    }else if(tipoMedicion.equals("CO2")){
-                        datos.addProperty("Valor C02", valorMedicion);
-                        marker = marker.position(coordenada).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)); //.title(medicion.getTipoMedida());
-                    }else if(tipoMedicion.equals("03")){
-                        datos.addProperty("Valor 03", valorMedicion);
-                        marker = marker.position(coordenada).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)); //.title(medicion.getTipoMedida());
-                    }else if(tipoMedicion.equals("NO2")){
-                        datos.addProperty("Valor NO2", valorMedicion);
-                        marker = marker.position(coordenada).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA)); //.title(medicion.getTipoMedida());
-                    }else {
-                        datos.addProperty("Valor", valorMedicion);
-                        marker = marker.position(coordenada).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)); //.title(medicion.getTipoMedida());
-                    }
-                    datos.addProperty("Temperatura(ºC)", valorTemperatura);
-                    datos.addProperty("Humedad(%)", valorHumedad);
-                    mMap.addMarker(marker).setTitle(datos+"");
-                }
-
+                mediciones = gson.fromJson(cuerpo, Medicion[].class);
+                mostrarMediciones();
             } else {
                 Toast.makeText(MapaActivity.this, "Fallo al recibir mediciones", Toast.LENGTH_LONG).show();
             }
         }
     }
 
+    private void mostrarMediciones(){
+        mMap.clear();
+        for(Medicion medicion: mediciones) {
+
+            if (autorMediciones==1){
+                if (!medicion.getMacSensor().equals(macSensor)){
+                    continue;
+                }
+            }
+
+            if(fechaInicio!=0){
+                if (medicion.getFecha()<fechaInicio){
+                    continue;
+                }
+            }
+
+            if(fechaFin!=0){
+                if (medicion.getFecha()>fechaFin){
+                    continue;
+                }
+            }
+
+            MarkerOptions marker = new MarkerOptions();
+            LatLng coordenada = new LatLng(medicion.getLatitud(), medicion.getLongitud());
+            String tipoMedicion = medicion.getTipoMedicion();
+
+            double valorMedicion = medicion.getMedida();
+            int valorTemperatura = medicion.getTemperatura();
+            int valorHumedad = medicion.getHumedad();
+
+            JsonObject datos = new JsonObject();
+
+            if (tipoMedicion.equals("CO")) {
+                datos.addProperty("Valor C0", valorMedicion);
+                marker = marker.position(coordenada).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)); //.title(medicion.getTipoMedida());
+            } else if (tipoMedicion.equals("SO2")) {
+                datos.addProperty("Valor S02", valorMedicion);
+                marker = marker.position(coordenada).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)); //.title(medicion.getTipoMedida());
+            } else if (tipoMedicion.equals("03")) {
+                datos.addProperty("Valor 03", valorMedicion);
+                marker = marker.position(coordenada).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)); //.title(medicion.getTipoMedida());
+            } else if (tipoMedicion.equals("NO2")) {
+                datos.addProperty("Valor NO2", valorMedicion);
+                marker = marker.position(coordenada).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA)); //.title(medicion.getTipoMedida());
+            } else if(tipoMedicion.equals("IAQ")){
+                datos.addProperty("Valor IAQ", valorMedicion);
+                marker = marker.position(coordenada).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)); //.title(medicion.getTipoMedida());
+            }
+            datos.addProperty("Temperatura(ºC)", valorTemperatura);
+            datos.addProperty("Humedad(%)", valorHumedad);
+            mMap.addMarker(marker).setTitle(datos + "");
+        }
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==200 && resultCode==RESULT_OK){
+            autorMediciones= data.getIntExtra("autorMediciones", 0);
+            fechaInicio = data.getLongExtra("fechaInicio", 0);
+            fechaFin = data.getLongExtra("fechaFin", 0);
+            mostrarMediciones();
+        }
+    }
 }

@@ -28,6 +28,7 @@
                 android:layout_width="115dp"
                 android:layout_height="wrap_content"
                 android:clickable="true"
+                android:tint="#FFFFFF"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/map"
                 app:layout_constraintHorizontal_bias="0.045"
@@ -35,20 +36,6 @@
                 app:layout_constraintTop_toTopOf="@+id/map"
                 app:layout_constraintVertical_bias="0.974"
                 app:srcCompat="@drawable/play"
-                tools:ignore="SpeakableTextPresentCheck" />
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab_filtro"
-                android:layout_width="115dp"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/map"
-                app:layout_constraintHorizontal_bias="0.954"
-                app:layout_constraintStart_toStartOf="@+id/map"
-                app:layout_constraintTop_toTopOf="@+id/map"
-                app:layout_constraintVertical_bias="0.92"
-                app:srcCompat="@drawable/boton_filtro"
                 tools:ignore="SpeakableTextPresentCheck" />
 
             <fragment
@@ -64,6 +51,7 @@
                 android:background="#00DBC5"
                 android:fontFamily="@font/comfortaa"
                 android:text="Empezar escaneo"
+                android:textColor="#FFFFFF"
                 app:layout_constraintBottom_toBottomOf="@+id/floatingActionButton"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0"
@@ -100,6 +88,15 @@
                 android:textColor="#FFFFFF"
                 android:textSize="18dp"
                 android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/iv_filtros"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="-40dp"
+                android:layout_weight="0"
+                android:tint="#FFFFFF"
+                app:srcCompat="@drawable/boton_filtro" />
 
         </LinearLayout>
 
