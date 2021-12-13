@@ -24,6 +24,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +33,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.menu.MenuItemWrapperICS;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -53,6 +55,8 @@ import com.google.zxing.integration.android.IntentResult;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 public class MapaActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     private GoogleMap mMap;
@@ -63,11 +67,22 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
     private MapaActivity.ReceptorGetMedicion receptor;
     //private MapaActivity.ReceptorDatosUsuario receptor;
 
-    TextView tv_scan;
+    ConstraintLayout ct_marker;
+    TextView tv_scan, tv_marker_nombre;
+    ImageView iv_close;
     Bundle datos;
     Boolean sesionInicidad;
     String cuerpo;
     LogicaFake logicaFake;
+
+    ArrayList<LatLng> estacionesDeMedida = new ArrayList<LatLng>();
+    LatLng estacionGandia = new LatLng(38.96797739, -0.19109882);
+    LatLng estacionAlzira = new LatLng(39.14996506, -0.45786026);
+    LatLng estacionAlcoi = new LatLng(38.70651691, -0.46721615);
+    LatLng estacionBenidorm = new LatLng(38.57297101, -0.14637164);
+
+    ArrayList<String> nombresEstaciones = new ArrayList<String>();
+    ArrayList<String> imagenesEstaciones = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +91,11 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         FloatingActionButton fab = findViewById(R.id.floatingActionButton);
         FloatingActionButton fabFiltros = findViewById(R.id.fab_filtro);
         tv_scan = findViewById(R.id.tv_scan);
+        tv_marker_nombre = findViewById(R.id.tv_marker_nombre);
+        ct_marker = findViewById(R.id.ct_marker);
+        iv_close = findViewById(R.id.iv_close);
+
+        ct_marker.setVisibility(View.GONE);
 
         intentFilter = new IntentFilter();
         intentFilter.addAction("Get_Mediciones");
@@ -96,6 +116,20 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
             tv_scan.setVisibility(View.GONE);
             fabFiltros.setVisibility(View.GONE);
         }
+
+        estacionesDeMedida.add(estacionGandia);
+        nombresEstaciones.add("Gandia");
+        imagenesEstaciones.add("https://webcat-web.gva.es/webcat_web/img/Estaciones/ES_00005.jpg");
+        estacionesDeMedida.add(estacionAlcoi);
+        nombresEstaciones.add("Alcoi - Verge dels Lliris");
+        imagenesEstaciones.add("https://webcat-web.gva.es/webcat_web/img/Estaciones/ES_00278.jpg");
+        estacionesDeMedida.add(estacionAlzira);
+        nombresEstaciones.add("Alzira");
+        imagenesEstaciones.add("https://webcat-web.gva.es/webcat_web/img/Estaciones/ES_00239.jpg");
+        estacionesDeMedida.add(estacionBenidorm);
+        nombresEstaciones.add("Benidorm");
+        imagenesEstaciones.add("https://webcat-web.gva.es/webcat_web/img/Estaciones/ES_00329.jpg");
+
 
 
         //-------------------------------------------
@@ -124,11 +158,6 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         prepararDrawer(navigationView);
         //-------------------------------------------
         //-------------------------------------------
-
-        /**
-         * Para la cámara QR
-         */
-
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -141,6 +170,12 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        iv_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ct_marker.setVisibility(View.GONE);
+            }
+        });
     }
 
     private void prepararDrawer(NavigationView navigationView) {
@@ -153,7 +188,6 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
                         return true;
                     }
                 });
-
     }
 
     private void seleccionarItem(MenuItem itemDrawer) {
@@ -273,10 +307,30 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap.getUiSettings().setZoomControlsEnabled(false);
         // Add a marker in Sydney and move the camera
         LatLng epsgGandia = new LatLng(38.9959757, -0.1658417);
+
+
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         mMap.setMinZoomPreference(6.0f);
         mMap.setMaxZoomPreference(25.0f);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(epsgGandia, 18));
+
+        //ESTACIONES OFICIALES DE MEDIDA
+        for (int i = 0; i<estacionesDeMedida.size();i++){
+            for (int j = 0; j<nombresEstaciones.size();j++){
+                mMap.addMarker(new MarkerOptions().position(estacionesDeMedida.get(i)).title(nombresEstaciones.get(i)));
+            }
+        }
+
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(@NonNull Marker marker) {
+                if (marker.getTitle().length()<30){
+                    ct_marker.setVisibility(VISIBLE);
+                    tv_marker_nombre.setText(marker.getTitle());
+                }
+                return false;
+            }
+        });
     }
 
     @Override
