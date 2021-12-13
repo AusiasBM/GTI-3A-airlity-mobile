@@ -26,6 +26,13 @@ public class Medicion {
     public Medicion() {
     }
 
+    // Este constructor lo utilizamos para las mediciones de las estaciones
+    public Medicion(String tipoMedicion, double medida, long fecha) {
+        this.tipoMedicion = tipoMedicion;
+        this.medida = medida;
+        this.fecha = fecha;
+    }
+
     public String getIdUsuario() {
         return idUsuario;
     }

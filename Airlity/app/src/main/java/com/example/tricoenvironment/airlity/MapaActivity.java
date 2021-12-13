@@ -38,6 +38,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.example.tricoenvironment.airlity.dialogos.DialogMarkerFragment;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -67,22 +68,17 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
     private MapaActivity.ReceptorGetMedicion receptor;
     //private MapaActivity.ReceptorDatosUsuario receptor;
 
-    ConstraintLayout ct_marker;
-    TextView tv_scan, tv_marker_nombre;
-    ImageView iv_close;
     Bundle datos;
     Boolean sesionInicidad;
     String cuerpo;
     LogicaFake logicaFake;
 
-    ArrayList<LatLng> estacionesDeMedida = new ArrayList<LatLng>();
-    LatLng estacionGandia = new LatLng(38.96797739, -0.19109882);
-    LatLng estacionAlzira = new LatLng(39.14996506, -0.45786026);
-    LatLng estacionAlcoi = new LatLng(38.70651691, -0.46721615);
-    LatLng estacionBenidorm = new LatLng(38.57297101, -0.14637164);
+    LatLng posicionGandia = new LatLng(38.96797739, -0.19109882);
+    LatLng posicionAlzira = new LatLng(39.14996506, -0.45786026);
+    LatLng posicionAlcoi = new LatLng(38.70651691, -0.46721615);
+    LatLng posicionBenidorm = new LatLng(38.57297101, -0.14637164);
 
-    ArrayList<String> nombresEstaciones = new ArrayList<String>();
-    ArrayList<String> imagenesEstaciones = new ArrayList<String>();
+    ArrayList<Estacion> estacionesOficiales = new ArrayList<Estacion>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,12 +86,6 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         setContentView(R.layout.activity_mapa);
         FloatingActionButton fab = findViewById(R.id.floatingActionButton);
         FloatingActionButton fabFiltros = findViewById(R.id.fab_filtro);
-        tv_scan = findViewById(R.id.tv_scan);
-        tv_marker_nombre = findViewById(R.id.tv_marker_nombre);
-        ct_marker = findViewById(R.id.ct_marker);
-        iv_close = findViewById(R.id.iv_close);
-
-        ct_marker.setVisibility(View.GONE);
 
         intentFilter = new IntentFilter();
         intentFilter.addAction("Get_Mediciones");
@@ -113,24 +103,17 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         Log.d("sesion", sesionInicidad+", "+cuerpo);
         if(sesionInicidad==false && cuerpo==null){
             fab.setVisibility(View.GONE);
-            tv_scan.setVisibility(View.GONE);
             fabFiltros.setVisibility(View.GONE);
         }
 
-        estacionesDeMedida.add(estacionGandia);
-        nombresEstaciones.add("Gandia");
-        imagenesEstaciones.add("https://webcat-web.gva.es/webcat_web/img/Estaciones/ES_00005.jpg");
-        estacionesDeMedida.add(estacionAlcoi);
-        nombresEstaciones.add("Alcoi - Verge dels Lliris");
-        imagenesEstaciones.add("https://webcat-web.gva.es/webcat_web/img/Estaciones/ES_00278.jpg");
-        estacionesDeMedida.add(estacionAlzira);
-        nombresEstaciones.add("Alzira");
-        imagenesEstaciones.add("https://webcat-web.gva.es/webcat_web/img/Estaciones/ES_00239.jpg");
-        estacionesDeMedida.add(estacionBenidorm);
-        nombresEstaciones.add("Benidorm");
-        imagenesEstaciones.add("https://webcat-web.gva.es/webcat_web/img/Estaciones/ES_00329.jpg");
-
-
+        Estacion estacionGandia = new Estacion("Gandia", "https://webcat-web.gva.es/webcat_web/img/Estaciones/ES_00005.jpg", posicionGandia, "46131002");
+        Estacion estacionAlcoi = new Estacion("Alcoi - Verge dels Lliris", "https://webcat-web.gva.es/webcat_web/img/Estaciones/ES_00278.jpg", posicionAlcoi, "03009006");
+        Estacion estacionAlzira = new Estacion("Alzira", "https://webcat-web.gva.es/webcat_web/img/Estaciones/ES_00239.jpg", posicionAlzira, "46017002");
+        Estacion estacionBenidorm = new Estacion("Benidorm", "https://webcat-web.gva.es/webcat_web/img/Estaciones/ES_00329.jpg", posicionBenidorm, "03031002");
+        estacionesOficiales.add(estacionGandia);
+        estacionesOficiales.add(estacionAlcoi);
+        estacionesOficiales.add(estacionAlzira);
+        estacionesOficiales.add(estacionBenidorm);
 
         //-------------------------------------------
         //Para el menu
@@ -169,13 +152,6 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
-        iv_close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ct_marker.setVisibility(View.GONE);
-            }
-        });
     }
 
     private void prepararDrawer(NavigationView navigationView) {
@@ -315,22 +291,39 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(epsgGandia, 18));
 
         //ESTACIONES OFICIALES DE MEDIDA
-        for (int i = 0; i<estacionesDeMedida.size();i++){
-            for (int j = 0; j<nombresEstaciones.size();j++){
-                mMap.addMarker(new MarkerOptions().position(estacionesDeMedida.get(i)).title(nombresEstaciones.get(i)));
-            }
+        for (int i = 0; i<estacionesOficiales.size();i++){
+            mMap.addMarker(new MarkerOptions().position(estacionesOficiales.get(i).posicionEstacion).title(estacionesOficiales.get(i).nombreEstacion));
         }
 
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(@NonNull Marker marker) {
                 if (marker.getTitle().length()<30){
-                    ct_marker.setVisibility(VISIBLE);
-                    tv_marker_nombre.setText(marker.getTitle());
+
+                    SharedPreferences sharedPreferences = getSharedPreferences("infoEstacion", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("nombreEstacion", marker.getTitle());
+                    editor.putString("fotoEstacion", buscarEstacionPorLatLng(marker.getPosition()).fotoEstacion);
+                    editor.putString("codigoEstacion", buscarEstacionPorLatLng(marker.getPosition()).codigoEstacion);
+                    editor.commit();
+                    Intent i = new Intent();
+                    i.setAction("info_mediciones");
+                    i.putExtra("nombreEstacion", marker.getTitle());
+                    getApplicationContext().sendBroadcast(i);
+
+                    DialogMarkerFragment dialogMarkerFragment=new DialogMarkerFragment();
+                    dialogMarkerFragment.show(getSupportFragmentManager(), "DialogMarkerFragment");
                 }
                 return false;
             }
         });
+    }
+
+    private Estacion buscarEstacionPorLatLng( LatLng posicion){
+        for (int i = 0; i< estacionesOficiales.size(); i++){
+            if (estacionesOficiales.get(i).posicionEstacion.equals(posicion)) return estacionesOficiales.get(i);
+        }
+        return estacionesOficiales.get(0);
     }
 
     @Override
