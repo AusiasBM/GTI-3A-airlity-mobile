@@ -73,7 +73,7 @@ public class LogicaFake {
         PeticionarioREST elPeticionario = new PeticionarioREST();
         //Direccion ip en UPVNET10.236.29.250
         //Direccion ip en casa 192.168.0.107
-        elPeticionario.hacerPeticionREST("GET",  "http://"+url+":3500/ultimasMediciones/10", null,
+        elPeticionario.hacerPeticionREST("GET",  "http://"+url+":3500/ultimasMediciones/20", null,
                 new PeticionarioREST.RespuestaREST () {
                     @Override
                     public void callback(int codigo, String cuerpo) {
