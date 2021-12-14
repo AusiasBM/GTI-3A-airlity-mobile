@@ -58,9 +58,11 @@ import com.google.zxing.integration.android.IntentResult;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MapaActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
+    private List<Marker> markersMediciones = new ArrayList<>();
     private GoogleMap mMap;
     boolean usuarioRegistrado, usuarioLogeado;
     String idUsuarioDato, nombreUsuarioDato, correoUsuarioDato, contraseñaUsuarioDato, tokkenUsuarioDato, telefonoUsuarioDato, macUsuarioDato;
@@ -130,7 +132,7 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
         Estacion estacionGandia = new Estacion("Gandia", "https://webcat-web.gva.es/webcat_web/img/Estaciones/ES_00005.jpg", posicionGandia, "46131002");
-        Estacion estacionAlcoi = new Estacion("Alcoi - Verge dels Lliris", "https://webcat-web.gva.es/webcat_web/img/Estaciones/ES_00278.jpg", posicionAlcoi, "03009006");
+        Estacion estacionAlcoi = new Estacion("Alcoi - Verge", "https://webcat-web.gva.es/webcat_web/img/Estaciones/ES_00278.jpg", posicionAlcoi, "03009006");
         Estacion estacionAlzira = new Estacion("Alzira", "https://webcat-web.gva.es/webcat_web/img/Estaciones/ES_00239.jpg", posicionAlzira, "46017002");
         Estacion estacionBenidorm = new Estacion("Benidorm", "https://webcat-web.gva.es/webcat_web/img/Estaciones/ES_00329.jpg", posicionBenidorm, "03031002");
         estacionesOficiales.add(estacionGandia);
@@ -347,19 +349,20 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         //ESTACIONES OFICIALES DE MEDIDA
         for (int i = 0; i<estacionesOficiales.size();i++){
-            mMap.addMarker(new MarkerOptions().position(estacionesOficiales.get(i).posicionEstacion).title(estacionesOficiales.get(i).nombreEstacion));
+            mMap.addMarker(new MarkerOptions().position(estacionesOficiales.get(i).posicionEstacion).title("Estación: "+estacionesOficiales.get(i).nombreEstacion));
         }
 
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(@NonNull Marker marker) {
-                if (marker.getTitle().length()<30){
-
+                if (marker.getTitle().startsWith("Estación: ")){
                     SharedPreferences sharedPreferences = getSharedPreferences("infoEstacion", MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("nombreEstacion", marker.getTitle());
                     editor.putString("fotoEstacion", buscarEstacionPorLatLng(marker.getPosition()).fotoEstacion);
                     editor.putString("codigoEstacion", buscarEstacionPorLatLng(marker.getPosition()).codigoEstacion);
+                    editor.putFloat("latitudEstacion", (float)marker.getPosition().latitude);
+                    editor.putFloat("longitudEstacion", (float)marker.getPosition().longitude);
                     editor.commit();
                     Intent i = new Intent();
                     i.setAction("info_mediciones");
@@ -410,7 +413,12 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void mostrarMediciones(){
-        mMap.clear();
+       for(Marker marker: markersMediciones){
+           marker.remove();
+       }
+
+       markersMediciones = new ArrayList<>();
+
         for(Medicion medicion: mediciones) {
 
             if (autorMediciones==1){
@@ -466,8 +474,10 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
             String tipoMedicion = medicion.getTipoMedicion();
 
             double valorMedicion = medicion.getMedida();
+            /*
             int valorTemperatura = medicion.getTemperatura();
             int valorHumedad = medicion.getHumedad();
+             */
 
             JsonObject datos = new JsonObject();
 
@@ -475,7 +485,6 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
                 datos.addProperty("Valor C0", valorMedicion);
                 marker = marker.position(coordenada).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)); //.title(medicion.getTipoMedida());
             } else if (tipoMedicion.equals("SO2")) {
-                datos.addProperty("Valor S02", valorMedicion);
                 marker = marker.position(coordenada).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)); //.title(medicion.getTipoMedida());
             } else if (tipoMedicion.equals("O3")) {
                 datos.addProperty("Valor O3", valorMedicion);
@@ -489,9 +498,12 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
             } else {
                 continue;
             }
-            datos.addProperty("Temperatura(ºC)", valorTemperatura);
-            datos.addProperty("Humedad(%)", valorHumedad);
-            mMap.addMarker(marker).setTitle(datos + "");
+            //datos.addProperty("Temperatura(ºC)", valorTemperatura);
+            //datos.addProperty("Humedad(%)", valorHumedad);
+            Marker marcador = mMap.addMarker(marker);
+            marcador.setTitle("Medición "+ medicion.getTipoMedicion());
+            marcador.setSnippet("       "+valorMedicion);
+            markersMediciones.add(marcador);
         }
     }
     @Override

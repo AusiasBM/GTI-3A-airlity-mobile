@@ -50,7 +50,6 @@ public class FiltrosActivity extends AppCompatActivity {
         tv_fechaFin=findViewById(R.id.tv_fechaFin);
         bt_borrarFiltros=findViewById(R.id.bt_borrar_filtros);
         iv_abrir_tipo_mediciones=findViewById(R.id.iv_abrir_tipo_medicion);
-        iv_abrir_posicion=findViewById(R.id.iv_abrir_posicion);
         cb_co=findViewById(R.id.cb_CO);
         cb_o3=findViewById(R.id.cb_o3);
         cb_no2=findViewById(R.id.cb_no2);
@@ -188,12 +187,6 @@ public class FiltrosActivity extends AppCompatActivity {
                     cb_iaq.setVisibility(View.VISIBLE);
                     iv_abrir_tipo_mediciones.setImageResource(R.drawable.flecha_arriba);
                 }
-            }
-        });
-
-        iv_abrir_posicion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
             }
         });
 
