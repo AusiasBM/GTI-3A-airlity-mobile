@@ -86,7 +86,7 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
     private Intent intentServicioBLE = null;
     private boolean bluetoothActivo = false;
 
-    int autorMediciones = 0;
+    int autorMediciones = 0, tipoSO2 = 0, tipoO3 = 0, tipoNO2 = 0, tipoCO = 0, tipoIAQ = 0;
     long fechaInicio = 0;
     long fechaFin = 0;
 
@@ -198,6 +198,11 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
                 intent.putExtra("autorMediciones", autorMediciones);
                 intent.putExtra("fechaInicio", fechaInicio);
                 intent.putExtra("fechaFin", fechaFin);
+                intent.putExtra("tipoCO", tipoCO);
+                intent.putExtra( "tipoIAQ", tipoIAQ);
+                intent.putExtra("tipoNO2", tipoNO2);
+                intent.putExtra( "tipoO3", tipoO3);
+                intent.putExtra("tipoSO2", tipoSO2);
                 startActivityForResult(intent, 200);
 
             }
@@ -426,6 +431,36 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
                 }
             }
 
+            if (tipoSO2==1){
+                if (medicion.getTipoMedicion().equals("SO2")){
+                    continue;
+                }
+            }
+
+            if (tipoO3==1){
+                if (medicion.getTipoMedicion().equals("O3")){
+                    continue;
+                }
+            }
+
+            if (tipoCO==1){
+                if (medicion.getTipoMedicion().equals("CO")){
+                    continue;
+                }
+            }
+
+            if (tipoIAQ==1){
+                if (medicion.getTipoMedicion().equals("IAQ")){
+                    continue;
+                }
+            }
+
+            if (tipoNO2==1){
+                if (medicion.getTipoMedicion().equals("NO2")){
+                    continue;
+                }
+            }
+
             MarkerOptions marker = new MarkerOptions();
             LatLng coordenada = new LatLng(medicion.getLatitud(), medicion.getLongitud());
             String tipoMedicion = medicion.getTipoMedicion();
@@ -442,8 +477,8 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
             } else if (tipoMedicion.equals("SO2")) {
                 datos.addProperty("Valor S02", valorMedicion);
                 marker = marker.position(coordenada).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)); //.title(medicion.getTipoMedida());
-            } else if (tipoMedicion.equals("03")) {
-                datos.addProperty("Valor 03", valorMedicion);
+            } else if (tipoMedicion.equals("O3")) {
+                datos.addProperty("Valor O3", valorMedicion);
                 marker = marker.position(coordenada).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)); //.title(medicion.getTipoMedida());
             } else if (tipoMedicion.equals("NO2")) {
                 datos.addProperty("Valor NO2", valorMedicion);
@@ -451,6 +486,8 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
             } else if(tipoMedicion.equals("IAQ")){
                 datos.addProperty("Valor IAQ", valorMedicion);
                 marker = marker.position(coordenada).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)); //.title(medicion.getTipoMedida());
+            } else {
+                continue;
             }
             datos.addProperty("Temperatura(ºC)", valorTemperatura);
             datos.addProperty("Humedad(%)", valorHumedad);
@@ -464,7 +501,13 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
             autorMediciones= data.getIntExtra("autorMediciones", 0);
             fechaInicio = data.getLongExtra("fechaInicio", 0);
             fechaFin = data.getLongExtra("fechaFin", 0);
+            tipoCO = data.getIntExtra("tipoCO", 0);
+            tipoNO2 = data.getIntExtra("tipoNO2", 0);
+            tipoO3 = data.getIntExtra("tipoO3", 0);
+            tipoIAQ = data.getIntExtra("tipoIAQ", 0);
+            tipoSO2 = data.getIntExtra("tipoSO2", 0);
             mostrarMediciones();
+
         }
     }
 }

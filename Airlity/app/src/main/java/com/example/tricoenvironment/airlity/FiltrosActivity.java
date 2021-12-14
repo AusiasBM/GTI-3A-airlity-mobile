@@ -80,24 +80,40 @@ public class FiltrosActivity extends AppCompatActivity {
             radioMias.setChecked(true);
         }
 
-        /*
-        ArrayList<Integer> tipodeMedicion=new ArrayList<Integer>();
-        if (cb_so2.isChecked()) {
-            tipodeMedicion.add(1);
+        int tipoSO2 = intent.getIntExtra("tipoSO2", 0);
+        if(tipoSO2 == 0){
+            cb_so2.setChecked(true);
+        } else {
+            cb_so2.setChecked(false);
         }
-        if (cb_o3.isChecked()) {
-            tipodeMedicion.add(2);
+
+        int tipoO3 = intent.getIntExtra("tipoO3", 0);
+        if(tipoO3 == 0){
+            cb_o3.setChecked(true);
+        } else {
+            cb_o3.setChecked(false);
         }
-        if (cb_no2.isChecked()) {
-            tipodeMedicion.add(3);
+
+        int tipoNO2 = intent.getIntExtra("tipoNO2", 0);
+        if(tipoNO2 == 0){
+            cb_no2.setChecked(true);
+        } else {
+            cb_no2.setChecked(false);
         }
-        if (cb_co.isChecked()) {
-            tipodeMedicion.add(4);
+
+        final int tipoCO = intent.getIntExtra("tipoCO", 0);
+        if(tipoCO == 0){
+            cb_co.setChecked(true);
+        } else {
+            cb_co.setChecked(false);
         }
-        if (cb_iaq.isChecked()) {
-            tipodeMedicion.add(5);
+
+        int tipoIAQ = intent.getIntExtra("tipoIAQ", 0);
+        if(tipoIAQ == 0){
+            cb_iaq.setChecked(true);
+        } else {
+            cb_iaq.setChecked(false);
         }
-         */
 
 
         cv_inicio.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
@@ -193,11 +209,16 @@ public class FiltrosActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 long fechaActual = System.currentTimeMillis();
-                long unAño = 31556900000L;
+                long unMes = 2629750000L;
                 radioTodas.setChecked(true);
                 radioMias.setChecked(false);
-                cv_inicio.setDate(fechaActual-unAño);
+                cv_inicio.setDate(fechaActual-unMes);
                 cv_fin.setDate(fechaActual);
+                cb_iaq.setChecked(true);
+                cb_co.setChecked(true);
+                cb_no2.setChecked(true);
+                cb_o3.setChecked(true);
+                cb_so2.setChecked(true);
             }
         });
 
@@ -227,6 +248,47 @@ public class FiltrosActivity extends AppCompatActivity {
 
                 intent.putExtra("fechaInicio", fechaInicio);
                 intent.putExtra("fechaFin", fechaFin);
+
+                //Obtener tipo de mediciones
+                int tipoSO2;
+                if(cb_so2.isChecked()){
+                    tipoSO2=0;
+                } else {
+                    tipoSO2=1;
+                }
+                intent.putExtra("tipoSO2", tipoSO2);
+
+                int tipoO3;
+                if(cb_o3.isChecked()){
+                    tipoO3=0;
+                } else {
+                    tipoO3=1;
+                }
+                intent.putExtra("tipoO3", tipoO3);
+
+                int tipoNO2;
+                if(cb_no2.isChecked()){
+                    tipoNO2=0;
+                } else {
+                    tipoNO2=1;
+                }
+                intent.putExtra("tipoNO2", tipoNO2);
+
+                int tipoCO;
+                if(cb_co.isChecked()){
+                    tipoCO=0;
+                } else {
+                    tipoCO=1;
+                }
+                intent.putExtra("tipoCO", tipoCO);
+
+                int tipoIAQ;
+                if(cb_iaq.isChecked()){
+                    tipoIAQ=0;
+                } else {
+                    tipoIAQ=1;
+                }
+                intent.putExtra("tipoIAQ", tipoIAQ);
 
                 setResult(RESULT_OK, intent);
                 finish();
