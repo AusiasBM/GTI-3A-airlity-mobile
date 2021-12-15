@@ -64,7 +64,8 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:background="@color/colorGrey"
+                android:background="#B0707070"
+                android:padding="5dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/map"
                 app:layout_constraintHorizontal_bias="1.0"
@@ -96,7 +97,7 @@
                         android:layout_width="43dp"
                         android:layout_height="15dp"
                         android:layout_weight="1"
-                        app:srcCompat="@drawable/estacion" />
+                        android:background="#C02227" />
 
                     <TextView
                         android:id="@+id/textView30"
@@ -104,7 +105,7 @@
                         android:layout_height="15dp"
                         android:layout_weight="1"
                         android:fontFamily="@font/comfortaa_bold"
-                        android:text="Estaciones oficiales"
+                        android:text="  Estaciones               "
                         android:textColor="#FFFFFF"
                         android:textSize="10dp" />
                 </LinearLayout>
@@ -122,7 +123,7 @@
                         android:layout_width="0dp"
                         android:layout_height="15dp"
                         android:layout_weight="1"
-                        app:srcCompat="@drawable/iaq" />
+                        android:background="#373AE6" />
 
                     <TextView
                         android:id="@+id/textView29"
@@ -130,7 +131,7 @@
                         android:layout_height="15dp"
                         android:layout_weight="1"
                         android:fontFamily="@font/comfortaa_bold"
-                        android:text="ICA             "
+                        android:text="  ICA             "
                         android:textColor="#FFFFFF"
                         android:textSize="10dp" />
                 </LinearLayout>
@@ -148,7 +149,7 @@
                         android:layout_width="0dp"
                         android:layout_height="15dp"
                         android:layout_weight="1"
-                        app:srcCompat="@drawable/co" />
+                        android:background="#8BE94B" />
 
                     <TextView
                         android:id="@+id/textView28"
@@ -156,7 +157,7 @@
                         android:layout_height="15dp"
                         android:layout_weight="1"
                         android:fontFamily="@font/comfortaa_bold"
-                        android:text="CO             "
+                        android:text="  CO             "
                         android:textColor="#FFFFFF"
                         android:textSize="10dp" />
                 </LinearLayout>
@@ -174,7 +175,7 @@
                         android:layout_width="0dp"
                         android:layout_height="15dp"
                         android:layout_weight="1"
-                        app:srcCompat="@drawable/no2" />
+                        android:background="#CD39E6" />
 
                     <TextView
                         android:id="@+id/textView27"
@@ -182,7 +183,7 @@
                         android:layout_height="15dp"
                         android:layout_weight="1"
                         android:fontFamily="@font/comfortaa_bold"
-                        android:text="NO2           "
+                        android:text="  NO2           "
                         android:textColor="#FFFFFF"
                         android:textSize="10dp" />
                 </LinearLayout>
@@ -201,7 +202,7 @@
                         android:layout_width="0dp"
                         android:layout_height="15dp"
                         android:layout_weight="1"
-                        app:srcCompat="@drawable/so2" />
+                        android:background="#FFFD00" />
 
                     <TextView
                         android:id="@+id/textView24"
@@ -209,7 +210,7 @@
                         android:layout_height="15dp"
                         android:layout_weight="1"
                         android:fontFamily="@font/comfortaa_bold"
-                        android:text="SO2             "
+                        android:text="  SO2           "
                         android:textColor="#FFFFFF"
                         android:textSize="10dp" />
                 </LinearLayout>
@@ -227,7 +228,7 @@
                         android:layout_width="0dp"
                         android:layout_height="15dp"
                         android:layout_weight="1"
-                        app:srcCompat="@drawable/o3" />
+                        android:background="#D48D3D" />
 
                     <TextView
                         android:id="@+id/textView26"
@@ -235,7 +236,7 @@
                         android:layout_height="15dp"
                         android:layout_weight="1"
                         android:fontFamily="@font/comfortaa_bold"
-                        android:text="03               "
+                        android:text="  03               "
                         android:textColor="#FFFFFF"
                         android:textSize="10dp" />
                 </LinearLayout>
@@ -278,7 +279,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="-40dp"
                 android:layout_weight="0"
-                android:tint="#FFFFFF"
                 app:srcCompat="@drawable/boton_filtro" />
 
         </LinearLayout>
