@@ -50,10 +50,13 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.TileOverlay;
+import com.google.android.gms.maps.model.TileOverlayOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.maps.android.heatmaps.HeatmapTileProvider;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -79,10 +82,10 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
     String cuerpo, macSensor;
     LogicaFake logicaFake;
     ConstraintLayout cl_leyenda;
-    ImageView iv_close_leyenda, iv_abrir_leyenda;
-    LinearLayout l_03, l_so2, l_co, l_no2, l_iaq, l_estaciones;
+    ImageView iv_close_leyenda, iv_abrir_leyenda, iv_tipoMedicion;
+    LinearLayout l_iaq, l_estaciones;
 
-    TextView tv_scan;
+    TextView tv_scan, tv_tipoMedicion;
 
     LatLng posicionGandia = new LatLng(38.96797739, -0.19109882);
     LatLng posicionAlzira = new LatLng(39.14996506, -0.45786026);
@@ -94,7 +97,7 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
     private Intent intentServicioBLE = null;
     private boolean bluetoothActivo = false;
 
-    int autorMediciones = 0, tipoSO2 = 0, tipoO3 = 0, tipoNO2 = 0, tipoCO = 0, tipoIAQ = 0, mostrarEstacionesOficiales=0;
+    int autorMediciones = 0, tipoMedicion = 0, mostrarEstacionesOficiales=0;
     long fechaInicio = 0;
     long fechaFin = 0;
 
@@ -109,13 +112,11 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         tv_scan=findViewById(R.id.tv_scan);
         cl_leyenda=findViewById(R.id.cl_leyenda);
         iv_close_leyenda=findViewById(R.id.iv_close_leyenda);
-        l_03=findViewById(R.id.l_O3);
-        l_no2=findViewById(R.id.l_NO2);
-        l_co=findViewById(R.id.l_CO);
-        l_so2=findViewById(R.id.l_SO2);
         l_iaq=findViewById(R.id.l_IAQ);
         l_estaciones=findViewById(R.id.l_estaciones);
         iv_abrir_leyenda=findViewById(R.id.iv_borde);
+        tv_tipoMedicion=findViewById(R.id.tv_tipoMedicion);
+        iv_tipoMedicion=findViewById(R.id.iv_tipoMedicion);
 
         cl_leyenda.setVisibility(VISIBLE);
 
@@ -218,11 +219,7 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
                 intent.putExtra("mostrarEstaciones", mostrarEstacionesOficiales);
                 intent.putExtra("fechaInicio", fechaInicio);
                 intent.putExtra("fechaFin", fechaFin);
-                intent.putExtra("tipoCO", tipoCO);
-                intent.putExtra( "tipoIAQ", tipoIAQ);
-                intent.putExtra("tipoNO2", tipoNO2);
-                intent.putExtra( "tipoO3", tipoO3);
-                intent.putExtra("tipoSO2", tipoSO2);
+                intent.putExtra("tipoMedicion", tipoMedicion);
                 startActivityForResult(intent, 200);
 
             }
@@ -384,7 +381,27 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap.setMaxZoomPreference(25.0f);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(epsgGandia, 18));
 
-        mostrarEstaciones();
+        //crearMapadeCalor();
+        //mostrarEstaciones();
+    }
+
+    private void crearMapadeCalor() {
+        HeatmapTileProvider provider;
+        TileOverlay mOverlay;
+
+        ArrayList<LatLng> list= new ArrayList<LatLng>();
+        for(Medicion medicion: mediciones) {
+            LatLng coordenada = new LatLng(medicion.getLatitud(), medicion.getLongitud());
+            //Log.d("Mediciones de calor", coordenada+"");
+            list.add(coordenada);
+        }
+
+
+
+        provider = new HeatmapTileProvider.Builder()
+                .data(list)
+                .build();
+        mOverlay = mMap.addTileOverlay(new TileOverlayOptions().tileProvider(provider));
     }
 
     private void mostrarEstaciones() {
@@ -423,10 +440,6 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
             mMap.clear();
             mostrarMediciones();
         }
-
-
-
-
     }
 
     private Estacion buscarEstacionPorLatLng( LatLng posicion){
@@ -491,71 +504,68 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
                 }
             }
 
-            if (tipoSO2==1){
-                if (medicion.getTipoMedicion().equals("SO2")){
-                    continue;
-                }
-            }
-
-            if (tipoO3==1){
-                if (medicion.getTipoMedicion().equals("O3")){
-                    continue;
-                }
-            }
-
-            if (tipoCO==1){
-                if (medicion.getTipoMedicion().equals("CO")){
-                    continue;
-                }
-            }
-
-            if (tipoIAQ==1){
-                if (medicion.getTipoMedicion().equals("IAQ")){
-                    continue;
-                }
-            }
-
-            if (tipoNO2==1){
-                if (medicion.getTipoMedicion().equals("NO2")){
-                    continue;
-                }
-            }
-
             MarkerOptions marker = new MarkerOptions();
             LatLng coordenada = new LatLng(medicion.getLatitud(), medicion.getLongitud());
-            String tipoMedicion = medicion.getTipoMedicion();
 
             double valorMedicion = medicion.getMedida();
-            /*
-            int valorTemperatura = medicion.getTemperatura();
-            int valorHumedad = medicion.getHumedad();
-             */
+            String tipoMed = medicion.getTipoMedicion();
 
-            JsonObject datos = new JsonObject();
+            if (tipoMedicion==0){
+                Log.d("TIPOMEDICION", "0");
+                mMap.clear();
+                crearMapadeCalor();
+                mostrarEstaciones();
+            } else if (tipoMedicion==1){
+                Log.d("TIPOMEDICION", "1");
+                mostrarEstaciones();
+                if (tipoMed.equals("SO2")){
+                    Log.d("TIPOMEDICION2", "1"+ medicion);
+                    marker = marker.position(coordenada).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)); //.title(medicion.getTipoMedida());
+                    Marker marcador = mMap.addMarker(marker);
+                    marcador.setTitle("Medición "+ medicion.getTipoMedicion());
+                    marcador.setSnippet("       "+valorMedicion);
+                    markersMediciones.add(marcador);
+                }
+            } else if (tipoMedicion==2){
+                Log.d("TIPOMEDICION", "2");
+                mostrarEstaciones();
+                if (tipoMed.equals("O3")){
+                    Log.d("TIPOMEDICION2", "2"+medicion);
+                    marker = marker.position(coordenada).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)); //.title(medicion.getTipoMedida());
+                    Marker marcador = mMap.addMarker(marker);
+                    marcador.setTitle("Medición "+ medicion.getTipoMedicion());
+                    marcador.setSnippet("       "+valorMedicion);
+                    markersMediciones.add(marcador);
+                }
 
-            if (tipoMedicion.equals("CO")) {
-                datos.addProperty("Valor C0", valorMedicion);
-                marker = marker.position(coordenada).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)); //.title(medicion.getTipoMedida());
-            } else if (tipoMedicion.equals("SO2")) {
-                marker = marker.position(coordenada).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)); //.title(medicion.getTipoMedida());
-            } else if (tipoMedicion.equals("O3")) {
-                datos.addProperty("Valor O3", valorMedicion);
-                marker = marker.position(coordenada).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)); //.title(medicion.getTipoMedida());
-            } else if (tipoMedicion.equals("NO2")) {
-                datos.addProperty("Valor NO2", valorMedicion);
-                marker = marker.position(coordenada).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA)); //.title(medicion.getTipoMedida());
-            } else if(tipoMedicion.equals("IAQ")){
-                datos.addProperty("Valor IAQ", valorMedicion);
-                marker = marker.position(coordenada).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)); //.title(medicion.getTipoMedida());
-            } else {
+            } else if (tipoMedicion==3){
+                Log.d("TIPOMEDICION", "3");
+                mostrarEstaciones();
+                if (tipoMed.equals("NO2")){
+                    Log.d("TIPOMEDICION2", "3"+medicion);
+                    marker = marker.position(coordenada).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)); //.title(medicion.getTipoMedida());
+                    Marker marcador = mMap.addMarker(marker);
+                    marcador.setTitle("Medición "+ medicion.getTipoMedicion());
+                    marcador.setSnippet("       "+valorMedicion);
+                    markersMediciones.add(marcador);
+                }
+            } else if (tipoMedicion==4){
+                Log.d("TIPOMEDICION", "4"+medicion);
+                mostrarEstaciones();
+                if (tipoMed.equals("CO")){
+                    Log.d("TIPOMEDICION2", "4");
+                    marker = marker.position(coordenada).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)); //.title(medicion.getTipoMedida());
+                    Marker marcador = mMap.addMarker(marker);
+                    marcador.setTitle("Medición "+ medicion.getTipoMedicion());
+                    marcador.setSnippet("       "+valorMedicion);
+                    markersMediciones.add(marcador);
+                }
+            }  else {
                 continue;
             }
             //datos.addProperty("Temperatura(ºC)", valorTemperatura);
             //datos.addProperty("Humedad(%)", valorHumedad);
-            Marker marcador = mMap.addMarker(marker);
-            marcador.setTitle("Medición "+ medicion.getTipoMedicion());
-            marcador.setSnippet("       "+valorMedicion);
-            markersMediciones.add(marcador);
+
         }
     }
 
@@ -567,43 +577,28 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
             mostrarEstacionesOficiales= data.getIntExtra("mostrarEstaciones", 0);
             fechaInicio = data.getLongExtra("fechaInicio", 0);
             fechaFin = data.getLongExtra("fechaFin", 0);
-            tipoCO = data.getIntExtra("tipoCO", 0);
-            if (tipoCO==0){
-                l_co.setVisibility(VISIBLE);
-            }else{
-                l_co.setVisibility(GONE);
+            tipoMedicion = data.getIntExtra("tipoMedicion", 0);
+
+            if (tipoMedicion==0){
+                tv_tipoMedicion.setText("  ICA             ");
+            } else if (tipoMedicion==1){
+                tv_tipoMedicion.setText("  SO2             ");
+            } else if (tipoMedicion==2){
+                tv_tipoMedicion.setText("  O3              ");
+            } else if (tipoMedicion==3){
+                tv_tipoMedicion.setText("  NO2             ");
+            } else if (tipoMedicion==4){
+                tv_tipoMedicion.setText("  CO              ");
             }
-            tipoNO2 = data.getIntExtra("tipoNO2", 0);
-            if (tipoNO2==0){
-                l_no2.setVisibility(VISIBLE);
-            }else{
-                l_no2.setVisibility(GONE);
-            }
-            tipoO3 = data.getIntExtra("tipoO3", 0);
-            if (tipoO3==0){
-                l_03.setVisibility(VISIBLE);
-            }else{
-                l_03.setVisibility(GONE);
-            }
-            tipoIAQ = data.getIntExtra("tipoIAQ", 0);
-            if (tipoIAQ==0){
-                l_iaq.setVisibility(VISIBLE);
-            }else{
-                l_iaq.setVisibility(GONE);
-            }
-            tipoSO2 = data.getIntExtra("tipoSO2", 0);
-            if (tipoSO2==0){
-                l_so2.setVisibility(VISIBLE);
-            }else{
-                l_so2.setVisibility(GONE);
-            }
+
             if (mostrarEstacionesOficiales==0){
                 l_estaciones.setVisibility(VISIBLE);
             }else{
                 l_estaciones.setVisibility(GONE);
             }
             mostrarMediciones();
-            mostrarEstaciones();
+            //mostrarEstaciones();
+            //crearMapadeCalor();
 
         }
     }

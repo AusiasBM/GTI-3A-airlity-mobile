@@ -64,7 +64,7 @@
             <ImageView
                 android:id="@+id/iv_borde"
                 android:layout_width="60dp"
-                android:layout_height="110dp"
+                android:layout_height="20dp"
                 android:layout_marginBottom="10dp"
                 android:scaleType="fitXY"
                 app:layout_constraintBottom_toBottomOf="@+id/map"
@@ -81,7 +81,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:background="#707070"
-                android:padding="5dp"
+                android:padding="4dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/map"
                 app:layout_constraintHorizontal_bias="1.0"
@@ -93,11 +93,11 @@
                     android:id="@+id/iv_close_leyenda"
                     android:layout_width="15dp"
                     android:layout_height="15dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/l_estaciones"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/l_IAQ"
                     app:layout_constraintVertical_bias="0.0"
                     app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
 
@@ -132,129 +132,24 @@
                     android:id="@+id/l_IAQ"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="2dp"
                     android:orientation="horizontal"
-                    app:layout_constraintTop_toBottomOf="@id/l_CO">
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:layout_editor_absoluteX="5dp">
 
                     <ImageView
-                        android:id="@+id/imageView11"
+                        android:id="@+id/iv_tipoMedicion"
                         android:layout_width="0dp"
                         android:layout_height="15dp"
                         android:layout_weight="1"
-                        android:background="#373AE6" />
+                        android:background="#8BEB4B" />
 
                     <TextView
-                        android:id="@+id/textView29"
+                        android:id="@+id/tv_tipoMedicion"
                         android:layout_width="wrap_content"
                         android:layout_height="15dp"
                         android:layout_weight="1"
                         android:fontFamily="@font/comfortaa_bold"
                         android:text="  ICA             "
-                        android:textColor="#FFFFFF"
-                        android:textSize="10dp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/l_CO"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="2dp"
-                    android:orientation="horizontal"
-                    app:layout_constraintTop_toBottomOf="@id/l_NO2">
-
-                    <ImageView
-                        android:id="@+id/imageView10"
-                        android:layout_width="0dp"
-                        android:layout_height="15dp"
-                        android:layout_weight="1"
-                        android:background="#8BE94B" />
-
-                    <TextView
-                        android:id="@+id/textView28"
-                        android:layout_width="wrap_content"
-                        android:layout_height="15dp"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/comfortaa_bold"
-                        android:text="  CO             "
-                        android:textColor="#FFFFFF"
-                        android:textSize="10dp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/l_NO2"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="2dp"
-                    android:orientation="horizontal"
-                    app:layout_constraintTop_toBottomOf="@id/l_O3">
-
-                    <ImageView
-                        android:id="@+id/imageView9"
-                        android:layout_width="0dp"
-                        android:layout_height="15dp"
-                        android:layout_weight="1"
-                        android:background="#CD39E6" />
-
-                    <TextView
-                        android:id="@+id/textView27"
-                        android:layout_width="wrap_content"
-                        android:layout_height="15dp"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/comfortaa_bold"
-                        android:text="  NO2           "
-                        android:textColor="#FFFFFF"
-                        android:textSize="10dp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/l_SO2"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <ImageView
-                        android:id="@+id/imageView7"
-                        android:layout_width="0dp"
-                        android:layout_height="15dp"
-                        android:layout_weight="1"
-                        android:background="#FFFD00" />
-
-                    <TextView
-                        android:id="@+id/textView24"
-                        android:layout_width="wrap_content"
-                        android:layout_height="15dp"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/comfortaa_bold"
-                        android:text="  SO2           "
-                        android:textColor="#FFFFFF"
-                        android:textSize="10dp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/l_O3"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="2dp"
-                    android:orientation="horizontal"
-                    app:layout_constraintTop_toBottomOf="@id/l_SO2">
-
-                    <ImageView
-                        android:id="@+id/imageView8"
-                        android:layout_width="0dp"
-                        android:layout_height="15dp"
-                        android:layout_weight="1"
-                        android:background="#D48D3D" />
-
-                    <TextView
-                        android:id="@+id/textView26"
-                        android:layout_width="wrap_content"
-                        android:layout_height="15dp"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/comfortaa_bold"
-                        android:text="  03               "
                         android:textColor="#FFFFFF"
                         android:textSize="10dp" />
                 </LinearLayout>

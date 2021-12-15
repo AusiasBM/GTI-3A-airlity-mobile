@@ -24,7 +24,7 @@ import java.util.ArrayList;
 public class FiltrosActivity extends AppCompatActivity {
 
     Button bt_aplicarFiltros, bt_borrarFiltros;
-    RadioGroup radioGroup;
+    RadioGroup radioGroup, rg_tipo;
     RadioButton radioTodas;
     RadioButton radioMias;
     CalendarView cv_inicio, cv_fin;
@@ -32,7 +32,7 @@ public class FiltrosActivity extends AppCompatActivity {
     Boolean fechaFinSeleccionada = false;
     ImageView iv_abrir_autor, iv_abrir_fechas, iv_abrir_tipo_mediciones, iv_abrir_estaciones, iv_volver;
     TextView tv_fechaIni, tv_fechaFin;
-    CheckBox cb_o3, cb_no2, cb_co, cb_so2, cb_iaq;
+    RadioButton rb_o3, rb_no2, rb_co, rb_so2, rb_iaq;
     Switch switch_estaciones;
 
     @Override
@@ -52,11 +52,12 @@ public class FiltrosActivity extends AppCompatActivity {
         tv_fechaFin=findViewById(R.id.tv_fechaFin);
         bt_borrarFiltros=findViewById(R.id.bt_borrar_filtros);
         iv_abrir_tipo_mediciones=findViewById(R.id.iv_abrir_tipo_medicion);
-        cb_co=findViewById(R.id.cb_CO);
-        cb_o3=findViewById(R.id.cb_o3);
-        cb_no2=findViewById(R.id.cb_no2);
-        cb_so2=findViewById(R.id.cb_SO2);
-        cb_iaq=findViewById(R.id.cb_IAQ);
+        rb_co=findViewById(R.id.rb_co);
+        rb_o3=findViewById(R.id.rb_o3);
+        rb_no2=findViewById(R.id.rb_no2);
+        rb_so2=findViewById(R.id.rb_so2);
+        rb_iaq=findViewById(R.id.rb_iaq);
+        rg_tipo=findViewById(R.id.rg_tipo);
         iv_volver=findViewById(R.id.iv_volver);
         switch_estaciones=findViewById(R.id.switch_estaciones);
         iv_abrir_estaciones=findViewById(R.id.iv_abrir_estaciones);
@@ -81,39 +82,17 @@ public class FiltrosActivity extends AppCompatActivity {
             radioMias.setChecked(true);
         }
 
-        int tipoSO2 = intent.getIntExtra("tipoSO2", 0);
-        if(tipoSO2 == 0){
-            cb_so2.setChecked(true);
-        } else {
-            cb_so2.setChecked(false);
-        }
-
-        int tipoO3 = intent.getIntExtra("tipoO3", 0);
-        if(tipoO3 == 0){
-            cb_o3.setChecked(true);
-        } else {
-            cb_o3.setChecked(false);
-        }
-
-        int tipoNO2 = intent.getIntExtra("tipoNO2", 0);
-        if(tipoNO2 == 0){
-            cb_no2.setChecked(true);
-        } else {
-            cb_no2.setChecked(false);
-        }
-
-        final int tipoCO = intent.getIntExtra("tipoCO", 0);
-        if(tipoCO == 0){
-            cb_co.setChecked(true);
-        } else {
-            cb_co.setChecked(false);
-        }
-
-        int tipoIAQ = intent.getIntExtra("tipoIAQ", 0);
-        if(tipoIAQ == 0){
-            cb_iaq.setChecked(true);
-        } else {
-            cb_iaq.setChecked(false);
+        int tipoMedicion =  intent.getIntExtra("tipoMedicion", 0);
+        if(tipoMedicion == 0){
+            rb_iaq.setChecked(true);
+        } else if (tipoMedicion == 1){
+            rb_so2.setChecked(true);
+        } else if (tipoMedicion == 2){
+            rb_o3.setChecked(true);
+        } else if (tipoMedicion == 3){
+            rb_no2.setChecked(true);
+        } else if (tipoMedicion == 4){
+            rb_co.setChecked(true);
         }
 
         int mostrarEstaciones = intent.getIntExtra("mostrarEstaciones", 0);
@@ -193,19 +172,11 @@ public class FiltrosActivity extends AppCompatActivity {
         iv_abrir_tipo_mediciones.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (cb_co.getVisibility()==View.VISIBLE){
-                    cb_co.setVisibility(View.GONE);
-                    cb_o3.setVisibility(View.GONE);
-                    cb_no2.setVisibility(View.GONE);
-                    cb_so2.setVisibility(View.GONE);
-                    cb_iaq.setVisibility(View.GONE);
+                if (rg_tipo.getVisibility()==View.VISIBLE){
+                    rg_tipo.setVisibility(View.GONE);
                     iv_abrir_tipo_mediciones.setImageResource(R.drawable.flecha_abajo);
                 } else{
-                    cb_co.setVisibility(View.VISIBLE);
-                    cb_o3.setVisibility(View.VISIBLE);
-                    cb_no2.setVisibility(View.VISIBLE);
-                    cb_so2.setVisibility(View.VISIBLE);
-                    cb_iaq.setVisibility(View.VISIBLE);
+                    rg_tipo.setVisibility(View.VISIBLE);
                     iv_abrir_tipo_mediciones.setImageResource(R.drawable.flecha_arriba);
                 }
             }
@@ -228,11 +199,7 @@ public class FiltrosActivity extends AppCompatActivity {
                 radioMias.setChecked(false);
                 cv_inicio.setDate(fechaActual-unMes);
                 cv_fin.setDate(fechaActual);
-                cb_iaq.setChecked(true);
-                cb_co.setChecked(true);
-                cb_no2.setChecked(true);
-                cb_o3.setChecked(true);
-                cb_so2.setChecked(true);
+                rb_iaq.setChecked(true);
                 switch_estaciones.setChecked(true);
             }
         });
@@ -272,45 +239,19 @@ public class FiltrosActivity extends AppCompatActivity {
                 intent.putExtra("fechaFin", fechaFin);
 
                 //Obtener tipo de mediciones
-                int tipoSO2;
-                if(cb_so2.isChecked()){
-                    tipoSO2=0;
+                int tipoMedicion;
+                if(rb_iaq.isChecked()){
+                    tipoMedicion=0;
+                } else if (rb_so2.isChecked()){
+                    tipoMedicion=1;
+                } else if (rb_o3.isChecked()){
+                    tipoMedicion=2;
+                } else if (rb_no2.isChecked()){
+                    tipoMedicion=3;
                 } else {
-                    tipoSO2=1;
+                    tipoMedicion=4;
                 }
-                intent.putExtra("tipoSO2", tipoSO2);
-
-                int tipoO3;
-                if(cb_o3.isChecked()){
-                    tipoO3=0;
-                } else {
-                    tipoO3=1;
-                }
-                intent.putExtra("tipoO3", tipoO3);
-
-                int tipoNO2;
-                if(cb_no2.isChecked()){
-                    tipoNO2=0;
-                } else {
-                    tipoNO2=1;
-                }
-                intent.putExtra("tipoNO2", tipoNO2);
-
-                int tipoCO;
-                if(cb_co.isChecked()){
-                    tipoCO=0;
-                } else {
-                    tipoCO=1;
-                }
-                intent.putExtra("tipoCO", tipoCO);
-
-                int tipoIAQ;
-                if(cb_iaq.isChecked()){
-                    tipoIAQ=0;
-                } else {
-                    tipoIAQ=1;
-                }
-                intent.putExtra("tipoIAQ", tipoIAQ);
+                intent.putExtra("tipoMedicion", tipoMedicion);
 
                 setResult(RESULT_OK, intent);
                 finish();
