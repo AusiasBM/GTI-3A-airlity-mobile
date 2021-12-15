@@ -14,6 +14,7 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -29,9 +30,10 @@ public class FiltrosActivity extends AppCompatActivity {
     CalendarView cv_inicio, cv_fin;
     Boolean fechaInicioSeleccionada = false;
     Boolean fechaFinSeleccionada = false;
-    ImageView iv_abrir_autor, iv_abrir_fechas, iv_abrir_tipo_mediciones, iv_abrir_posicion, iv_volver;
+    ImageView iv_abrir_autor, iv_abrir_fechas, iv_abrir_tipo_mediciones, iv_abrir_estaciones, iv_volver;
     TextView tv_fechaIni, tv_fechaFin;
     CheckBox cb_o3, cb_no2, cb_co, cb_so2, cb_iaq;
+    Switch switch_estaciones;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +58,8 @@ public class FiltrosActivity extends AppCompatActivity {
         cb_so2=findViewById(R.id.cb_SO2);
         cb_iaq=findViewById(R.id.cb_IAQ);
         iv_volver=findViewById(R.id.iv_volver);
-
-
+        switch_estaciones=findViewById(R.id.switch_estaciones);
+        iv_abrir_estaciones=findViewById(R.id.iv_abrir_estaciones);
 
         Intent intent = getIntent();
         long fechaInicioIntent = intent.getLongExtra("fechaInicio", 0);
@@ -114,6 +116,13 @@ public class FiltrosActivity extends AppCompatActivity {
             cb_iaq.setChecked(false);
         }
 
+        int mostrarEstaciones = intent.getIntExtra("mostrarEstaciones", 0);
+        if(mostrarEstaciones == 0){
+            switch_estaciones.setChecked(true);
+        } else {
+            switch_estaciones.setChecked(false);
+        }
+
 
         cv_inicio.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
@@ -149,6 +158,18 @@ public class FiltrosActivity extends AppCompatActivity {
             }
         });
 
+        iv_abrir_estaciones.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (switch_estaciones.getVisibility()==View.VISIBLE){
+                    switch_estaciones.setVisibility(View.GONE);
+                    iv_abrir_estaciones.setImageResource(R.drawable.flecha_abajo);
+                }else{
+                    switch_estaciones.setVisibility(View.VISIBLE);
+                    iv_abrir_estaciones.setImageResource(R.drawable.flecha_arriba);
+                }
+            }
+        });
         iv_abrir_fechas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -212,6 +233,7 @@ public class FiltrosActivity extends AppCompatActivity {
                 cb_no2.setChecked(true);
                 cb_o3.setChecked(true);
                 cb_so2.setChecked(true);
+                switch_estaciones.setChecked(true);
             }
         });
 
@@ -229,6 +251,13 @@ public class FiltrosActivity extends AppCompatActivity {
                 }
                 intent.putExtra("autorMediciones", autorMediciones);
 
+                int mostrarEstaciones;
+                if (switch_estaciones.isChecked()){
+                    mostrarEstaciones=0;
+                }else{
+                    mostrarEstaciones=1;
+                }
+                intent.putExtra("mostrarEstaciones", mostrarEstaciones);
                 //Obtener fechas mediciones
                 long fechaInicio = 0;
                 if(fechaInicioSeleccionada) {

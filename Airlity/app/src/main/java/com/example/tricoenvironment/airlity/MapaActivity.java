@@ -65,6 +65,7 @@ import java.util.List;
 public class MapaActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     private List<Marker> markersMediciones = new ArrayList<>();
+    private List<Marker> markersEstaciones = new ArrayList<>();
     private GoogleMap mMap;
     boolean usuarioRegistrado, usuarioLogeado;
     String idUsuarioDato, nombreUsuarioDato, correoUsuarioDato, contraseñaUsuarioDato, tokkenUsuarioDato, telefonoUsuarioDato, macUsuarioDato;
@@ -78,8 +79,8 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
     String cuerpo, macSensor;
     LogicaFake logicaFake;
     ConstraintLayout cl_leyenda;
-    ImageView iv_close_leyenda;
-    LinearLayout l_03, l_so2, l_co, l_no2, l_iaq;
+    ImageView iv_close_leyenda, iv_abrir_leyenda;
+    LinearLayout l_03, l_so2, l_co, l_no2, l_iaq, l_estaciones;
 
     TextView tv_scan;
 
@@ -93,7 +94,7 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
     private Intent intentServicioBLE = null;
     private boolean bluetoothActivo = false;
 
-    int autorMediciones = 0, tipoSO2 = 0, tipoO3 = 0, tipoNO2 = 0, tipoCO = 0, tipoIAQ = 0;
+    int autorMediciones = 0, tipoSO2 = 0, tipoO3 = 0, tipoNO2 = 0, tipoCO = 0, tipoIAQ = 0, mostrarEstacionesOficiales=0;
     long fechaInicio = 0;
     long fechaFin = 0;
 
@@ -113,6 +114,8 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         l_co=findViewById(R.id.l_CO);
         l_so2=findViewById(R.id.l_SO2);
         l_iaq=findViewById(R.id.l_IAQ);
+        l_estaciones=findViewById(R.id.l_estaciones);
+        iv_abrir_leyenda=findViewById(R.id.iv_borde);
 
         cl_leyenda.setVisibility(VISIBLE);
 
@@ -212,6 +215,7 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), FiltrosActivity.class);
                 intent.putExtra("autorMediciones", autorMediciones);
+                intent.putExtra("mostrarEstaciones", mostrarEstacionesOficiales);
                 intent.putExtra("fechaInicio", fechaInicio);
                 intent.putExtra("fechaFin", fechaFin);
                 intent.putExtra("tipoCO", tipoCO);
@@ -228,6 +232,18 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onClick(View v) {
                 cl_leyenda.setVisibility(GONE);
+            }
+        });
+
+        iv_abrir_leyenda.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (cl_leyenda.getVisibility()==VISIBLE){
+                    cl_leyenda.setVisibility(GONE);
+                } else{
+                    cl_leyenda.setVisibility(VISIBLE);
+                }
+
             }
         });
     }
@@ -368,34 +384,49 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap.setMaxZoomPreference(25.0f);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(epsgGandia, 18));
 
-        //ESTACIONES OFICIALES DE MEDIDA
-        for (int i = 0; i<estacionesOficiales.size();i++){
-            mMap.addMarker(new MarkerOptions().position(estacionesOficiales.get(i).posicionEstacion).title("Estación: "+estacionesOficiales.get(i).nombreEstacion));
+        mostrarEstaciones();
+    }
+
+    private void mostrarEstaciones() {
+        if (mostrarEstacionesOficiales == 0) {
+            for (int i = 0; i<estacionesOficiales.size();i++){
+                mMap.addMarker(new MarkerOptions().position(estacionesOficiales.get(i).posicionEstacion).title("Estación: "+estacionesOficiales.get(i).nombreEstacion));
+            }
+
+            markersEstaciones = new ArrayList<>();
+
+            mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                @Override
+                public boolean onMarkerClick(@NonNull Marker marker) {
+                    if (marker.getTitle().startsWith("Estación: ")){
+
+                        SharedPreferences sharedPreferences = getSharedPreferences("infoEstacion", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("nombreEstacion", marker.getTitle());
+                        editor.putString("fotoEstacion", buscarEstacionPorLatLng(marker.getPosition()).fotoEstacion);
+                        editor.putString("codigoEstacion", buscarEstacionPorLatLng(marker.getPosition()).codigoEstacion);
+                        editor.putFloat("latitudEstacion", (float)marker.getPosition().latitude);
+                        editor.putFloat("longitudEstacion", (float)marker.getPosition().longitude);
+                        editor.commit();
+                        Intent i = new Intent();
+                        i.setAction("info_mediciones");
+                        i.putExtra("nombreEstacion", marker.getTitle());
+                        getApplicationContext().sendBroadcast(i);
+
+                        DialogMarkerFragment dialogMarkerFragment=new DialogMarkerFragment();
+                        dialogMarkerFragment.show(getSupportFragmentManager(), "DialogMarkerFragment");
+                    }
+                    return false;
+                }
+            });
+        }else{
+            mMap.clear();
+            mostrarMediciones();
         }
 
-        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-            @Override
-            public boolean onMarkerClick(@NonNull Marker marker) {
-                if (marker.getTitle().startsWith("Estación: ")){
-                    SharedPreferences sharedPreferences = getSharedPreferences("infoEstacion", MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("nombreEstacion", marker.getTitle());
-                    editor.putString("fotoEstacion", buscarEstacionPorLatLng(marker.getPosition()).fotoEstacion);
-                    editor.putString("codigoEstacion", buscarEstacionPorLatLng(marker.getPosition()).codigoEstacion);
-                    editor.putFloat("latitudEstacion", (float)marker.getPosition().latitude);
-                    editor.putFloat("longitudEstacion", (float)marker.getPosition().longitude);
-                    editor.commit();
-                    Intent i = new Intent();
-                    i.setAction("info_mediciones");
-                    i.putExtra("nombreEstacion", marker.getTitle());
-                    getApplicationContext().sendBroadcast(i);
 
-                    DialogMarkerFragment dialogMarkerFragment=new DialogMarkerFragment();
-                    dialogMarkerFragment.show(getSupportFragmentManager(), "DialogMarkerFragment");
-                }
-                return false;
-            }
-        });
+
+
     }
 
     private Estacion buscarEstacionPorLatLng( LatLng posicion){
@@ -527,11 +558,13 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
             markersMediciones.add(marcador);
         }
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode==200 && resultCode==RESULT_OK){
             autorMediciones= data.getIntExtra("autorMediciones", 0);
+            mostrarEstacionesOficiales= data.getIntExtra("mostrarEstaciones", 0);
             fechaInicio = data.getLongExtra("fechaInicio", 0);
             fechaFin = data.getLongExtra("fechaFin", 0);
             tipoCO = data.getIntExtra("tipoCO", 0);
@@ -564,7 +597,13 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
             }else{
                 l_so2.setVisibility(GONE);
             }
+            if (mostrarEstacionesOficiales==0){
+                l_estaciones.setVisibility(VISIBLE);
+            }else{
+                l_estaciones.setVisibility(GONE);
+            }
             mostrarMediciones();
+            mostrarEstaciones();
 
         }
     }

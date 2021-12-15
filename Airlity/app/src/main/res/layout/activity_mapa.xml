@@ -42,7 +42,9 @@
                 android:id="@+id/map"
                 android:name="com.google.android.gms.maps.SupportMapFragment"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="0dp" />
 
             <TextView
                 android:id="@+id/tv_scan"
@@ -59,12 +61,26 @@
                 app:layout_constraintTop_toTopOf="@+id/floatingActionButton"
                 app:layout_constraintVertical_bias="0.5" />
 
+            <ImageView
+                android:id="@+id/iv_borde"
+                android:layout_width="60dp"
+                android:layout_height="110dp"
+                android:layout_marginBottom="10dp"
+                android:scaleType="fitXY"
+                app:layout_constraintBottom_toBottomOf="@+id/map"
+                app:layout_constraintEnd_toStartOf="@+id/cl_leyenda"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@+id/map"
+                app:layout_constraintTop_toTopOf="@+id/map"
+                app:layout_constraintVertical_bias="1.0"
+                app:srcCompat="@drawable/borde" />
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cl_leyenda"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:background="#B0707070"
+                android:background="#707070"
                 android:padding="5dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/map"
@@ -86,11 +102,13 @@
                     app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
 
                 <LinearLayout
+                    android:id="@+id/l_estaciones"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="2dp"
                     android:orientation="horizontal"
-                    app:layout_constraintTop_toBottomOf="@id/l_IAQ">
+                    app:layout_constraintTop_toBottomOf="@id/l_IAQ"
+                    tools:layout_editor_absoluteX="5dp">
 
                     <ImageView
                         android:id="@+id/imageView12"
