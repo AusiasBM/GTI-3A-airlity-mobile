@@ -50,10 +50,13 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.TileOverlay;
+import com.google.android.gms.maps.model.TileOverlayOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.maps.android.heatmaps.HeatmapTileProvider;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -384,7 +387,27 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap.setMaxZoomPreference(25.0f);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(epsgGandia, 18));
 
-        mostrarEstaciones();
+        //crearMapadeCalor();
+        //mostrarEstaciones();
+    }
+
+    private void crearMapadeCalor() {
+        HeatmapTileProvider provider;
+        TileOverlay mOverlay;
+
+        ArrayList<LatLng> list= new ArrayList<LatLng>();
+        for(Medicion medicion: mediciones) {
+            LatLng coordenada = new LatLng(medicion.getLatitud(), medicion.getLongitud());
+            //Log.d("Mediciones de calor", coordenada+"");
+            list.add(coordenada);
+        }
+
+
+
+        provider = new HeatmapTileProvider.Builder()
+                .data(list)
+                .build();
+        mOverlay = mMap.addTileOverlay(new TileOverlayOptions().tileProvider(provider));
     }
 
     private void mostrarEstaciones() {
@@ -423,10 +446,6 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
             mMap.clear();
             mostrarMediciones();
         }
-
-
-
-
     }
 
     private Estacion buscarEstacionPorLatLng( LatLng posicion){
@@ -604,6 +623,7 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
             mostrarMediciones();
             mostrarEstaciones();
+            crearMapadeCalor();
 
         }
     }
