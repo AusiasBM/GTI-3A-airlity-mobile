@@ -9,6 +9,7 @@
 
 package com.example.tricoenvironment.airlity;
 
+import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
 import android.Manifest;
@@ -26,6 +27,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -75,6 +77,9 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
     Boolean sesionInicidad;
     String cuerpo, macSensor;
     LogicaFake logicaFake;
+    ConstraintLayout cl_leyenda;
+    ImageView iv_close_leyenda;
+    LinearLayout l_03, l_so2, l_co, l_no2, l_iaq;
 
     TextView tv_scan;
 
@@ -101,6 +106,15 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         final FloatingActionButton fab = findViewById(R.id.floatingActionButton);
         ImageView iv_filtros = findViewById(R.id.iv_filtros);
         tv_scan=findViewById(R.id.tv_scan);
+        cl_leyenda=findViewById(R.id.cl_leyenda);
+        iv_close_leyenda=findViewById(R.id.iv_close_leyenda);
+        l_03=findViewById(R.id.l_O3);
+        l_no2=findViewById(R.id.l_NO2);
+        l_co=findViewById(R.id.l_CO);
+        l_so2=findViewById(R.id.l_SO2);
+        l_iaq=findViewById(R.id.l_IAQ);
+
+        cl_leyenda.setVisibility(VISIBLE);
 
         intentServicioBLE = new Intent(this, ServicioEscuharBeacons.class);
 
@@ -119,9 +133,9 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         Log.d("sesion", sesionInicidad+"");
         Log.d("sesion", sesionInicidad+", "+cuerpo);
         if(sesionInicidad==false && cuerpo==null){
-            fab.setVisibility(View.GONE);
-            iv_filtros.setVisibility(View.GONE);
-            tv_scan.setVisibility(View.GONE);
+            fab.setVisibility(GONE);
+            iv_filtros.setVisibility(GONE);
+            tv_scan.setVisibility(GONE);
         }else {
             Gson gson = new Gson();
             Root datosRoot = gson.fromJson(cuerpo, Root.class);
@@ -175,7 +189,7 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
                     intentServicioBLE.putExtra("macDispositivo", macSensor);
                     getApplicationContext().startService(intentServicioBLE);
                     fab.setImageResource(R.drawable.pausa);
-                    tv_scan.setVisibility(View.GONE);
+                    tv_scan.setVisibility(GONE);
                     bluetoothActivo=true;
 
 
@@ -207,6 +221,13 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
                 intent.putExtra("tipoSO2", tipoSO2);
                 startActivityForResult(intent, 200);
 
+            }
+        });
+
+        iv_close_leyenda.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cl_leyenda.setVisibility(GONE);
             }
         });
     }
@@ -483,18 +504,18 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             if (tipoMedicion.equals("CO")) {
                 datos.addProperty("Valor C0", valorMedicion);
-                marker = marker.position(coordenada).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)); //.title(medicion.getTipoMedida());
+                marker = marker.position(coordenada).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)); //.title(medicion.getTipoMedida());
             } else if (tipoMedicion.equals("SO2")) {
-                marker = marker.position(coordenada).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)); //.title(medicion.getTipoMedida());
+                marker = marker.position(coordenada).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)); //.title(medicion.getTipoMedida());
             } else if (tipoMedicion.equals("O3")) {
                 datos.addProperty("Valor O3", valorMedicion);
-                marker = marker.position(coordenada).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)); //.title(medicion.getTipoMedida());
+                marker = marker.position(coordenada).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)); //.title(medicion.getTipoMedida());
             } else if (tipoMedicion.equals("NO2")) {
                 datos.addProperty("Valor NO2", valorMedicion);
                 marker = marker.position(coordenada).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA)); //.title(medicion.getTipoMedida());
             } else if(tipoMedicion.equals("IAQ")){
                 datos.addProperty("Valor IAQ", valorMedicion);
-                marker = marker.position(coordenada).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)); //.title(medicion.getTipoMedida());
+                marker = marker.position(coordenada).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)); //.title(medicion.getTipoMedida());
             } else {
                 continue;
             }
@@ -514,10 +535,35 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
             fechaInicio = data.getLongExtra("fechaInicio", 0);
             fechaFin = data.getLongExtra("fechaFin", 0);
             tipoCO = data.getIntExtra("tipoCO", 0);
+            if (tipoCO==0){
+                l_co.setVisibility(VISIBLE);
+            }else{
+                l_co.setVisibility(GONE);
+            }
             tipoNO2 = data.getIntExtra("tipoNO2", 0);
+            if (tipoNO2==0){
+                l_no2.setVisibility(VISIBLE);
+            }else{
+                l_no2.setVisibility(GONE);
+            }
             tipoO3 = data.getIntExtra("tipoO3", 0);
+            if (tipoO3==0){
+                l_03.setVisibility(VISIBLE);
+            }else{
+                l_03.setVisibility(GONE);
+            }
             tipoIAQ = data.getIntExtra("tipoIAQ", 0);
+            if (tipoIAQ==0){
+                l_iaq.setVisibility(VISIBLE);
+            }else{
+                l_iaq.setVisibility(GONE);
+            }
             tipoSO2 = data.getIntExtra("tipoSO2", 0);
+            if (tipoSO2==0){
+                l_so2.setVisibility(VISIBLE);
+            }else{
+                l_so2.setVisibility(GONE);
+            }
             mostrarMediciones();
 
         }

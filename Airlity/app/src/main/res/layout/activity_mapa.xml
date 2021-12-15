@@ -59,6 +59,189 @@
                 app:layout_constraintTop_toTopOf="@+id/floatingActionButton"
                 app:layout_constraintVertical_bias="0.5" />
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_leyenda"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@color/colorGrey"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/map"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="1.0">
+
+                <ImageView
+                    android:id="@+id/iv_close_leyenda"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0"
+                    app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="2dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toBottomOf="@id/l_IAQ">
+
+                    <ImageView
+                        android:id="@+id/imageView12"
+                        android:layout_width="43dp"
+                        android:layout_height="15dp"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/estacion" />
+
+                    <TextView
+                        android:id="@+id/textView30"
+                        android:layout_width="wrap_content"
+                        android:layout_height="15dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/comfortaa_bold"
+                        android:text="Estaciones oficiales"
+                        android:textColor="#FFFFFF"
+                        android:textSize="10dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/l_IAQ"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="2dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toBottomOf="@id/l_CO">
+
+                    <ImageView
+                        android:id="@+id/imageView11"
+                        android:layout_width="0dp"
+                        android:layout_height="15dp"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/iaq" />
+
+                    <TextView
+                        android:id="@+id/textView29"
+                        android:layout_width="wrap_content"
+                        android:layout_height="15dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/comfortaa_bold"
+                        android:text="ICA             "
+                        android:textColor="#FFFFFF"
+                        android:textSize="10dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/l_CO"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="2dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toBottomOf="@id/l_NO2">
+
+                    <ImageView
+                        android:id="@+id/imageView10"
+                        android:layout_width="0dp"
+                        android:layout_height="15dp"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/co" />
+
+                    <TextView
+                        android:id="@+id/textView28"
+                        android:layout_width="wrap_content"
+                        android:layout_height="15dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/comfortaa_bold"
+                        android:text="CO             "
+                        android:textColor="#FFFFFF"
+                        android:textSize="10dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/l_NO2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="2dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toBottomOf="@id/l_O3">
+
+                    <ImageView
+                        android:id="@+id/imageView9"
+                        android:layout_width="0dp"
+                        android:layout_height="15dp"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/no2" />
+
+                    <TextView
+                        android:id="@+id/textView27"
+                        android:layout_width="wrap_content"
+                        android:layout_height="15dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/comfortaa_bold"
+                        android:text="NO2           "
+                        android:textColor="#FFFFFF"
+                        android:textSize="10dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/l_SO2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/imageView7"
+                        android:layout_width="0dp"
+                        android:layout_height="15dp"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/so2" />
+
+                    <TextView
+                        android:id="@+id/textView24"
+                        android:layout_width="wrap_content"
+                        android:layout_height="15dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/comfortaa_bold"
+                        android:text="SO2             "
+                        android:textColor="#FFFFFF"
+                        android:textSize="10dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/l_O3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="2dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toBottomOf="@id/l_SO2">
+
+                    <ImageView
+                        android:id="@+id/imageView8"
+                        android:layout_width="0dp"
+                        android:layout_height="15dp"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/o3" />
+
+                    <TextView
+                        android:id="@+id/textView26"
+                        android:layout_width="wrap_content"
+                        android:layout_height="15dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/comfortaa_bold"
+                        android:text="03               "
+                        android:textColor="#FFFFFF"
+                        android:textSize="10dp" />
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout

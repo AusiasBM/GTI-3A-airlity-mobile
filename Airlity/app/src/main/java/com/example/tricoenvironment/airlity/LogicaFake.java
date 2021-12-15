@@ -27,7 +27,7 @@ import java.util.List;
 public class LogicaFake {
 
     private static final String ETIQUETA_LOG = ">>>>";
-    private static String url="192.168.1.124";
+    private static String url="192.168.31.98";
     //IP Pere casa 192.168.31.98
     //IP Pere red iphone 172.20.10.2
     //IP Pere en UPVNET 10.236.50.31
