@@ -79,7 +79,7 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     Bundle datos;
     Boolean sesionInicidad;
-    String cuerpo, macSensor;
+    String cuerpo, macSensor, rolUsuario;
     LogicaFake logicaFake;
     ConstraintLayout cl_leyenda;
     ImageView iv_close_leyenda, iv_abrir_leyenda, iv_tipoMedicion;
@@ -134,6 +134,7 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         SharedPreferences preferences=getSharedPreferences("com.example.tricoenvironment.airlity", Context.MODE_PRIVATE);
         sesionInicidad = preferences.getBoolean("usuarioLogeado", false);
         cuerpo = preferences.getString("cuerpoUsuario", null);
+
         Log.d("sesion", sesionInicidad+"");
         Log.d("sesion", sesionInicidad+", "+cuerpo);
         if(sesionInicidad==false && cuerpo==null){
@@ -145,6 +146,7 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
             Root datosRoot = gson.fromJson(cuerpo, Root.class);
 
             macUsuarioDato = datosRoot.getDatosUsuario().getMacSensor().toString();
+            rolUsuario=datosRoot.getDatosUsuario().getRol();
         }
 
 
@@ -173,9 +175,11 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         navigationView.setItemIconTintList(null);
 
         if (sesionInicidad && cuerpo!=null){
+            if (!rolUsuario.equals("Admin")){
+                navigationView.getMenu().getItem(6).setVisible(false);
+            }
             navigationView.getMenu().getItem(2).setVisible(false);
         }else{
-
             navigationView.getMenu().getItem(1).setVisible(false);
             navigationView.getMenu().getItem(3).setVisible(false);
             navigationView.getMenu().getItem(4).setVisible(false);

@@ -67,7 +67,7 @@ public class GraficasActivity extends AppCompatActivity {
     private LogicaFake logicaFake;
 
     Boolean sesionInicidad;
-    String cuerpo, tokkenUsuarioDato;
+    String cuerpo, tokkenUsuarioDato, rolUsuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +91,7 @@ public class GraficasActivity extends AppCompatActivity {
         Root datosRoot = gson.fromJson(cuerpo, Root.class);
 
         tokkenUsuarioDato = datosRoot.getData().getToken();
+        rolUsuario = datosRoot.getDatosUsuario().getRol();
 
         //logicaFake.sensoresInactivos(tokkenUsuarioDato, this);
 
@@ -109,6 +110,9 @@ public class GraficasActivity extends AppCompatActivity {
 
         NavigationView navigationView = findViewById(R.id.graficas_navigationView);
         navigationView.setItemIconTintList(null);
+        if (!rolUsuario.equals("Admin")){
+            navigationView.getMenu().getItem(6).setVisible(false);
+        }
         navigationView.getMenu().getItem(2).setVisible(false);
         prepararDrawer(navigationView);
         //-------------------------------------------

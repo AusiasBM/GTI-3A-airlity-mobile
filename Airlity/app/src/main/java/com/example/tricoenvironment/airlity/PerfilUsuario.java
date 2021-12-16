@@ -48,7 +48,7 @@ public class PerfilUsuario extends AppCompatActivity {
     int codigo;
     Boolean sesionInicidad;
     String cuerpo;
-    String idUsuarioDato, nombreUsuarioDato, correoUsuarioDato, contraseñaUsuarioDato, tokkenUsuarioDato, telefonoUsuarioDato, macUsuarioDato;
+    String rolUsuario, idUsuarioDato, nombreUsuarioDato, correoUsuarioDato, contraseñaUsuarioDato, tokkenUsuarioDato, telefonoUsuarioDato, macUsuarioDato;
 
     Menu menu;
     Bundle datos;
@@ -81,6 +81,7 @@ public class PerfilUsuario extends AppCompatActivity {
         correoUsuarioDato = datosRoot.getDatosUsuario().getCorreo();
         telefonoUsuarioDato = datosRoot.getDatosUsuario().getTelefono().toString();
         macUsuarioDato = datosRoot.getDatosUsuario().getMacSensor().toString();
+        rolUsuario = datosRoot.getDatosUsuario().getRol();
 
         tv_nombreUsuario.setText(nombreUsuarioDato);
         et_nombreUsuario.setText(nombreUsuarioDato);
@@ -117,6 +118,9 @@ public class PerfilUsuario extends AppCompatActivity {
 
         NavigationView navigationView = findViewById(R.id.perfilusuario_navigationView);
         navigationView.setItemIconTintList(null);
+        if (!rolUsuario.equals("Admin")){
+            navigationView.getMenu().getItem(6).setVisible(false);
+        }
         navigationView.getMenu().getItem(2).setVisible(false);
         prepararDrawer(navigationView);
         seleccionarItem(navigationView.getMenu().getItem(4));
