@@ -37,13 +37,14 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.google.gson.Gson;
 
 public class MedicionesActivity extends AppCompatActivity {
 
     private String[] nombres = new String[]{"Buscar dispositivo BLE","Listado Últimas Mediciones"};
     private static final int CODIGO_PETICION_PERMISOS = 11223344;
     Boolean sesionInicidad;
-    String cuerpo;
+    String cuerpo, rolUsuario;
     /**
      * Método onCreate se ejecuta antes de iniciar la actividad MedicionesActivity
      *
@@ -61,6 +62,10 @@ public class MedicionesActivity extends AppCompatActivity {
         SharedPreferences preferences=getSharedPreferences("com.example.tricoenvironment.airlity", Context.MODE_PRIVATE);
         sesionInicidad = preferences.getBoolean("usuarioLogeado", false);
         cuerpo = preferences.getString("cuerpoUsuario", null);
+        Gson gson = new Gson();
+        Root datosRoot = gson.fromJson(cuerpo, Root.class);
+
+        rolUsuario = datosRoot.getDatosUsuario().getRol();
 
         //Comprobamos si la app tiene los permisos para utilizar el bluetooth
         permisosBluetooth();
@@ -93,6 +98,9 @@ public class MedicionesActivity extends AppCompatActivity {
 
         NavigationView navigationView = findViewById(R.id.mediciones_navigationView);
         navigationView.setItemIconTintList(null);
+        if (!rolUsuario.equals("Admin")){
+            navigationView.getMenu().getItem(6).setVisible(false);
+        }
         navigationView.getMenu().getItem(2).setVisible(false);
 
         prepararDrawer(navigationView);

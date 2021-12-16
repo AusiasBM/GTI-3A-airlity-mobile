@@ -15,6 +15,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.gson.Gson;
 
 public class ConoceTricoActivity extends AppCompatActivity {
 
@@ -23,7 +24,7 @@ public class ConoceTricoActivity extends AppCompatActivity {
 
     Bundle datos;
     Boolean sesionInicidad;
-    String cuerpo;
+    String cuerpo, rolUsuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +34,12 @@ public class ConoceTricoActivity extends AppCompatActivity {
         SharedPreferences preferences=getSharedPreferences("com.example.tricoenvironment.airlity", Context.MODE_PRIVATE);
         sesionInicidad = preferences.getBoolean("usuarioLogeado", false);
         cuerpo = preferences.getString("cuerpoUsuario", null);
+
+        cuerpo = preferences.getString("cuerpoUsuario", null);
+        Gson gson = new Gson();
+        Root datosRoot = gson.fromJson(cuerpo, Root.class);
+
+        rolUsuario = datosRoot.getDatosUsuario().getRol();
 
         //-------------------------------------------
         //Para el menu
@@ -47,10 +54,15 @@ public class ConoceTricoActivity extends AppCompatActivity {
             }
         });
 
+
+
         NavigationView navigationView = findViewById(R.id.conocenos_navigationView);
         navigationView.setItemIconTintList(null);
         if (sesionInicidad && cuerpo!=null){
             navigationView.getMenu().getItem(2).setVisible(false);
+            if (!rolUsuario.equals("Admin")){
+                navigationView.getMenu().getItem(6).setVisible(false);
+            }
         }else{
             navigationView.getMenu().getItem(1).setVisible(false);
             navigationView.getMenu().getItem(3).setVisible(false);

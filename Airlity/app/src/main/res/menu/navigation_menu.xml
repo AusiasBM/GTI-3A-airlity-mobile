@@ -18,7 +18,7 @@
     <item
         android:id="@+id/menu_graficas"
         android:icon="@drawable/grafica"
-        android:title="Dashboard"/>
+        android:title="Gráficas"/>
     <item
         android:id="@+id/menu_perfilUsuario"
         android:icon="@drawable/gente"

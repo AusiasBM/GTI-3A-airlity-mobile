@@ -14,6 +14,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -35,6 +36,8 @@ public class Tab2 extends Fragment {
     private ArrayList<Medicion> mediciones;
     private IntentFilter intentFilter;
     private ReceptorGetMedicion receptor;
+    private String cuerpo, macSensorDato, rolUsuario;
+
 
     private static ProgressDialog progressDialog;
 
@@ -49,6 +52,14 @@ public class Tab2 extends Fragment {
 
         mediciones = new ArrayList<>();
         context.registerReceiver(receptor, intentFilter);
+
+        SharedPreferences preferences=context.getSharedPreferences("com.example.tricoenvironment.airlity", Context.MODE_PRIVATE);
+        cuerpo = preferences.getString("cuerpoUsuario", null);
+        Gson gson = new Gson();
+        Root datosRoot = gson.fromJson(cuerpo, Root.class);
+
+        macSensorDato = datosRoot.getDatosUsuario().getMacSensor().toString();
+        rolUsuario = datosRoot.getDatosUsuario().getRol();
     }
 
     /**
@@ -97,8 +108,15 @@ public class Tab2 extends Fragment {
                 Medicion[] mediciones = gson.fromJson(recibido, Medicion[].class);
 
                 for (Medicion m : mediciones) {
-                    Log.d("RESULTADO DE MEDICIONES", "OBJETO = "  + m);
-                    Tab2.this.mediciones.add(m);
+                    if (rolUsuario.equals("Admin")){
+                        Tab2.this.mediciones.add(m);
+                    } else {
+                        if (macSensorDato.equals(m.getMacSensor())){
+                            Log.d("RESULTADO DE MEDICIONES", "OBJETO = "  + m);
+                            Tab2.this.mediciones.add(m);
+                        }
+                    }
+
                 }
 
                 // notify adapter
