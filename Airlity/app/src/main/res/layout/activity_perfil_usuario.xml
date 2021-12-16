@@ -87,13 +87,13 @@
                 app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.225"
-                app:srcCompat="@drawable/foto_usuario" />
+                app:layout_constraintVertical_bias="0.06999999"
+                app:srcCompat="@drawable/user" />
 
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="300dp"
+                android:layout_marginTop="250dp"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView4"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -191,6 +191,24 @@
                         android:fontFamily="@font/comfortaa_light"
                         android:text="No hay sensores registrados"
                         android:textAlignment="center" />
+
+                    <TextView
+                        android:id="@+id/tv_cambio"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/comfortaa_light"
+                        android:gravity="center" />
+
+                    <Button
+                        android:id="@+id/bt_actualizar_usuario"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/boton_log_in"
+                        android:enabled="false"
+                        android:fontFamily="@font/comfortaa_bold"
+                        android:text="Actualizar información"
+                        android:textColor="@color/colorGrey" />
 
                 </LinearLayout>
             </ScrollView>

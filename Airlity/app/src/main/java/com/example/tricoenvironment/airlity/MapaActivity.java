@@ -86,6 +86,7 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
     LinearLayout l_iaq, l_estaciones;
 
     TextView tv_scan, tv_tipoMedicion;
+    ImageView iv_filtros;
 
     LatLng posicionGandia = new LatLng(38.96797739, -0.19109882);
     LatLng posicionAlzira = new LatLng(39.14996506, -0.45786026);
@@ -108,7 +109,7 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mapa);
         final FloatingActionButton fab = findViewById(R.id.floatingActionButton);
-        ImageView iv_filtros = findViewById(R.id.iv_filtros);
+        iv_filtros = findViewById(R.id.iv_filtros);
         tv_scan=findViewById(R.id.tv_scan);
         cl_leyenda=findViewById(R.id.cl_leyenda);
         iv_close_leyenda=findViewById(R.id.iv_close_leyenda);
@@ -606,6 +607,8 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
                 l_estaciones.setVisibility(VISIBLE);
             }else{
                 l_estaciones.setVisibility(GONE);
+                //mMap.clear();
+
             }
             mostrarMediciones();
             //mostrarEstaciones();

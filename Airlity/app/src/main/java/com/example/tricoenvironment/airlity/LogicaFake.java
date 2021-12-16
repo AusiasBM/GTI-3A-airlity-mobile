@@ -256,4 +256,31 @@ public class LogicaFake {
         );
     }
 
+    public static void actualizarUsuario(String acces_token, String nombreUsuario, String telefono, final Context context){
+        PeticionarioREST elPeticionario = new PeticionarioREST();
+
+        final JSONObject obj = new JSONObject();
+        try {
+            obj.put("nombreUsuario", nombreUsuario+"");
+            obj.put("telefono", telefono+"");
+        } catch (JSONException e)
+        { // TODO Auto-generated catch block e.printStackTrace();
+        }
+        elPeticionario.hacerPeticionRESTConTokken("POST",
+                "http://"+url+":3500/actualizarDatosUsuario", obj.toString(),acces_token,
+                new PeticionarioREST.RespuestaREST () {
+                    @Override
+                    public void callback(int codigo, String cuerpo) {
+                        Log.d("Actualizar_usuario", "Actualizacion= "+ codigo + ", "+ cuerpo);
+                        Intent i = new Intent();
+                        i.setAction("ActualizarUsuario");
+                        i.putExtra("codigoActualizacion", codigo);
+                        i.putExtra("cuerpoActualizacion", cuerpo);
+                        context.sendBroadcast(i);
+
+                    }
+                }
+        );
+    }
+
 }

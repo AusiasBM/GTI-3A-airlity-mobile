@@ -259,6 +259,7 @@ public class SignInActivity extends AppCompatActivity {
             cuerpo = intent.getStringExtra("cuerpo_usuario");
             if (codigo == 200) {
                 Gson gson = new Gson();
+                Log.d("CUERPO", cuerpo);
                 Root datosRoot = gson.fromJson(cuerpo, Root.class);
 
                 tokkenUsuarioDato = datosRoot.getData().getToken();

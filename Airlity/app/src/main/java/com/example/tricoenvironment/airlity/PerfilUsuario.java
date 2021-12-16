@@ -15,13 +15,17 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.SpannableString;
+import android.text.TextWatcher;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,15 +35,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.google.android.material.internal.TextWatcherAdapter;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 
 public class PerfilUsuario extends AppCompatActivity {
 
-    private TextView tv_nombreUsuario,  tv_correoElectronico, tv_macSensorUsuario;
+    private TextView tv_nombreUsuario,  tv_correoElectronico, tv_macSensorUsuario, tv_cambio;
     private EditText et_nombreUsuario,  et_telefonoUsuario;
     String macSensor;
+    Button bt_actualizar;
     String nombreCambiado, telefonoCambiado;
+
+    private IntentFilter intentFilter;
+    private PerfilUsuario.ReceptorGetUsuario receptor;
+
+    Bundle datos;
 
     /*
     private IntentFilter intentFilter;
@@ -50,8 +61,8 @@ public class PerfilUsuario extends AppCompatActivity {
     String cuerpo;
     String rolUsuario, idUsuarioDato, nombreUsuarioDato, correoUsuarioDato, contraseñaUsuarioDato, tokkenUsuarioDato, telefonoUsuarioDato, macUsuarioDato;
 
+    LogicaFake logicaFake;
     Menu menu;
-    Bundle datos;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,18 +71,28 @@ public class PerfilUsuario extends AppCompatActivity {
         SharedPreferences preferences=getSharedPreferences("com.example.tricoenvironment.airlity", Context.MODE_PRIVATE);
         cuerpo = preferences.getString("cuerpoUsuario", null);
         Log.d("Cuerpo",cuerpo+"");
+
+        intentFilter = new IntentFilter();
+        intentFilter.addAction("ActualizarUsuario");
+        receptor = new PerfilUsuario.ReceptorGetUsuario();
+        registerReceiver(receptor, intentFilter);
         //------------------------------------------------------------
         //------------------------------------------------------------
         //Conexión con elementos del layout
         //------------------------------------------------------------
         //------------------------------------------------------------
+        tv_cambio=findViewById(R.id.tv_cambio);
         tv_nombreUsuario = findViewById(R.id.tv_nombreUsuario_perfilUsuario);
         et_nombreUsuario = findViewById(R.id.et_nombreUsuario_perfilUsuario);
         tv_correoElectronico = findViewById(R.id.et_correoUsuario_perfilUsuario);
         et_telefonoUsuario =findViewById(R.id.et_telefonoUsuario_perfilUsuario);
         tv_macSensorUsuario = findViewById(R.id.tv_infoSensor_perfilUsuario);
         tv_macSensorUsuario = findViewById(R.id.tv_infoSensor_perfilUsuario);
+        bt_actualizar=findViewById(R.id.bt_actualizar_usuario);
 
+        tv_cambio.setVisibility(View.GONE);
+
+        logicaFake = new LogicaFake();
         Gson gson = new Gson();
         Root datosRoot = gson.fromJson(cuerpo, Root.class);
 
@@ -82,6 +103,10 @@ public class PerfilUsuario extends AppCompatActivity {
         telefonoUsuarioDato = datosRoot.getDatosUsuario().getTelefono().toString();
         macUsuarioDato = datosRoot.getDatosUsuario().getMacSensor().toString();
         rolUsuario = datosRoot.getDatosUsuario().getRol();
+
+        Log.d("cuerpo_tokken", tokkenUsuarioDato);
+        nombreCambiado=nombreUsuarioDato;
+        telefonoCambiado=telefonoUsuarioDato;
 
         tv_nombreUsuario.setText(nombreUsuarioDato);
         et_nombreUsuario.setText(nombreUsuarioDato);
@@ -126,6 +151,50 @@ public class PerfilUsuario extends AppCompatActivity {
         seleccionarItem(navigationView.getMenu().getItem(4));
         //-------------------------------------------
         //-------------------------------------------
+        et_nombreUsuario.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                nombreCambiado=et_nombreUsuario.getText().toString();
+                if (!nombreCambiado.equals(nombreUsuarioDato)){
+                    bt_actualizar.setEnabled(true);
+                    bt_actualizar.setTextColor(Color.WHITE);
+                }
+            }
+        });
+
+        et_telefonoUsuario.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                telefonoCambiado=et_telefonoUsuario.getText().toString();
+                if (!telefonoCambiado.equals(telefonoUsuarioDato)){
+                    bt_actualizar.setEnabled(true);
+                    bt_actualizar.setTextColor(Color.WHITE);
+                }
+            }
+        });
+        bt_actualizar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logicaFake.actualizarUsuario(tokkenUsuarioDato, nombreCambiado, telefonoCambiado, getApplicationContext());
+
+            }
+        });
     }
 
     private void prepararDrawer(NavigationView navigationView) {
@@ -227,5 +296,38 @@ public class PerfilUsuario extends AppCompatActivity {
     private void lanzarContactanos(){
         Intent i = new Intent(this, ConoceTricoActivity.class);
         startActivity(i);
+    }
+
+    private class ReceptorGetUsuario extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            int codigo = intent.getIntExtra("codigoActualizacion", 0);
+
+            if (codigo == 200) {
+                tv_cambio.setVisibility(View.VISIBLE);
+                tv_cambio.setText("Información del usuario actualizada");
+                tv_cambio.setTextColor(Color.GREEN);
+
+
+                //SharedPreferences settings = getSharedPreferences("com.example.tricoenvironment.airlity", Context.MODE_PRIVATE);
+                //settings.edit().clear().commit();
+                //logicaFake.iniciarSesion(correoUsuarioDato, contraseñaUsuarioDato, getApplicationContext());
+               //cuerpo= "{"+" \"error\":null" +",\"data\":{\"token\":"+tokkenUsuarioDato+"\"},\"datosUsuario\":{\"_id\":\""+idUsuarioDato+"\",\"nombreUsuario\":\""+nombreCambiado+",\"correo\":\""+correoUsuarioDato+"\",\"contrasenya\":\""+contraseñaUsuarioDato+"\",\"telefono\":"+telefonoCambiado+",\"macSensor\":\""+macUsuarioDato+"\",\"rol\":\""+rolUsuario+"\"}}";
+
+                /*
+                SharedPreferences sharedPreferences = getSharedPreferences("com.example.tricoenvironment.airlity", MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putBoolean("usuarioLogeado", true);
+                editor.putString("cuerpoUsuario", cuerpo);
+                editor.commit();
+                */
+            } else {
+                tv_cambio.setVisibility(View.VISIBLE);
+                tv_cambio.setText("Error al actualizar datos del usuario");
+                tv_cambio.setTextColor(Color.RED);
+            }
+        }
     }
 }

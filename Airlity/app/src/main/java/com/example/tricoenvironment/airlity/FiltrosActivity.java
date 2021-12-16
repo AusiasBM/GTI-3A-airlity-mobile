@@ -59,7 +59,6 @@ public class FiltrosActivity extends AppCompatActivity {
         rb_iaq=findViewById(R.id.rb_iaq);
         rg_tipo=findViewById(R.id.rg_tipo);
         iv_volver=findViewById(R.id.iv_volver);
-        switch_estaciones=findViewById(R.id.switch_estaciones);
         iv_abrir_estaciones=findViewById(R.id.iv_abrir_estaciones);
 
         Intent intent = getIntent();
@@ -93,13 +92,6 @@ public class FiltrosActivity extends AppCompatActivity {
             rb_no2.setChecked(true);
         } else if (tipoMedicion == 4){
             rb_co.setChecked(true);
-        }
-
-        int mostrarEstaciones = intent.getIntExtra("mostrarEstaciones", 0);
-        if(mostrarEstaciones == 0){
-            switch_estaciones.setChecked(true);
-        } else {
-            switch_estaciones.setChecked(false);
         }
 
 
@@ -217,14 +209,7 @@ public class FiltrosActivity extends AppCompatActivity {
                     autorMediciones=0;
                 }
                 intent.putExtra("autorMediciones", autorMediciones);
-
-                int mostrarEstaciones;
-                if (switch_estaciones.isChecked()){
-                    mostrarEstaciones=0;
-                }else{
-                    mostrarEstaciones=1;
-                }
-                intent.putExtra("mostrarEstaciones", mostrarEstaciones);
+                
                 //Obtener fechas mediciones
                 long fechaInicio = 0;
                 if(fechaInicioSeleccionada) {
@@ -257,5 +242,9 @@ public class FiltrosActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    private void guardarFiltro(View view){
+
     }
 }
