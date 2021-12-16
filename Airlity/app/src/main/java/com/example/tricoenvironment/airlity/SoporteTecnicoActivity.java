@@ -52,6 +52,8 @@ public class SoporteTecnicoActivity extends AppCompatActivity {
             navigationView.getMenu().getItem(3).setVisible(false);
             navigationView.getMenu().getItem(4).setVisible(false);
             navigationView.getMenu().getItem(5).setVisible(false);
+            navigationView.getMenu().getItem(6).setVisible(false);
+
         }
         prepararDrawer(navigationView);
         //-------------------------------------------

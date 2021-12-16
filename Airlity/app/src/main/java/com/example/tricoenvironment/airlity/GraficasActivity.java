@@ -92,7 +92,7 @@ public class GraficasActivity extends AppCompatActivity {
 
         tokkenUsuarioDato = datosRoot.getData().getToken();
 
-        logicaFake.sensoresInactivos(tokkenUsuarioDato, this);
+        //logicaFake.sensoresInactivos(tokkenUsuarioDato, this);
 
         //-------------------------------------------
         //Para el menu
@@ -124,8 +124,8 @@ public class GraficasActivity extends AppCompatActivity {
 
         //Llamamos a los métodos de la lógica fake obtenerEstadisticas y obtenerDatosParaGrafico
         // para mostrar los datos
-        LogicaFake.obtenerEstadisticas(GraficasActivity.this, currentTimeMillis()-15708000, currentTimeMillis()- 15701000);
-        LogicaFake.obtenerDatosParaGrafico(GraficasActivity.this, medianoche, currentTimeMillis());
+        LogicaFake.obtenerEstadisticas(tokkenUsuarioDato, GraficasActivity.this, currentTimeMillis()-15708000, currentTimeMillis()- 15701000);
+        LogicaFake.obtenerDatosParaGrafico(tokkenUsuarioDato,   GraficasActivity.this, medianoche, currentTimeMillis());
     }
 
     @Override

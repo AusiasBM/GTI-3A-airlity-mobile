@@ -29,7 +29,7 @@
         android:title="Cerrar sesión" />
     <item
         android:id="@+id/menu_sensores"
-        android:icon="@drawable/mapa"
+        android:icon="@drawable/sensor"
         android:title="Información de los sensores" />
 
 

@@ -165,18 +165,18 @@ public class LogicaFake {
      *
      *
      */
-    public static void obtenerEstadisticas(final Context context, long fechaIni, long fechaFin){
+    public static void obtenerEstadisticas(final String tokkenUsu,final Context context, long fechaIni, long fechaFin){
         PeticionarioREST elPeticionario = new PeticionarioREST();
         //Direccion ip en UPVNET10.236.29.250
         //Direccion ip en casa 192.168.0.107
-        elPeticionario.hacerPeticionREST("GET",
-                "http://"+url+":3500/estadisticasMedicionesUsuario?fechaIni="+ fechaIni + "&fechaFin="+ fechaFin, null,
+        elPeticionario.hacerPeticionRESTConTokken("GET",
+                "http://"+url+":3500/estadisticasMedicionesUsuario?fechaIni="+ fechaIni + "&fechaFin="+ fechaFin, null, tokkenUsu,
                 new PeticionarioREST.RespuestaREST () {
                     @Override
                     public void callback(int codigo, String cuerpo) {
-                        /*Log.d("PROVA", "codigo respuesta= " + codigo + " <-> \n" + cuerpo);
+                        Log.d("PROVA", "codigo respuesta= " + codigo + " <-> \n" + cuerpo);
                         Log.d("CODIGO", "" + codigo);
-                        Log.d("CUERPO", "" + cuerpo);*/
+                        Log.d("CUERPO", "" + cuerpo);
                         Gson gson = new Gson();
                         EstadisticasMediciones estadisticas = gson.fromJson(cuerpo, EstadisticasMediciones.class);
 
@@ -212,12 +212,12 @@ public class LogicaFake {
      *
      *
      */
-    public static void obtenerDatosParaGrafico(final Context context, long fechaIni, long fechaFin){
+    public static void obtenerDatosParaGrafico(final String tokkenUsuario, final Context context, long fechaIni, long fechaFin){
         PeticionarioREST elPeticionario = new PeticionarioREST();
         //Direccion ip en UPVNET10.236.29.250
         //Direccion ip en casa 192.168.0.107
-        elPeticionario.hacerPeticionREST("GET",
-                "http://"+url+":3500/datosGraficaUsuario?fechaIni="+ fechaIni + "&fechaFin="+ fechaFin, null,
+        elPeticionario.hacerPeticionRESTConTokken("GET",
+                "http://"+url+":3500/datosGraficaUsuario?fechaIni="+ fechaIni + "&fechaFin="+ fechaFin, null, tokkenUsuario,
                 new PeticionarioREST.RespuestaREST () {
                     @Override
                     public void callback(int codigo, String cuerpo) {

@@ -360,7 +360,6 @@ public class Tab1 extends Fragment {
         */
     public void mostarDistancia( double resultado ) {
         Log.d("distancia", "" + resultado);
-        resultado=1;
         if (resultado < 0.1) {
             Toast.makeText(context, "Error al rastrear el sensor, vuelva a intentarlo",
                     Toast.LENGTH_SHORT).show();
