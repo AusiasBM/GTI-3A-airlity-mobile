@@ -23,6 +23,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
@@ -114,6 +116,10 @@ public class SensoresInactivosActivity extends AppCompatActivity {
         prepararDrawer(navigationView);
         //-------------------------------------------
         //-------------------------------------------
+
+        progressDialog = new ProgressDialog(SensoresInactivosActivity.this);
+        progressDialog.setMessage("Obteniendo información de los sensores");
+        progressDialog.show();
     }
 
     private void prepararDrawer(NavigationView navigationView) {
@@ -251,6 +257,7 @@ public class SensoresInactivosActivity extends AppCompatActivity {
             } else {
                 Toast.makeText(SensoresInactivosActivity.this, "Fallo al recibir sensores", Toast.LENGTH_LONG).show();
             }
+            progressDialog.dismiss();
         }
     }
 }
