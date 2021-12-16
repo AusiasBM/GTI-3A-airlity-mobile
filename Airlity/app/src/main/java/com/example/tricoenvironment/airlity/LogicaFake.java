@@ -237,7 +237,7 @@ public class LogicaFake {
         );
     }
 
-    public static void sensoresInactivos(String acces_token){
+    public static void sensoresInactivos(String acces_token, final Context context){
         PeticionarioREST elPeticionario = new PeticionarioREST();
         elPeticionario.hacerPeticionRESTConTokken("GET",
                 "http://"+url+":3500/sensoresInactivos", null,acces_token,
@@ -245,6 +245,12 @@ public class LogicaFake {
                     @Override
                     public void callback(int codigo, String cuerpo) {
                         Log.d("Sensores_inactivos", "sensores que se encuentran desconetados 24 h = " + codigo + ", "+ cuerpo);
+                        Intent i = new Intent();
+                        i.setAction("SensoresInactivos");
+                        i.putExtra("codigoSensor", codigo);
+                        i.putExtra("cuerpoSensor", cuerpo);
+                        context.sendBroadcast(i);
+
                     }
                 }
         );

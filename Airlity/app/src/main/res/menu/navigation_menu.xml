@@ -27,7 +27,10 @@
         android:id="@+id/menu_signout"
         android:icon="@drawable/iniciar_seion"
         android:title="Cerrar sesión" />
-
+    <item
+        android:id="@+id/menu_sensores"
+        android:icon="@drawable/mapa"
+        android:title="Información de los sensores" />
 
 
     <item

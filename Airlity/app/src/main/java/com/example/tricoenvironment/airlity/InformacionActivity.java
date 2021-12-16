@@ -120,8 +120,16 @@ public class InformacionActivity extends AppCompatActivity {
             case R.id.menu_nosotros:
                 lanzarContactanos();
                 break;
+            case R.id.menu_sensores:
+                lanzarSensores();
+                break;
         }
 
+    }
+
+    private void lanzarSensores() {
+        Intent i = new Intent(this, SensoresInactivosActivity.class);
+        startActivity(i);
     }
     private void lanzarSignOut() {
         AlertDialog.Builder alertDialog=new AlertDialog.Builder(InformacionActivity.this);

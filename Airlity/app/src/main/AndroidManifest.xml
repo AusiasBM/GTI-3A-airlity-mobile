@@ -19,6 +19,9 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".SensoresInactivosActivity"
+            android:exported="false" />
+        <activity
             android:name=".FiltrosActivity"
             android:exported="false" />
         <activity

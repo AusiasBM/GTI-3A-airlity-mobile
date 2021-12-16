@@ -92,7 +92,7 @@ public class GraficasActivity extends AppCompatActivity {
 
         tokkenUsuarioDato = datosRoot.getData().getToken();
 
-        logicaFake.sensoresInactivos(tokkenUsuarioDato);
+        logicaFake.sensoresInactivos(tokkenUsuarioDato, this);
 
         //-------------------------------------------
         //Para el menu
@@ -199,8 +199,16 @@ public class GraficasActivity extends AppCompatActivity {
             case R.id.menu_nosotros:
                 lanzarContactanos();
                 break;
+            case R.id.menu_sensores:
+                lanzarSensores();
+                break;
         }
 
+    }
+
+    private void lanzarSensores() {
+        Intent i = new Intent(this, SensoresInactivosActivity.class);
+        startActivity(i);
     }
 
     private void lanzarInformacion() {

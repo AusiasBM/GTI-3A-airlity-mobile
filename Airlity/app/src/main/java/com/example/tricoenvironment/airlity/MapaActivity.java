@@ -180,6 +180,7 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
             navigationView.getMenu().getItem(3).setVisible(false);
             navigationView.getMenu().getItem(4).setVisible(false);
             navigationView.getMenu().getItem(5).setVisible(false);
+            navigationView.getMenu().getItem(6).setVisible(false);
         }
         prepararDrawer(navigationView);
         //-------------------------------------------
@@ -286,8 +287,16 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
             case R.id.menu_signout:
                 lanzarSignOut();
                 break;
+            case R.id.menu_sensores:
+                lanzarSensores();
+                break;
         }
 
+    }
+
+    private void lanzarSensores() {
+        Intent i = new Intent(this, SensoresInactivosActivity.class);
+        startActivity(i);
     }
 
     private void lanzarSignOut() {
@@ -395,8 +404,6 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
             //Log.d("Mediciones de calor", coordenada+"");
             list.add(coordenada);
         }
-
-
 
         provider = new HeatmapTileProvider.Builder()
                 .data(list)

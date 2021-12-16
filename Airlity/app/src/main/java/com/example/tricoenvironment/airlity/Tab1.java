@@ -307,9 +307,9 @@ public class Tab1 extends Fragment {
 
             Log.d("INTENT", "" + sensor);
 
-            textNombreDispositivo.setText(sensor.getNombre());
+            //textNombreDispositivo.setText(sensor.getNombre());
             textNMacDispositivo.setText(sensor.getMac());
-            textUuidDispositivo.setText(sensor.getUuid());
+            //textUuidDispositivo.setText(sensor.getUuid());
 
             SimpleDateFormat sdf = new SimpleDateFormat("MMM dd yyyy HH:mm");
             Date resultado = new Date(sensor.getFecha());
