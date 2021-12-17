@@ -291,6 +291,27 @@ public class LogicaFake {
         );
     }
 
+
+    public static void sensoresErroneos(String ciudad, String tipoMedicion, final Context context){
+        PeticionarioREST elPeticionario = new PeticionarioREST();
+
+        tipoMedicion="SO2";
+        elPeticionario.hacerPeticionRESTConTokken("GET",
+                "http://"+url+":3500/informeSensores?ciudad=Gandia&tipoMedicion="+tipoMedicion, null,null,
+                new PeticionarioREST.RespuestaREST () {
+                    @Override
+                    public void callback(int codigo, String cuerpo) {
+                        Log.d("Sensores_erroneos", "Sensores erroneos= "+ codigo + ", "+ cuerpo);
+                        Intent i = new Intent();
+                        i.setAction("SensoresInactivos");
+                        i.putExtra("codigoSensorErroneo", codigo);
+                        i.putExtra("cuerpoSensorErroneo", cuerpo);
+                        context.sendBroadcast(i);
+                    }
+                }
+        );
+    }
+
     public static void actualizarUsuario(String acces_token, String nombreUsuario, String telefono, final Context context){
         PeticionarioREST elPeticionario = new PeticionarioREST();
 

@@ -19,6 +19,10 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".PopUpTerminos"
+            android:exported="false"
+            android:theme="@style/AppTheme.TemaPopUp"/>
+        <activity
             android:name=".SensoresInactivosActivity"
             android:exported="false" />
         <activity

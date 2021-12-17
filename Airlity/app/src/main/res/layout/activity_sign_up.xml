@@ -59,8 +59,9 @@
                 android:id="@+id/bt_signup_signup"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/boton_log_in"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/boton_deshabilitado"
+                android:enabled="false"
                 android:fontFamily="@font/comfortaa_bold"
                 android:text="Registrar usuario"
                 android:textColor="#FFFFFF"
@@ -68,7 +69,7 @@
                 app:layout_constraintEnd_toEndOf="@+id/et_signup_contrasenya"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/et_signup_contrasenya"
-                app:layout_constraintTop_toBottomOf="@+id/tv_error_signup" />
+                app:layout_constraintTop_toBottomOf="@+id/cb_proteccion_datos" />
 
             <EditText
                 android:id="@+id/et_signup_nombre"
@@ -236,6 +237,36 @@
                 app:layout_constraintEnd_toEndOf="@+id/et_signup_verificar_contrasenya"
                 app:layout_constraintStart_toStartOf="@+id/et_signup_verificar_contrasenya"
                 app:layout_constraintTop_toBottomOf="@+id/et_signup_verificar_contrasenya" />
+
+            <CheckBox
+                android:id="@+id/cb_proteccion_datos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                app:layout_constraintStart_toStartOf="@+id/et_signup_verificar_contrasenya"
+                app:layout_constraintTop_toBottomOf="@+id/et_signup_verificar_contrasenya" />
+
+            <TextView
+                android:id="@+id/tv_terminos_condiciones"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/comfortaa"
+                android:text="términos y condiciones"
+                android:textColor="@color/colorPrimary"
+                app:layout_constraintBottom_toBottomOf="@+id/textView27"
+                app:layout_constraintStart_toEndOf="@+id/textView27"
+                app:layout_constraintTop_toTopOf="@+id/textView27"
+                app:layout_constraintVertical_bias="1.0" />
+
+            <TextView
+                android:id="@+id/textView27"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/comfortaa"
+                android:text="Acepto los "
+                app:layout_constraintBottom_toBottomOf="@+id/cb_proteccion_datos"
+                app:layout_constraintStart_toEndOf="@+id/cb_proteccion_datos"
+                app:layout_constraintTop_toTopOf="@+id/cb_proteccion_datos" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

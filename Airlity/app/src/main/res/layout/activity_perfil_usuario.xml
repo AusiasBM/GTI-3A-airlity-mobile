@@ -204,11 +204,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_marginTop="10dp"
-                        android:background="@drawable/boton_log_in"
+                        android:background="@drawable/boton_deshabilitado"
                         android:enabled="false"
                         android:fontFamily="@font/comfortaa_bold"
                         android:text="Actualizar información"
-                        android:textColor="@color/colorGrey" />
+                        android:textColor="#FFFFFF" />
 
                 </LinearLayout>
             </ScrollView>

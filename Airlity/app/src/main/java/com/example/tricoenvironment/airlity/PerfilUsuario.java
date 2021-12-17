@@ -103,6 +103,7 @@ public class PerfilUsuario extends AppCompatActivity {
         telefonoUsuarioDato = datosRoot.getDatosUsuario().getTelefono().toString();
         macUsuarioDato = datosRoot.getDatosUsuario().getMacSensor().toString();
         rolUsuario = datosRoot.getDatosUsuario().getRol();
+        contraseñaUsuarioDato= datosRoot.getDatosUsuario().getContrasenya();
 
         Log.d("cuerpo_tokken", tokkenUsuarioDato);
         nombreCambiado=nombreUsuarioDato;
@@ -165,7 +166,7 @@ public class PerfilUsuario extends AppCompatActivity {
                 nombreCambiado=et_nombreUsuario.getText().toString();
                 if (!nombreCambiado.equals(nombreUsuarioDato)){
                     bt_actualizar.setEnabled(true);
-                    bt_actualizar.setTextColor(Color.WHITE);
+                    bt_actualizar.setBackgroundResource(R.drawable.boton_log_in);
                 }
             }
         });
@@ -184,7 +185,7 @@ public class PerfilUsuario extends AppCompatActivity {
                 telefonoCambiado=et_telefonoUsuario.getText().toString();
                 if (!telefonoCambiado.equals(telefonoUsuarioDato)){
                     bt_actualizar.setEnabled(true);
-                    bt_actualizar.setTextColor(Color.WHITE);
+                    bt_actualizar.setBackgroundResource(R.drawable.boton_log_in);
                 }
             }
         });
@@ -309,17 +310,14 @@ public class PerfilUsuario extends AppCompatActivity {
                 tv_cambio.setVisibility(View.VISIBLE);
                 tv_cambio.setText("Información del usuario actualizada");
                 tv_cambio.setTextColor(Color.GREEN);
-
-
                 //SharedPreferences settings = getSharedPreferences("com.example.tricoenvironment.airlity", Context.MODE_PRIVATE);
                 //settings.edit().clear().commit();
                 //logicaFake.iniciarSesion(correoUsuarioDato, contraseñaUsuarioDato, getApplicationContext());
-               //cuerpo= "{"+" \"error\":null" +",\"data\":{\"token\":"+tokkenUsuarioDato+"\"},\"datosUsuario\":{\"_id\":\""+idUsuarioDato+"\",\"nombreUsuario\":\""+nombreCambiado+",\"correo\":\""+correoUsuarioDato+"\",\"contrasenya\":\""+contraseñaUsuarioDato+"\",\"telefono\":"+telefonoCambiado+",\"macSensor\":\""+macUsuarioDato+"\",\"rol\":\""+rolUsuario+"\"}}";
+               //cuerpo= "{"+"\"error\":null" +",\"data\":{\"token\":"+tokkenUsuarioDato+"\"},\"datosUsuario\":{\"_id\":\""+idUsuarioDato+"\",\"nombreUsuario\":\""+nombreCambiado+",\"correo\":\""+correoUsuarioDato+"\",\"contrasenya\":\""+contraseñaUsuarioDato+"\",\"telefono\":"+telefonoCambiado+",\"macSensor\":\""+macUsuarioDato+"\",\"rol\":\""+rolUsuario+"\"}}";
 
-                /*
+               /*
                 SharedPreferences sharedPreferences = getSharedPreferences("com.example.tricoenvironment.airlity", MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putBoolean("usuarioLogeado", true);
                 editor.putString("cuerpoUsuario", cuerpo);
                 editor.commit();
                 */

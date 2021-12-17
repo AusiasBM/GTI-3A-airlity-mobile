@@ -59,7 +59,6 @@ public class FiltrosActivity extends AppCompatActivity {
         rb_iaq=findViewById(R.id.rb_iaq);
         rg_tipo=findViewById(R.id.rg_tipo);
         iv_volver=findViewById(R.id.iv_volver);
-        iv_abrir_estaciones=findViewById(R.id.iv_abrir_estaciones);
 
         Intent intent = getIntent();
         long fechaInicioIntent = intent.getLongExtra("fechaInicio", 0);
@@ -129,18 +128,6 @@ public class FiltrosActivity extends AppCompatActivity {
             }
         });
 
-        iv_abrir_estaciones.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (switch_estaciones.getVisibility()==View.VISIBLE){
-                    switch_estaciones.setVisibility(View.GONE);
-                    iv_abrir_estaciones.setImageResource(R.drawable.flecha_abajo);
-                }else{
-                    switch_estaciones.setVisibility(View.VISIBLE);
-                    iv_abrir_estaciones.setImageResource(R.drawable.flecha_arriba);
-                }
-            }
-        });
         iv_abrir_fechas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

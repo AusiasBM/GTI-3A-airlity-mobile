@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,6 +45,8 @@ public class SignUpActivity extends AppCompatActivity {
 
     private IntentFilter intentFilter;
     private ReceptorGetUsuario receptor;
+    CheckBox cb_terminos;
+    TextView tv_terminos;
 
     Bundle dato;
 
@@ -107,9 +110,11 @@ public class SignUpActivity extends AppCompatActivity {
         final EditText etContrasenyaSignUp = (EditText) findViewById(R.id.et_signup_contrasenya);
         final EditText etVerificarContrasenyaSignUp = (EditText) findViewById(R.id.et_signup_verificar_contrasenya);
         final TextView tvLogearse = (TextView) findViewById(R.id.tv_signup_logearse_clickable);
-        Button btSignUp = (Button) findViewById(R.id.bt_signup_signup);
+        final Button btSignUp = (Button) findViewById(R.id.bt_signup_signup);
         final TextView tvErrorSignUp = findViewById(R.id.tv_error_signup);
         final EditText etTelefonoSignUp = findViewById(R.id.et_signup_telefono);
+        cb_terminos = findViewById(R.id.cb_proteccion_datos);
+        tv_terminos=findViewById(R.id.tv_terminos_condiciones);
 
         //------------------------------------------------------------
         //------------------------------------------------------------
@@ -131,6 +136,17 @@ public class SignUpActivity extends AppCompatActivity {
         mitextoU.setSpan(new UnderlineSpan(), 0, mitextoU.length(), 0);
         tvLogearse.setText(mitextoU);
 
+        SpannableString mix = new SpannableString("términos y condiciones");
+        mix.setSpan(new UnderlineSpan(), 0, mix.length(), 0);
+        tv_terminos.setText(mix);
+
+        tv_terminos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SignUpActivity.this, PopUpTerminos.class));
+            }
+        });
+
         tvLogearse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -138,6 +154,20 @@ public class SignUpActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+        cb_terminos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (cb_terminos.isChecked()){
+                    btSignUp.setBackgroundResource(R.drawable.boton_log_in);
+                    btSignUp.setEnabled(true);
+                }else{
+                    btSignUp.setBackgroundResource(R.drawable.boton_deshabilitado);
+                    btSignUp.setEnabled(false);
+                }
+            }
+        });
+
 
         btSignUp.setOnClickListener(new View.OnClickListener() {
             @Override

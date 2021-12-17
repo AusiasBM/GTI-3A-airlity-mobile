@@ -5,6 +5,7 @@
       <map>
         <entry key="../../../../../../layout/custom_preview.xml" value="0.25885416666666666" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.10572916666666667" />
+        <entry key="app/src/main/res/drawable/boton_deshabilitado.xml" value="0.20833333333333334" />
         <entry key="app/src/main/res/drawable/boton_log_in.xml" value="0.20989583333333334" />
         <entry key="app/src/main/res/drawable/boton_redondo.xml" value="0.19583333333333333" />
         <entry key="app/src/main/res/drawable/custom_progress_bar.xml" value="0.19583333333333333" />
@@ -15,7 +16,7 @@
         <entry key="app/src/main/res/font/font.xml" value="0.22395833333333334" />
         <entry key="app/src/main/res/layout/activity_.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_conoce_trico.xml" value="0.165" />
-        <entry key="app/src/main/res/layout/activity_filtros.xml" value="0.2626002462349001" />
+        <entry key="app/src/main/res/layout/activity_filtros.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_graficas.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_informacion.xml" value="0.1712962962962963" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.24375" />
@@ -24,17 +25,20 @@
         <entry key="app/src/main/res/layout/activity_mediciones.xml" value="0.2578125" />
         <entry key="app/src/main/res/layout/activity_perfil_usuario.xml" value="0.278810611151432" />
         <entry key="app/src/main/res/layout/activity_pop_up_registro.xml" value="0.2578125" />
+        <entry key="app/src/main/res/layout/activity_pop_up_terminos.xml" value="0.13400340036386152" />
         <entry key="app/src/main/res/layout/activity_principal.xml" value="0.24375" />
         <entry key="app/src/main/res/layout/activity_res.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/activity_sensores_inactivos.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/activity_sensores_inactivos.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_sign_in.xml" value="0.26602794836930327" />
-        <entry key="app/src/main/res/layout/activity_sign_up.xml" value="0.19375" />
+        <entry key="app/src/main/res/layout/activity_sign_up.xml" value="0.2651441897284446" />
         <entry key="app/src/main/res/layout/activity_soporte_tecnico.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.13697916666666668" />
         <entry key="app/src/main/res/layout/cabecera_drawer.xml" value="0.2578125" />
         <entry key="app/src/main/res/layout/content_res.xml" value="0.24375" />
-        <entry key="app/src/main/res/layout/elementos_recycler_inactivos.xml" value="0.375" />
+        <entry key="app/src/main/res/layout/elementos_recycler_erroneos.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/elementos_recycler_inactivos.xml" value="0.2756052141527002" />
         <entry key="app/src/main/res/layout/elementos_recyclerview.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/elementos_sensores_erroneos.xml" value="0.13703703703703704" />
         <entry key="app/src/main/res/layout/fragment_dialog_marker.xml" value="0.2381774822220598" />
         <entry key="app/src/main/res/layout/layout_navigation_header.xml" value="0.19375" />
         <entry key="app/src/main/res/layout/tab1.xml" value="0.21416498295831649" />

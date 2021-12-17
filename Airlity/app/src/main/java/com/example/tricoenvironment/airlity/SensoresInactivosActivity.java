@@ -5,6 +5,7 @@ import static android.view.View.VISIBLE;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,13 +19,11 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
@@ -37,17 +36,23 @@ import java.util.List;
 public class SensoresInactivosActivity extends AppCompatActivity {
 
     private LogicaFake logicaFake;
-    String cuerpo, tokkenUsuarioDato;
+    String cuerpo, cuerpoSensoresErroneo, tokkenUsuarioDato;
     Boolean sesionInicidad;
-    private RecyclerView recyclerView;
+    private RecyclerView recyclerView, recyclerViewErroneos;
     private Context context;
     private AdaptadorSensoresInactivos adaptador;
+    private AdaptadorSensoresErroneos adaptadorSensoresErroneos;
     private static ProgressDialog progressDialog;
     private ArrayList<Sensor> listaSensoresInactivos;
+    private ArrayList<Sensor> listaSensoresErroneos;
+
     private IntentFilter intentFilter;
     private ReceptoGetSensores receptor;
     LinearLayout l_inactivos;
-    ImageView iv_abrir_inactivos;
+    ImageView iv_abrir_inactivos, iv_abrir_erroneos;
+
+    ConstraintLayout cl_sensores_errorneos;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +82,7 @@ public class SensoresInactivosActivity extends AppCompatActivity {
         tokkenUsuarioDato = datosRoot.getData().getToken();
 
         logicaFake.sensoresInactivos(tokkenUsuarioDato, this);
+        //logicaFake.sensoresErroneos("Gandia", "SO2", this);
 
         iv_abrir_inactivos.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -257,6 +263,21 @@ public class SensoresInactivosActivity extends AppCompatActivity {
             } else {
                 Toast.makeText(SensoresInactivosActivity.this, "Fallo al recibir sensores", Toast.LENGTH_LONG).show();
             }
+
+            /*
+            int codigoSensoresErroneos=intent.getIntExtra("codigoSensorErroneo", 0);
+
+            cuerpoSensoresErroneo =intent.getStringExtra("cuerpoSensorErroneo");
+            if (codigoSensoresErroneos == 200){
+                Gson gson = new Gson();
+                //listaSensoresErroneos = gson.fromJson(cuerpoSensoresErroneo, );
+
+                //Log.d("Sensores_erroneos", listaSensoresErroneos.toString());
+                //recyclerViewErroneos.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false));
+                //adaptadorSensoresErroneos = new AdaptadorSensoresErroneos(listaSensoresErroneos);
+                //recyclerViewErroneos.setAdapter(adaptadorSensoresErroneos);
+            }*/
+
             progressDialog.dismiss();
         }
     }

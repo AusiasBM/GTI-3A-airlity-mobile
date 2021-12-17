@@ -129,7 +129,7 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         cl_leyenda.setVisibility(VISIBLE);
 
         intentServicioBLE = new Intent(this, ServicioEscuharBeacons.class);
-
+        //mostrarEstaciones();
         intentFilter = new IntentFilter();
         intentFilter.addAction("Get_Mediciones");
         receptor = new MapaActivity.ReceptorGetMedicion();
@@ -239,7 +239,6 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), FiltrosActivity.class);
                 intent.putExtra("autorMediciones", autorMediciones);
-                intent.putExtra("mostrarEstaciones", mostrarEstacionesOficiales);
                 intent.putExtra("fechaInicio", fechaInicio);
                 intent.putExtra("fechaFin", fechaFin);
                 intent.putExtra("tipoMedicion", tipoMedicion);
@@ -438,8 +437,7 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         provider = new HeatmapTileProvider.Builder()
                 .weightedData(datos)
-                .radius(50)
-                .maxIntensity(500.0)
+                .radius(20)
                 .build();
 
         // Create the gradient.
@@ -629,7 +627,7 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode==200 && resultCode==RESULT_OK){
             autorMediciones= data.getIntExtra("autorMediciones", 0);
-            mostrarEstacionesOficiales= data.getIntExtra("mostrarEstaciones", 0);
+            //mostrarEstacionesOficiales= data.getIntExtra("mostrarEstaciones", 0);
             fechaInicio = data.getLongExtra("fechaInicio", 0);
             fechaFin = data.getLongExtra("fechaFin", 0);
             tipoMedicion = data.getIntExtra("tipoMedicion", 0);
@@ -654,7 +652,7 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             }
             mostrarMediciones();
-            //mostrarEstaciones();
+            mostrarEstaciones();
             //crearMapadeCalor();
 
         }
