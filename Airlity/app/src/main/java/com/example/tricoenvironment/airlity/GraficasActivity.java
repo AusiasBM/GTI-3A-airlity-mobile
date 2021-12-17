@@ -128,8 +128,8 @@ public class GraficasActivity extends AppCompatActivity {
 
         //Llamamos a los métodos de la lógica fake obtenerEstadisticas y obtenerDatosParaGrafico
         // para mostrar los datos
-        LogicaFake.obtenerEstadisticas(GraficasActivity.this, currentTimeMillis()-86400000, currentTimeMillis(), tokkenUsuarioDato);
-        LogicaFake.obtenerDatosParaGrafico(GraficasActivity.this, medianoche, currentTimeMillis(), tokkenUsuarioDato);
+        LogicaFake.obtenerEstadisticas(tokkenUsuarioDato,GraficasActivity.this, currentTimeMillis()-86400000, currentTimeMillis());
+        LogicaFake.obtenerDatosParaGrafico(tokkenUsuarioDato,GraficasActivity.this, medianoche, currentTimeMillis());
     }
 
     @Override

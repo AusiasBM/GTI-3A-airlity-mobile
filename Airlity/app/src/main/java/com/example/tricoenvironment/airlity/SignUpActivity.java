@@ -31,7 +31,8 @@ import java.util.ArrayList;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    private String nombreUsuario, macSensorUsuario;
+    private String datos;
+    private String nombreUsuario, macSensorUsuario, tipoMedicion;
     private String correoUsuario;
     private String contraseñaUsuario;
     private String contraseñaVerificada;
@@ -54,9 +55,15 @@ public class SignUpActivity extends AppCompatActivity {
         logicaFake = new LogicaFake();
 
         dato = getIntent().getExtras();
-        macSensorUsuario = dato.getString("macUsuario");
+        datos = dato.getString("macUsuario");
 
-        Log.d("Sensor", macSensorUsuario+"");
+        Gson gson = new Gson();
+
+        DatosScanner dc = gson.fromJson(datos, DatosScanner.class);
+
+        Log.d("Sensor", dc.getMacSensor()+"");
+        macSensorUsuario = dc.getMacSensor();
+        tipoMedicion = dc.getTipoMedicion();
 
         intentFilter = new IntentFilter();
         intentFilter.addAction("Get_usuario");
@@ -135,6 +142,7 @@ public class SignUpActivity extends AppCompatActivity {
         btSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.d("ENTRA AL BOTON SIGNUP ONCLICK", "CLIIIIIIIIIIIIIIICK");
                 nombreUsuario = etNombreSignUp.getText().toString();
                 correoUsuario = etCorreoSignUp.getText().toString();
                 contraseñaUsuario = etContrasenyaSignUp.getText().toString();
@@ -149,7 +157,7 @@ public class SignUpActivity extends AppCompatActivity {
                     tvErrorSignUp.setVisibility(VISIBLE);
                     tvErrorSignUp.setText("Rellene todos los campos");
                 } else if (contraseñaUsuario.equals(contraseñaVerificada)) {
-                    logicaFake.registrarUsuario(nombreUsuario, correoUsuario, contraseñaUsuario, telefonoUsuarioInt, macSensorUsuario,getApplicationContext());
+                    logicaFake.registrar(nombreUsuario, correoUsuario, contraseñaUsuario, telefonoUsuarioInt, macSensorUsuario, tipoMedicion, getApplicationContext());
                     SharedPreferences sharedPreferences = getSharedPreferences("com.example.tricoenvironment.airlity", MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putBoolean("usuarioLogeado", true);

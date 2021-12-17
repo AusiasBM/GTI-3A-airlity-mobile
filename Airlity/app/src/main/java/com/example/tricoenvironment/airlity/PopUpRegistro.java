@@ -8,10 +8,12 @@ import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -58,9 +60,33 @@ public class PopUpRegistro extends AppCompatActivity {
 
         IntentResult intentResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         macUsuarioDato = intentResult.getContents();
-        Toast.makeText(this, "Sensor encontrado", Toast.LENGTH_SHORT).show();
-        Intent i = new Intent(this, SignUpActivity.class);
-        i.putExtra("macUsuario", macUsuarioDato);
-        startActivity(i);
+
+        try {
+            Log.d("ESCANEEEEEER", macUsuarioDato);
+            Gson gson = new Gson();
+
+            DatosScanner dc = gson.fromJson(macUsuarioDato, DatosScanner.class);
+
+            Log.d("ESCANEEEEEER", dc.toString());
+
+            if(!dc.getMacSensor().equals(null) && !dc.getTipoMedicion().equals(null)){
+                //Toast.makeText(this, "Sensor encontrado", Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(this, SignUpActivity.class);
+                i.putExtra("macUsuario", macUsuarioDato);
+                startActivity(i);
+            }else{
+                //Toast.makeText(getApplicationContext(), "Error al escanear", Toast.LENGTH_LONG).show();
+                Intent i = new Intent(this, SignInActivity.class);
+                i.putExtra("error", "error");
+                startActivity(i);
+            }
+
+        }catch(Exception e){
+            //Toast.makeText(getApplicationContext(), "Error al escanear", Toast.LENGTH_LONG).show();
+            Log.d("ESCANEEEEEER", "Error de escaneo");
+        }
+
+
+
     }
 }
