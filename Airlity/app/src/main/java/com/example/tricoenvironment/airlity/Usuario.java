@@ -1,42 +1,42 @@
 package com.example.tricoenvironment.airlity;
 
 public class Usuario {
-    private String _id, nombreUsuario, correo, contraseña;
-    private int numero;
+    private String _id, nombreUsuario, correo, contrasenya;
+    private int telefono;
 
     public Usuario() {
     }
 
-    public Usuario(String correo, String contraseña) {
+    public Usuario(String correo, String contrasenya) {
         this.correo = correo;
-        this.contraseña = contraseña;
+        this.contrasenya = contrasenya;
     }
 
-    public Usuario(String nombreUsuario, String correo, int numero) {
+    public Usuario(String nombreUsuario, String correo, int telefono) {
         this.nombreUsuario = nombreUsuario;
         this.correo = correo;
-        this.numero = numero;
+        this.telefono = telefono;
     }
 
-    public Usuario(String nombreUsuario, String correo, String contraseña, int numero) {
+    public Usuario(String nombreUsuario, String correo, String contrasenya, int telefono) {
         this.nombreUsuario = nombreUsuario;
         this.correo = correo;
-        this.contraseña = contraseña;
-        this.numero = numero;
+        this.contrasenya = contrasenya;
+        this.telefono = telefono;
     }
 
-    public Usuario(String nombreUsuario, String correo, String contraseña) {
+    public Usuario(String nombreUsuario, String correo, String contrasenya) {
         this.nombreUsuario = nombreUsuario;
         this.correo = correo;
-        this.contraseña = contraseña;
+        this.contrasenya = contrasenya;
     }
 
-    public Usuario(String _id, String nombreUsuario, String correo, String contraseña, int numero) {
+    public Usuario(String _id, String nombreUsuario, String correo, String contrasenya, int telefono) {
         this._id = _id;
         this.nombreUsuario = nombreUsuario;
         this.correo = correo;
-        this.contraseña = contraseña;
-        this.numero = numero;
+        this.contrasenya = contrasenya;
+        this.telefono = telefono;
     }
 
     public String get_id() {
@@ -63,20 +63,20 @@ public class Usuario {
         this.correo = correo;
     }
 
-    public String getContraseña() {
-        return contraseña;
+    public String getContrasenya() {
+        return contrasenya;
     }
 
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
+    public void setContrasenya(String contrasenya) {
+        this.contrasenya = contrasenya;
     }
 
-    public int getNumero() {
-        return numero;
+    public int getTelefono() {
+        return telefono;
     }
 
-    public void setNumero(int numero) {
-        this.numero = numero;
+    public void setTelefono(int telefono) {
+        this.telefono = telefono;
     }
 
     @Override
@@ -84,8 +84,8 @@ public class Usuario {
         return "{" +
                 "\"nombreUsuario\":" + "\"" +nombreUsuario + "\"" +
                 ", \"correo\":" +"\"" +correo + "\"" +
-                ", \"contrasenya\":" +"\"" +contraseña + "\"" +
-                ", \"telefono\":"  + numero +
+                ", \"contrasenya\":" +"\"" + contrasenya + "\"" +
+                ", \"telefono\":"  + telefono +
                 "}";
     }
 }

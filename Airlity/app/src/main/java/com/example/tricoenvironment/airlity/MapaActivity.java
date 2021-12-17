@@ -144,11 +144,16 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
             iv_filtros.setVisibility(GONE);
             tv_scan.setVisibility(GONE);
         }else {
-            Gson gson = new Gson();
-            Root datosRoot = gson.fromJson(cuerpo, Root.class);
+            try{
+                Gson gson = new Gson();
+                Root datosRoot = gson.fromJson(cuerpo, Root.class);
 
-            macUsuarioDato = datosRoot.getDatosUsuario().getMacSensor().toString();
-            rolUsuario=datosRoot.getDatosUsuario().getRol();
+                macUsuarioDato = datosRoot.getDatosUsuario().getMacSensor().toString();
+                rolUsuario=datosRoot.getDatosUsuario().getRol();
+            }catch (Exception e){
+
+            }
+
         }
 
 

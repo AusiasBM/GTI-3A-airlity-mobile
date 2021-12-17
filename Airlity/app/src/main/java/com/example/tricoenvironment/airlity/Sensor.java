@@ -74,7 +74,7 @@ public class Sensor {
 
     @Override
     public String toString() {
-        return "Sensor{" +
+        return "{" +
                 "macSensor='" + macSensor + '\'' +
                 ", correoUsuario='" + correoUsuario + '\'' +
                 ", tipoMedicion='" + tipoMedicion + '\'' +

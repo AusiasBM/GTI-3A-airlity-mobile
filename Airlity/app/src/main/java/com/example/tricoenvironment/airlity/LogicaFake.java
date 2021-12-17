@@ -27,7 +27,7 @@ import java.util.List;
 public class LogicaFake {
 
     private static final String ETIQUETA_LOG = ">>>>";
-    private static String url="192.168.0.107";
+    private static String url="10.236.24.219";
     //IP Pere casa 192.168.31.98
     //IP Pere red iphone 172.20.10.2
     //IP Pere en UPVNET 10.236.50.31
@@ -55,6 +55,7 @@ public class LogicaFake {
                         @Override
                         public void callback(int codigo, String cuerpo) {
                             Log.d(ETIQUETA_LOG, "codigo respuesta= " + codigo + " <-> \n" + cuerpo);
+
                         }
                     }
             );
@@ -126,14 +127,17 @@ public class LogicaFake {
      *
      * registrarUsuario() ->
      */
-    public static void registrarUsuario(String nombre, String correo, String contraseña, int numero, String macSensor, final Context context) {
+    public static void registrar(String nombre, String correo, String contraseña, int numero, String macSensor, String tipoMedicion, final Context context) {
             PeticionarioREST elPeticionario = new PeticionarioREST();
 
             final Usuario usuario = new Usuario(nombre, correo, contraseña, numero);
-            final Sensor sensor = new Sensor(macSensor, "C02");
+            final Sensor sensor = new Sensor(macSensor, tipoMedicion);
             final DatosRegistro datosRegistro = new DatosRegistro(usuario, sensor);
+            Gson g = new Gson();
+            String json = g.toJson(datosRegistro);
+
             elPeticionario.hacerPeticionREST("POST",  "http://"+url+":3500/registrar",
-                    datosRegistro.toString(),
+                    json,
                     new PeticionarioREST.RespuestaREST () {
                         @Override
                         public void callback(int codigo, String cuerpo) {
