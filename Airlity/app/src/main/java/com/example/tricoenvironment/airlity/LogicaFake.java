@@ -27,7 +27,7 @@ import java.util.List;
 public class LogicaFake {
 
     private static final String ETIQUETA_LOG = ">>>>";
-    private static String url="172.20.10.2";
+    private static String url="192.168.0.107";
     //IP Pere casa 192.168.31.98
     //IP Pere red iphone 172.20.10.2
     //IP Pere en UPVNET 10.236.50.31
@@ -89,6 +89,37 @@ public class LogicaFake {
                 }
         );
     }
+
+
+    /**
+     * obtenerUltimasMediciones() ejecuta una petición GET al servidor para recuperar las últimas
+     * 10 mediciones guardadas en la bd. El resultado lo envia con un intent de forma broadcast
+     * para que lo recupere en el Fragment Tab2 donde se listará el resultado
+     *
+     * obtenerUltimasMediciones() <-
+     */
+    public static void getMedicionesPorTiempoZona(final Context context){
+        PeticionarioREST elPeticionario = new PeticionarioREST();
+        //Direccion ip en UPVNET10.236.29.250
+        //Direccion ip en casa 192.168.0.107
+        elPeticionario.hacerPeticionREST("GET",  "http://"+url+":3500/mapaContaminacionActual?ciudad=Gandia&tipoMedicion=O3", null,
+                new PeticionarioREST.RespuestaREST () {
+                    @Override
+                    public void callback(int codigo, String cuerpo) {
+                        Log.d(ETIQUETA_LOG, "codigo respuesta= " + codigo + " <-> \n" + cuerpo);
+
+                        Intent i = new Intent();
+                        i.setAction("Get_Mediciones");
+                        i.putExtra("codigoMedicion", codigo);
+                        i.putExtra("Mediciones", cuerpo);
+                        context.sendBroadcast(i);
+
+                    }
+                }
+        );
+    }
+
+
 
     /**
      * registrarUsuario() ejecuta una petición POST al servidor enviando los datos de un Usuario
@@ -165,28 +196,29 @@ public class LogicaFake {
      *
      *
      */
-    public static void obtenerEstadisticas(final Context context, long fechaIni, long fechaFin){
+    public static void obtenerEstadisticas(final Context context, long fechaIni, long fechaFin, String tokken){
         PeticionarioREST elPeticionario = new PeticionarioREST();
         //Direccion ip en UPVNET10.236.29.250
         //Direccion ip en casa 192.168.0.107
-        elPeticionario.hacerPeticionREST("GET",
-                "http://"+url+":3500/estadisticasMedicionesUsuario?fechaIni="+ fechaIni + "&fechaFin="+ fechaFin, null,
+        elPeticionario.hacerPeticionRESTConTokken("GET",
+                "http://"+url+":3500/estadisticasMedicionesUsuario?fechaIni="+ fechaIni + "&fechaFin="+ fechaFin, null, tokken,
                 new PeticionarioREST.RespuestaREST () {
                     @Override
                     public void callback(int codigo, String cuerpo) {
-                        /*Log.d("PROVA", "codigo respuesta= " + codigo + " <-> \n" + cuerpo);
+                        Log.d("PROVA", "codigo respuesta= " + codigo + " <-> \n" + cuerpo);
                         Log.d("CODIGO", "" + codigo);
-                        Log.d("CUERPO", "" + cuerpo);*/
+                        Log.d("CUERPO", "" + cuerpo);//*/
+
                         Gson gson = new Gson();
                         EstadisticasMediciones estadisticas = gson.fromJson(cuerpo, EstadisticasMediciones.class);
 
-                        Log.d("RESULTADO DE MEDICIONES", "VALOR MÁXIMO = "  + estadisticas.getValorMaximo());
+                        /*Log.d("RESULTADO DE MEDICIONES", "VALOR MÁXIMO = "  + estadisticas.getValorMaximo());
                         Log.d("RESULTADO DE MEDICIONES", "MEDIA PONDERADA = "  + estadisticas.getMedia());
                         Log.d("RESULTADO DE MEDICIONES", "TIEMPO MIDIENDO = "  + estadisticas.getTiempo());
                         Log.d("RESULTADO DE MEDICIONES", "VALORACION = "  + estadisticas.getValoracionCalidadAire());
                         Log.d("RESULTADO DE MEDICIONES", "GAS = "  + estadisticas.getTipoGas());
                         Log.d("RESULTADO DE MEDICIONES", "ADVERTENCIAS = "  + estadisticas.getAdvertencias().size());
-                        Log.d("RESULTADO DE MEDICIONES", "ADVERTENCIAS = "  + estadisticas.getAdvertencias());
+                        Log.d("RESULTADO DE MEDICIONES", "ADVERTENCIAS = "  + estadisticas.getAdvertencias());*/
 
                         Intent i = new Intent();
                         i.setAction("DatosEstadisticos");
@@ -212,18 +244,18 @@ public class LogicaFake {
      *
      *
      */
-    public static void obtenerDatosParaGrafico(final Context context, long fechaIni, long fechaFin){
+    public static void obtenerDatosParaGrafico(final Context context, long fechaIni, long fechaFin, String tokken){
         PeticionarioREST elPeticionario = new PeticionarioREST();
         //Direccion ip en UPVNET10.236.29.250
         //Direccion ip en casa 192.168.0.107
-        elPeticionario.hacerPeticionREST("GET",
-                "http://"+url+":3500/datosGraficaUsuario?fechaIni="+ fechaIni + "&fechaFin="+ fechaFin, null,
+        elPeticionario.hacerPeticionRESTConTokken("GET",
+                "http://"+url+":3500/datosGraficaUsuario?fechaIni="+ fechaIni + "&fechaFin="+ fechaFin, null, tokken,
                 new PeticionarioREST.RespuestaREST () {
                     @Override
                     public void callback(int codigo, String cuerpo) {
-                        //Log.d("PROVA", "codigo respuesta= " + codigo + " <-> \n" + cuerpo);
-                        //Log.d("CODIGO", "" + codigo);
-                        //Log.d("CUERPO", "" + cuerpo);
+                        Log.d("PROVA", "codigo respuesta= " + codigo + " <-> \n" + cuerpo);
+                        Log.d("CODIGO", "" + codigo);
+                        Log.d("CUERPO", "" + cuerpo);
                         Gson gson = new Gson();
                         DatosGrafica datos = gson.fromJson(cuerpo, DatosGrafica.class);
 

@@ -20,10 +20,9 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -35,7 +34,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.view.menu.MenuItemWrapperICS;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
@@ -55,12 +53,15 @@ import com.google.android.gms.maps.model.TileOverlayOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
+
+
 import com.google.gson.JsonObject;
+import com.google.maps.android.heatmaps.Gradient;
 import com.google.maps.android.heatmaps.HeatmapTileProvider;
+import com.google.maps.android.heatmaps.WeightedLatLng;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -101,7 +102,7 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
     long fechaInicio = 0;
     long fechaFin = 0;
 
-    Medicion mediciones[] = new Medicion[0];
+    MedicionMapa[] mediciones = new MedicionMapa[0];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,7 +130,7 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         logicaFake = new LogicaFake();
 
-        logicaFake.obtenerUltimasMediciones(this);
+        logicaFake.getMedicionesPorTiempoZona(this);
 
         SharedPreferences preferences=getSharedPreferences("com.example.tricoenvironment.airlity", Context.MODE_PRIVATE);
         sesionInicidad = preferences.getBoolean("usuarioLogeado", false);
@@ -379,7 +380,7 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         mMap.setMinZoomPreference(6.0f);
         mMap.setMaxZoomPreference(25.0f);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(epsgGandia, 18));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(epsgGandia, 13));
 
         //crearMapadeCalor();
         //mostrarEstaciones();
@@ -389,18 +390,41 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         HeatmapTileProvider provider;
         TileOverlay mOverlay;
 
-        ArrayList<LatLng> list= new ArrayList<LatLng>();
-        for(Medicion medicion: mediciones) {
-            LatLng coordenada = new LatLng(medicion.getLatitud(), medicion.getLongitud());
-            //Log.d("Mediciones de calor", coordenada+"");
-            list.add(coordenada);
+        float[] list= new float[mediciones.length];
+        List<LatLng> result = new ArrayList<>();
+
+        List<WeightedLatLng> datos = new ArrayList<>();
+        for(int i = 0; i <mediciones.length; i++) {
+
+            LatLng l = new LatLng(mediciones[i].getLatitud(), mediciones[i].getLongitud());
+            double m = mediciones[i].getMedida();
+            WeightedLatLng w = new WeightedLatLng( l, m);
+            datos.add(w);
+            result.add(new LatLng(mediciones[i].getLatitud(), mediciones[i].getLongitud()));
         }
 
-
+        Log.d("MEDICIONES MAPA: ", datos + "");
+        Log.d("MEDICIONES MAPA: ", datos.size() + "");
 
         provider = new HeatmapTileProvider.Builder()
-                .data(list)
+                .weightedData(datos)
+                .radius(50)
+                .maxIntensity(500.0)
                 .build();
+
+        // Create the gradient.
+        int[] colors = {
+                Color.rgb(102, 225, 0), // green
+                Color.rgb(255, 0, 0)    // red
+        };
+
+        float[] startPoints = {
+                0.01f, 1f
+        };
+
+        Gradient gradient = new Gradient(colors, startPoints);
+        provider.setGradient(gradient);
+
         mOverlay = mMap.addTileOverlay(new TileOverlayOptions().tileProvider(provider));
     }
 
@@ -469,8 +493,9 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
             cuerpo = intent.getStringExtra("Mediciones");
             if (codigo == 200) {
                 Gson gson = new Gson();
-                mediciones = gson.fromJson(cuerpo, Medicion[].class);
-                mostrarMediciones();
+                mediciones = gson.fromJson(cuerpo, MedicionMapa[].class);
+                //mostrarMediciones();
+                crearMapadeCalor();
             } else {
                 Toast.makeText(MapaActivity.this, "Fallo al recibir mediciones", Toast.LENGTH_LONG).show();
             }
@@ -484,7 +509,7 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
 
        markersMediciones = new ArrayList<>();
 
-        for(Medicion medicion: mediciones) {
+        for(MedicionMapa medicion: mediciones) {
 
             if (autorMediciones==1){
                 if (!medicion.getMacSensor().equals(macSensor)){
