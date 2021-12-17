@@ -196,19 +196,18 @@ public class LogicaFake {
      *
      *
      */
-    public static void obtenerEstadisticas(final Context context, long fechaIni, long fechaFin, String tokken){
+    public static void obtenerEstadisticas(final String tokkenUsu,final Context context, long fechaIni, long fechaFin){
         PeticionarioREST elPeticionario = new PeticionarioREST();
         //Direccion ip en UPVNET10.236.29.250
         //Direccion ip en casa 192.168.0.107
         elPeticionario.hacerPeticionRESTConTokken("GET",
-                "http://"+url+":3500/estadisticasMedicionesUsuario?fechaIni="+ fechaIni + "&fechaFin="+ fechaFin, null, tokken,
+                "http://"+url+":3500/estadisticasMedicionesUsuario?fechaIni="+ fechaIni + "&fechaFin="+ fechaFin, null, tokkenUsu,
                 new PeticionarioREST.RespuestaREST () {
                     @Override
                     public void callback(int codigo, String cuerpo) {
                         Log.d("PROVA", "codigo respuesta= " + codigo + " <-> \n" + cuerpo);
                         Log.d("CODIGO", "" + codigo);
-                        Log.d("CUERPO", "" + cuerpo);//*/
-
+                        Log.d("CUERPO", "" + cuerpo);
                         Gson gson = new Gson();
                         EstadisticasMediciones estadisticas = gson.fromJson(cuerpo, EstadisticasMediciones.class);
 
@@ -244,12 +243,12 @@ public class LogicaFake {
      *
      *
      */
-    public static void obtenerDatosParaGrafico(final Context context, long fechaIni, long fechaFin, String tokken){
+    public static void obtenerDatosParaGrafico(final String tokkenUsuario, final Context context, long fechaIni, long fechaFin){
         PeticionarioREST elPeticionario = new PeticionarioREST();
         //Direccion ip en UPVNET10.236.29.250
         //Direccion ip en casa 192.168.0.107
         elPeticionario.hacerPeticionRESTConTokken("GET",
-                "http://"+url+":3500/datosGraficaUsuario?fechaIni="+ fechaIni + "&fechaFin="+ fechaFin, null, tokken,
+                "http://"+url+":3500/datosGraficaUsuario?fechaIni="+ fechaIni + "&fechaFin="+ fechaFin, null, tokkenUsuario,
                 new PeticionarioREST.RespuestaREST () {
                     @Override
                     public void callback(int codigo, String cuerpo) {
@@ -269,7 +268,7 @@ public class LogicaFake {
         );
     }
 
-    public static void sensoresInactivos(String acces_token){
+    public static void sensoresInactivos(String acces_token, final Context context){
         PeticionarioREST elPeticionario = new PeticionarioREST();
         elPeticionario.hacerPeticionRESTConTokken("GET",
                 "http://"+url+":3500/sensoresInactivos", null,acces_token,
@@ -277,6 +276,39 @@ public class LogicaFake {
                     @Override
                     public void callback(int codigo, String cuerpo) {
                         Log.d("Sensores_inactivos", "sensores que se encuentran desconetados 24 h = " + codigo + ", "+ cuerpo);
+                        Intent i = new Intent();
+                        i.setAction("SensoresInactivos");
+                        i.putExtra("codigoSensor", codigo);
+                        i.putExtra("cuerpoSensor", cuerpo);
+                        context.sendBroadcast(i);
+
+                    }
+                }
+        );
+    }
+
+    public static void actualizarUsuario(String acces_token, String nombreUsuario, String telefono, final Context context){
+        PeticionarioREST elPeticionario = new PeticionarioREST();
+
+        final JSONObject obj = new JSONObject();
+        try {
+            obj.put("nombreUsuario", nombreUsuario+"");
+            obj.put("telefono", telefono+"");
+        } catch (JSONException e)
+        { // TODO Auto-generated catch block e.printStackTrace();
+        }
+        elPeticionario.hacerPeticionRESTConTokken("POST",
+                "http://"+url+":3500/actualizarDatosUsuario", obj.toString(),acces_token,
+                new PeticionarioREST.RespuestaREST () {
+                    @Override
+                    public void callback(int codigo, String cuerpo) {
+                        Log.d("Actualizar_usuario", "Actualizacion= "+ codigo + ", "+ cuerpo);
+                        Intent i = new Intent();
+                        i.setAction("ActualizarUsuario");
+                        i.putExtra("codigoActualizacion", codigo);
+                        i.putExtra("cuerpoActualizacion", cuerpo);
+                        context.sendBroadcast(i);
+
                     }
                 }
         );

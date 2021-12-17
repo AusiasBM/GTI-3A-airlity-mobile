@@ -3,36 +3,29 @@ package com.example.tricoenvironment.airlity;
 import static java.lang.System.currentTimeMillis;
 
 public class Sensor {
-    private String nombre, mac, uuid, tipoMedicion;
-    private long fecha;
+    private String  macSensor,correoUsuario, tipoMedicion;
+    private long fechaRegistro;
 
-
-    public String getNombre() {
-        return nombre;
+    public String getCorreoUsuario() {
+        return correoUsuario;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setCorreoUsuario(String correoUsuario) {
+        this.correoUsuario = correoUsuario;
     }
 
     public String getMac() {
-        return mac;
+        return macSensor;
     }
 
     public void setMac(String mac) {
-        this.mac = mac;
+        this.macSensor = mac;
     }
 
-    public String getUuid() {
-        return uuid;
-    }
 
-    public void setUuid(String uuidSensor) {
-        this.uuid = uuidSensor;
-    }
 
     public long getFecha() {
-        return fecha;
+        return fechaRegistro;
     }
 
     /**
@@ -42,7 +35,7 @@ public class Sensor {
      *
      */
     public void setFecha() {
-        this.fecha = currentTimeMillis();
+        this.fechaRegistro = currentTimeMillis();
     }
 
     /**
@@ -53,7 +46,7 @@ public class Sensor {
      *
      */
     public void setFecha(long fecha) {
-        this.fecha = fecha;
+        this.fechaRegistro = fecha;
     }
 
     public String getTipoMedicion() {
@@ -68,15 +61,24 @@ public class Sensor {
     }
 
     public Sensor(String mac, String tipoMedicion) {
-        this.mac = mac;
+        this.macSensor = mac;
         this.tipoMedicion = tipoMedicion;
+    }
+
+    public Sensor(String macSensor, String correoUsuario, String tipoMedicion, long fechaRegistro) {
+        this.macSensor = macSensor;
+        this.correoUsuario = correoUsuario;
+        this.tipoMedicion = tipoMedicion;
+        this.fechaRegistro = fechaRegistro;
     }
 
     @Override
     public String toString() {
-        return "{" +
-                " \"macSensor\":"+ "\""+ mac + '\"' +
-                ", \"tipoMedicion\": " + "\""+ tipoMedicion + '\"' +
+        return "Sensor{" +
+                "macSensor='" + macSensor + '\'' +
+                ", correoUsuario='" + correoUsuario + '\'' +
+                ", tipoMedicion='" + tipoMedicion + '\'' +
+                ", fechaRegistro=" + fechaRegistro +
                 '}';
     }
 }

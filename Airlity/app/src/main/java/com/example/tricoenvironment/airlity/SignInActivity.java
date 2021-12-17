@@ -87,6 +87,8 @@ public class SignInActivity extends AppCompatActivity {
         navigationView.getMenu().getItem(3).setVisible(false);
         navigationView.getMenu().getItem(4).setVisible(false);
         navigationView.getMenu().getItem(5).setVisible(false);
+        navigationView.getMenu().getItem(6).setVisible(false);
+
 
         prepararDrawer(navigationView);
         //-------------------------------------------
@@ -257,6 +259,7 @@ public class SignInActivity extends AppCompatActivity {
             cuerpo = intent.getStringExtra("cuerpo_usuario");
             if (codigo == 200) {
                 Gson gson = new Gson();
+                Log.d("CUERPO", cuerpo);
                 Root datosRoot = gson.fromJson(cuerpo, Root.class);
 
                 tokkenUsuarioDato = datosRoot.getData().getToken();

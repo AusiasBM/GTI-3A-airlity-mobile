@@ -94,16 +94,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cv_inicio" />
 
-            <View
-                android:id="@+id/divider2"
-                android:layout_width="409dp"
-                android:layout_height="1dp"
-                android:layout_marginTop="4dp"
-                android:background="@color/colorGrey"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rg_tipo" />
-
             <RadioGroup
                 android:id="@+id/rg_autoria"
                 android:layout_width="wrap_content"
@@ -182,21 +172,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/divider6" />
 
-            <TextView
-                android:id="@+id/textView23"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
-                android:fontFamily="@font/comfortaa_bold"
-                android:paddingStart="12dp"
-                android:text="Estaciones oficiales de medidas"
-                android:textColor="#FFFFFF"
-                android:textSize="18dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/divider2" />
-
             <ImageView
                 android:id="@+id/iv_abrir_calendarios"
                 android:layout_width="25dp"
@@ -226,23 +201,11 @@
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_marginEnd="8dp"
-                app:layout_constraintBottom_toBottomOf="@+id/textView23"
                 app:layout_constraintEnd_toEndOf="@+id/textView25"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="@+id/textView25"
-                app:layout_constraintTop_toTopOf="@+id/textView23"
-                app:srcCompat="@drawable/flecha_arriba" />
-
-            <Switch
-                android:id="@+id/switch_estaciones"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="Mostrar estaciones"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView23" />
+                app:srcCompat="@drawable/flecha_arriba"
+                tools:layout_editor_absoluteY="574dp" />
 
             <RadioGroup
                 android:id="@+id/rg_tipo"
@@ -251,11 +214,9 @@
                 android:layout_marginTop="4dp"
                 android:gravity="center"
                 android:orientation="horizontal"
-                app:layout_constraintBottom_toTopOf="@+id/textView23"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView25"
-                app:layout_constraintVertical_bias="0.0">
+                app:layout_constraintTop_toBottomOf="@+id/textView25">
 
                 <RadioButton
                     android:id="@+id/rb_so2"
@@ -337,7 +298,7 @@
         android:layout_height="wrap_content"
         android:background="#000000"
         android:fontFamily="@font/comfortaa_bold"
-        android:text="Borrar todo"
+        android:text="Restablecer filtros"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="@+id/bt_aplicarFiltros"
         app:layout_constraintEnd_toStartOf="@+id/bt_aplicarFiltros"

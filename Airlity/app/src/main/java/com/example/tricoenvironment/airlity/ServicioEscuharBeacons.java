@@ -391,10 +391,8 @@ public class ServicioEscuharBeacons extends Service {
 
         BluetoothDevice bluetoothDevice = result.getDevice();
 
-        sensor.setNombre(bluetoothDevice.getName());
         sensor.setMac(bluetoothDevice.getAddress());
         sensor.setFecha();
-        sensor.setUuid(Utilidades.bytesToString(tramaIBeacon.getUUID()));
         avisarDetecciónSensorEmitiendo(sensor);
     }
 

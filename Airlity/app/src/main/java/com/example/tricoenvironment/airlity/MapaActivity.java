@@ -80,13 +80,14 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     Bundle datos;
     Boolean sesionInicidad;
-    String cuerpo, macSensor;
+    String cuerpo, macSensor, rolUsuario;
     LogicaFake logicaFake;
     ConstraintLayout cl_leyenda;
     ImageView iv_close_leyenda, iv_abrir_leyenda, iv_tipoMedicion;
     LinearLayout l_iaq, l_estaciones;
 
     TextView tv_scan, tv_tipoMedicion;
+    ImageView iv_filtros;
 
     LatLng posicionGandia = new LatLng(38.96797739, -0.19109882);
     LatLng posicionAlzira = new LatLng(39.14996506, -0.45786026);
@@ -109,7 +110,7 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mapa);
         final FloatingActionButton fab = findViewById(R.id.floatingActionButton);
-        ImageView iv_filtros = findViewById(R.id.iv_filtros);
+        iv_filtros = findViewById(R.id.iv_filtros);
         tv_scan=findViewById(R.id.tv_scan);
         cl_leyenda=findViewById(R.id.cl_leyenda);
         iv_close_leyenda=findViewById(R.id.iv_close_leyenda);
@@ -135,6 +136,7 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         SharedPreferences preferences=getSharedPreferences("com.example.tricoenvironment.airlity", Context.MODE_PRIVATE);
         sesionInicidad = preferences.getBoolean("usuarioLogeado", false);
         cuerpo = preferences.getString("cuerpoUsuario", null);
+
         Log.d("sesion", sesionInicidad+"");
         Log.d("sesion", sesionInicidad+", "+cuerpo);
         if(sesionInicidad==false && cuerpo==null){
@@ -146,6 +148,7 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
             Root datosRoot = gson.fromJson(cuerpo, Root.class);
 
             macUsuarioDato = datosRoot.getDatosUsuario().getMacSensor().toString();
+            rolUsuario=datosRoot.getDatosUsuario().getRol();
         }
 
 
@@ -174,13 +177,16 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         navigationView.setItemIconTintList(null);
 
         if (sesionInicidad && cuerpo!=null){
+            if (!rolUsuario.equals("Admin")){
+                navigationView.getMenu().getItem(6).setVisible(false);
+            }
             navigationView.getMenu().getItem(2).setVisible(false);
         }else{
-
             navigationView.getMenu().getItem(1).setVisible(false);
             navigationView.getMenu().getItem(3).setVisible(false);
             navigationView.getMenu().getItem(4).setVisible(false);
             navigationView.getMenu().getItem(5).setVisible(false);
+            navigationView.getMenu().getItem(6).setVisible(false);
         }
         prepararDrawer(navigationView);
         //-------------------------------------------
@@ -287,8 +293,16 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
             case R.id.menu_signout:
                 lanzarSignOut();
                 break;
+            case R.id.menu_sensores:
+                lanzarSensores();
+                break;
         }
 
+    }
+
+    private void lanzarSensores() {
+        Intent i = new Intent(this, SensoresInactivosActivity.class);
+        startActivity(i);
     }
 
     private void lanzarSignOut() {
@@ -620,6 +634,8 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
                 l_estaciones.setVisibility(VISIBLE);
             }else{
                 l_estaciones.setVisibility(GONE);
+                //mMap.clear();
+
             }
             mostrarMediciones();
             //mostrarEstaciones();

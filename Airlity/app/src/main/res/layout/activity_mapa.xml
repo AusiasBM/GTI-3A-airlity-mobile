@@ -192,6 +192,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="-40dp"
                 android:layout_weight="0"
+                android:tint="@color/ic_launcher_background"
                 app:srcCompat="@drawable/boton_filtro" />
 
         </LinearLayout>

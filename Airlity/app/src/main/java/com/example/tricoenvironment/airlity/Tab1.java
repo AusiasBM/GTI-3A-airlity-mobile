@@ -307,9 +307,9 @@ public class Tab1 extends Fragment {
 
             Log.d("INTENT", "" + sensor);
 
-            textNombreDispositivo.setText(sensor.getNombre());
+            //textNombreDispositivo.setText(sensor.getNombre());
             textNMacDispositivo.setText(sensor.getMac());
-            textUuidDispositivo.setText(sensor.getUuid());
+            //textUuidDispositivo.setText(sensor.getUuid());
 
             SimpleDateFormat sdf = new SimpleDateFormat("MMM dd yyyy HH:mm");
             Date resultado = new Date(sensor.getFecha());
@@ -360,7 +360,6 @@ public class Tab1 extends Fragment {
         */
     public void mostarDistancia( double resultado ) {
         Log.d("distancia", "" + resultado);
-        resultado=1;
         if (resultado < 0.1) {
             Toast.makeText(context, "Error al rastrear el sensor, vuelva a intentarlo",
                     Toast.LENGTH_SHORT).show();
