@@ -103,6 +103,8 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
     long fechaInicio = 0;
     long fechaFin = 0;
 
+    private  Intent intentServicioREST = null;
+
     MedicionMapa[] mediciones = new MedicionMapa[0];
 
     @Override
@@ -119,6 +121,10 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         iv_abrir_leyenda=findViewById(R.id.iv_borde);
         tv_tipoMedicion=findViewById(R.id.tv_tipoMedicion);
         iv_tipoMedicion=findViewById(R.id.iv_tipoMedicion);
+
+
+        intentServicioREST = new Intent(this, ServicioLogicaFake.class);
+        this.startService(intentServicioREST);
 
         cl_leyenda.setVisibility(VISIBLE);
 
@@ -144,12 +150,16 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
             iv_filtros.setVisibility(GONE);
             tv_scan.setVisibility(GONE);
         }else {
-            try{
-                Gson gson = new Gson();
-                Root datosRoot = gson.fromJson(cuerpo, Root.class);
 
-                macUsuarioDato = datosRoot.getDatosUsuario().getMacSensor().toString();
-                rolUsuario=datosRoot.getDatosUsuario().getRol();
+            Gson gson = new Gson();
+            Root datosRoot = gson.fromJson(cuerpo, Root.class);
+
+            Log.d("prova", datosRoot.getDatosUsuario().getMacSensor());
+
+            macUsuarioDato = datosRoot.getDatosUsuario().getMacSensor();
+            rolUsuario=datosRoot.getDatosUsuario().getRol();
+            try{
+
             }catch (Exception e){
 
             }
@@ -201,8 +211,9 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onClick(View view) {
                 if(!bluetoothActivo){
                     Log.d("Escaner", " Inicio del servicio" );
+                    Log.d("Escaner", macUsuarioDato + "");
                     //ServicioEscucharBeacons
-                    intentServicioBLE.putExtra("macDispositivo", macSensor);
+                    intentServicioBLE.putExtra("macDispositivo", macUsuarioDato);
                     getApplicationContext().startService(intentServicioBLE);
                     fab.setImageResource(R.drawable.pausa);
                     tv_scan.setVisibility(GONE);

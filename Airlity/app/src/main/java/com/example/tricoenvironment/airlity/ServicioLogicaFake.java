@@ -139,11 +139,13 @@ public class ServicioLogicaFake extends IntentService {
             while ( this.seguir ) {
                 Log.d(ETIQUETA_LOG, "LONGITUD: " + medicionesString.size());
 
-                //Enviar mediciones cada 60s al servidor
+                /*//Enviar mediciones cada 60s al servidor
                 if(currentTimeMillis() > tiempo + tiempoDeEsperaEnvioPost){
-                    LogicaFake.guardarMediciones(medicionesString);
+
                     tiempo = currentTimeMillis();
-                }
+                }*/
+
+                LogicaFake.guardarMediciones(medicionesString);
 
                 LogicaFake.obtenerUltimasMediciones(context);
 

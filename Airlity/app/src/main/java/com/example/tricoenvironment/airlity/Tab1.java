@@ -116,8 +116,8 @@ public class Tab1 extends Fragment {
         intentServicioBLE = new Intent(context, ServicioEscuharBeacons.class);
 
         //Creamos el intent que permitirá lanzar el servicio ServicioLogicaFake
-        intentServicioREST = new Intent(context, ServicioLogicaFake.class);
-        context.startService(intentServicioREST);
+        //intentServicioREST = new Intent(context, ServicioLogicaFake.class);
+        //context.startService(intentServicioREST);
 
         //botonBuscarNuestroDispositivoBTLEPulsado();
         //botonDetenerBusquedaDispositivosBTLEPulsado();
@@ -301,21 +301,26 @@ public class Tab1 extends Fragment {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            String s = intent.getStringExtra("Sensor");
-            Gson gson = new Gson();
-            Sensor sensor = gson.fromJson(s, Sensor.class);
 
-            Log.d("INTENT", "" + sensor);
+            try {
+                String s = intent.getStringExtra("Sensor");
+                Gson gson = new Gson();
+                Sensor sensor = gson.fromJson(s, Sensor.class);
 
-            //textNombreDispositivo.setText(sensor.getNombre());
-            textNMacDispositivo.setText(sensor.getMac());
-            //textUuidDispositivo.setText(sensor.getUuid());
+                Log.d("INTENT", "" + sensor);
 
-            SimpleDateFormat sdf = new SimpleDateFormat("MMM dd yyyy HH:mm");
-            Date resultado = new Date(sensor.getFecha());
-            textFechaDispositivo.setText(resultado.toString());
-            ctd.cancel();
-            ctd.start();
+
+                textNMacDispositivo.setText(sensor.getMac());
+
+                SimpleDateFormat sdf = new SimpleDateFormat("MMM dd yyyy HH:mm");
+                Date resultado = new Date(sensor.getFecha());
+                textFechaDispositivo.setText(resultado.toString());
+                ctd.cancel();
+                ctd.start();
+            }catch (Exception e){
+
+            }
+
 
         }
     }

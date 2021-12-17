@@ -8,7 +8,7 @@ public class DatosUsuario {
     private String correo;
     private String contrasenya;
     private Integer telefono;
-    private Object macSensor;
+    private String macSensor;
     private String rol;
 
     public String getId() {
@@ -41,10 +41,10 @@ public class DatosUsuario {
     public void setTelefono(Integer telefono) {
         this.telefono = telefono;
     }
-    public Object getMacSensor() {
+    public String getMacSensor() {
         return macSensor;
     }
-    public void setMacSensor(Object macSensor) {
+    public void setMacSensor(String macSensor) {
         this.macSensor = macSensor;
     }
     public String getRol() {
@@ -52,5 +52,18 @@ public class DatosUsuario {
     }
     public void setRol(String rol) {
         this.rol = rol;
+    }
+
+    @Override
+    public String toString() {
+        return "DatosUsuario{" +
+                "id='" + id + '\'' +
+                ", nombreUsuario='" + nombreUsuario + '\'' +
+                ", correo='" + correo + '\'' +
+                ", contrasenya='" + contrasenya + '\'' +
+                ", telefono=" + telefono +
+                ", macSensor=" + macSensor +
+                ", rol='" + rol + '\'' +
+                '}';
     }
 }
