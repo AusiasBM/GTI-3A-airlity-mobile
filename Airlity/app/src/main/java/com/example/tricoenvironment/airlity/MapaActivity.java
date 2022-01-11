@@ -23,6 +23,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -138,28 +139,17 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         SharedPreferences preferences=getSharedPreferences("com.example.tricoenvironment.airlity", Context.MODE_PRIVATE);
         sesionIniciada = preferences.getBoolean("usuarioLogeado", false);
-        cuerpo = preferences.getString("cuerpoUsuario", null);
 
         Log.d("sesion", sesionIniciada +"");
-        Log.d("sesion", sesionIniciada +", "+cuerpo);
-        if(sesionIniciada ==false || cuerpo==null){
+
+        if(sesionIniciada == false){
             fab.setVisibility(GONE);
             iv_filtros.setVisibility(GONE);
             tv_scan.setVisibility(GONE);
         }else {
 
-            Gson gson = new Gson();
-            Root datosRoot = gson.fromJson(cuerpo, Root.class);
-
-            Log.d("prova", datosRoot.getDatosUsuario().getMacSensor());
-
-            macUsuarioDato = datosRoot.getDatosUsuario().getMacSensor();
-            rolUsuario=datosRoot.getDatosUsuario().getRol();
-            try{
-
-            }catch (Exception e){
-
-            }
+            macUsuarioDato = preferences.getString("mac", "");
+            rolUsuario= preferences.getString("rol", "");
 
         }
 
@@ -188,7 +178,7 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         NavigationView navigationView = findViewById(R.id.mapa_navigationView);
         navigationView.setItemIconTintList(null);
 
-        if (sesionIniciada && cuerpo!=null){
+        if (sesionIniciada){
             if (!rolUsuario.equals("Admin")){
                 navigationView.getMenu().getItem(6).setVisible(false);
             }
@@ -264,6 +254,8 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
     }
 
+    
+
     private void prepararDrawer(NavigationView navigationView) {
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
@@ -325,6 +317,8 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
                     public void onClick(DialogInterface dialog, int which) {
                         datos=null;
                         Intent i = new Intent(getApplicationContext(), MapaActivity.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         SharedPreferences settings = getSharedPreferences("com.example.tricoenvironment.airlity", Context.MODE_PRIVATE);
                         settings.edit().clear().commit();
                         startActivity(i);
@@ -349,6 +343,7 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
     private void lanzarInformacion() {
         Intent i = new Intent(this, InformacionActivity.class);
         startActivity(i);
+
     }
 
     private void lanzarSoporteTecnico() {
@@ -507,6 +502,7 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
+
 
     private class ReceptorGetMedicion extends BroadcastReceiver {
 

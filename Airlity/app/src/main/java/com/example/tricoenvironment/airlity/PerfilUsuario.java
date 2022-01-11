@@ -43,7 +43,6 @@ public class PerfilUsuario extends AppCompatActivity {
 
     private TextView tv_nombreUsuario,  tv_correoElectronico, tv_macSensorUsuario, tv_cambio;
     private EditText et_nombreUsuario,  et_telefonoUsuario;
-    String macSensor;
     Button bt_actualizar;
     String nombreCambiado, telefonoCambiado;
 
@@ -58,21 +57,18 @@ public class PerfilUsuario extends AppCompatActivity {
      */
 
     protected SharedPreferences preferences;
-    int codigo;
-    Boolean sesionInicidad;
-    String cuerpo;
+    Boolean sesionIniciada;
     String rolUsuario, idUsuarioDato, nombreUsuarioDato, correoUsuarioDato, contraseñaUsuarioDato, tokkenUsuarioDato, telefonoUsuarioDato, macUsuarioDato;
 
     LogicaFake logicaFake;
     Menu menu;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfil_usuario);
 
         preferences=getSharedPreferences("com.example.tricoenvironment.airlity", Context.MODE_PRIVATE);
-        cuerpo = preferences.getString("cuerpoUsuario", null);
-        Log.d("Cuerpo",cuerpo+"");
 
         intentFilter = new IntentFilter();
         intentFilter.addAction("ActualizarUsuario");
@@ -95,17 +91,16 @@ public class PerfilUsuario extends AppCompatActivity {
         tv_cambio.setVisibility(View.GONE);
 
         logicaFake = new LogicaFake();
-        Gson gson = new Gson();
-        Root datosRoot = gson.fromJson(cuerpo, Root.class);
 
-        tokkenUsuarioDato = datosRoot.getData().getToken();
-        idUsuarioDato = datosRoot.getDatosUsuario().getId();
-        nombreUsuarioDato = datosRoot.getDatosUsuario().getNombreUsuario();
-        correoUsuarioDato = datosRoot.getDatosUsuario().getCorreo();
-        telefonoUsuarioDato = datosRoot.getDatosUsuario().getTelefono().toString();
-        macUsuarioDato = datosRoot.getDatosUsuario().getMacSensor().toString();
-        rolUsuario = datosRoot.getDatosUsuario().getRol();
-        contraseñaUsuarioDato= datosRoot.getDatosUsuario().getContrasenya();
+        sesionIniciada = preferences.getBoolean("usuarioLogeado", false);
+        tokkenUsuarioDato = preferences.getString("tokken", null);
+        idUsuarioDato = preferences.getString("id", null);
+        nombreUsuarioDato = preferences.getString("nombre", null);
+        correoUsuarioDato = preferences.getString("correo", null);
+        telefonoUsuarioDato = preferences.getString("telefono", null);
+        macUsuarioDato = preferences.getString("mac", null);
+        rolUsuario = preferences.getString("rol", null);
+        contraseñaUsuarioDato= preferences.getString("contrasenya", null);
 
         Log.d("cuerpo_tokken", tokkenUsuarioDato);
         nombreCambiado=nombreUsuarioDato;
@@ -251,6 +246,8 @@ public class PerfilUsuario extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         datos=null;
                         Intent i = new Intent(getApplicationContext(), MapaActivity.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         SharedPreferences settings = getSharedPreferences("com.example.tricoenvironment.airlity", Context.MODE_PRIVATE);
                         settings.edit().clear().commit();
                         startActivity(i);
@@ -306,45 +303,34 @@ public class PerfilUsuario extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
 
             int codigo = intent.getIntExtra("codigoActualizacion", 0);
-            cuerpo = intent.getStringExtra("cuerpoActualizacion");
+            String cuerpo = intent.getStringExtra("cuerpoActualizacion");
             Log.d("CUERPO___", cuerpo);
 
             if (codigo == 200) {
                 tv_cambio.setVisibility(View.VISIBLE);
                 tv_cambio.setText("Información del usuario actualizada");
                 tv_cambio.setTextColor(Color.GREEN);
-                //SharedPreferences settings = getSharedPreferences("com.example.tricoenvironment.airlity", Context.MODE_PRIVATE);
-                //settings.edit().clear().commit();
-                //logicaFake.iniciarSesion(correoUsuarioDato, contraseñaUsuarioDato, getApplicationContext());
-               //cuerpo= "{"+"\"error\":null" +",\"data\":{\"token\":"+tokkenUsuarioDato+"\"},\"datosUsuario\":{\"_id\":\""+idUsuarioDato+"\",\"nombreUsuario\":\""+nombreCambiado+",\"correo\":\""+correoUsuarioDato+"\",\"contrasenya\":\""+contraseñaUsuarioDato+"\",\"telefono\":"+telefonoCambiado+",\"macSensor\":\""+macUsuarioDato+"\",\"rol\":\""+rolUsuario+"\"}}";
 
-
-                //SharedPreferences sharedPreferences = getSharedPreferences("com.example.tricoenvironment.airlity", MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putString("cuerpoUsuario", cuerpo);
                 editor.commit();
 
 
                 Gson gson = new Gson();
-                Root datosRoot = gson.fromJson(cuerpo, Root.class);
+                DatosUsuario datosUsuario = gson.fromJson(cuerpo, DatosUsuario.class);
 
-                /*tokkenUsuarioDato = datosRoot.getData().getToken();
-                idUsuarioDato = datosRoot.getDatosUsuario().getId();
-                nombreUsuarioDato = datosRoot.getDatosUsuario().getNombreUsuario();
-                correoUsuarioDato = datosRoot.getDatosUsuario().getCorreo();
-                telefonoUsuarioDato = datosRoot.getDatosUsuario().getTelefono().toString();
-                macUsuarioDato = datosRoot.getDatosUsuario().getMacSensor().toString();
-                rolUsuario = datosRoot.getDatosUsuario().getRol();
-                contraseñaUsuarioDato= datosRoot.getDatosUsuario().getContrasenya();
+                editor.putString("nombre", datosUsuario.getNombreUsuario());
+                editor.putString("telefono", datosUsuario.getTelefono().toString());
+                editor.commit();
 
-                Log.d("cuerpo_tokken", tokkenUsuarioDato);
+                //Recuperem (i asegurem que s'ha guardat correctament) el nom i el telefon...
+                nombreUsuarioDato = preferences.getString("nombre", null);
+                telefonoUsuarioDato = preferences.getString("telefono", null);
                 nombreCambiado=nombreUsuarioDato;
                 telefonoCambiado=telefonoUsuarioDato;
-
-                tv_nombreUsuario.setText(nombreUsuarioDato);
+                //... i els posem als editText corresponents actualitzats
                 et_nombreUsuario.setText(nombreUsuarioDato);
-                tv_correoElectronico.setText(correoUsuarioDato);
-                et_telefonoUsuario.setText(telefonoUsuarioDato);*/
+                et_telefonoUsuario.setText(telefonoUsuarioDato);
 
             } else {
                 tv_cambio.setVisibility(View.VISIBLE);

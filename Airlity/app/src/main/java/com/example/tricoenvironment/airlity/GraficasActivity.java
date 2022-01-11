@@ -15,13 +15,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,21 +26,10 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.charts.Chart;
-import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.components.LegendEntry;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.DataSet;
-import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
@@ -66,7 +52,7 @@ public class GraficasActivity extends AppCompatActivity {
     private String gas;
     private LogicaFake logicaFake;
 
-    Boolean sesionInicidad;
+    Boolean sesionIniciada;
     String cuerpo, tokkenUsuarioDato, rolUsuario;
 
     @Override
@@ -85,13 +71,10 @@ public class GraficasActivity extends AppCompatActivity {
         logicaFake = new LogicaFake();
 
         SharedPreferences preferences=getSharedPreferences("com.example.tricoenvironment.airlity", Context.MODE_PRIVATE);
-        sesionInicidad = preferences.getBoolean("usuarioLogeado", false);
-        cuerpo = preferences.getString("cuerpoUsuario", null);
-        Gson gson = new Gson();
-        Root datosRoot = gson.fromJson(cuerpo, Root.class);
+        sesionIniciada = preferences.getBoolean("usuarioLogeado", false);
 
-        tokkenUsuarioDato = datosRoot.getData().getToken();
-        rolUsuario = datosRoot.getDatosUsuario().getRol();
+        tokkenUsuarioDato = preferences.getString("tokken", null);;
+        rolUsuario = preferences.getString("rol", "");;
 
         //logicaFake.sensoresInactivos(tokkenUsuarioDato, this);
 
@@ -227,6 +210,8 @@ public class GraficasActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Intent i = new Intent(getApplicationContext(), MapaActivity.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         SharedPreferences settings = getSharedPreferences("com.example.tricoenvironment.airlity", Context.MODE_PRIVATE);
                         settings.edit().clear().commit();
                         startActivity(i);

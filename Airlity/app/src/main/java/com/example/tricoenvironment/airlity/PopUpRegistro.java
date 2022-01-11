@@ -67,9 +67,8 @@ public class PopUpRegistro extends AppCompatActivity {
 
             DatosScanner dc = gson.fromJson(macUsuarioDato, DatosScanner.class);
 
-            Log.d("ESCANEEEEEER", dc.toString());
-
             if(!dc.getMacSensor().equals(null) && !dc.getTipoMedicion().equals(null)){
+                Log.d("ESCANEEEEEER", dc.toString());
                 //Toast.makeText(this, "Sensor encontrado", Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(this, SignUpActivity.class);
                 i.putExtra("macUsuario", macUsuarioDato);
