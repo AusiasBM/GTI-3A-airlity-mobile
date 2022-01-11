@@ -55,12 +55,9 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 
 
-import com.google.gson.JsonObject;
 import com.google.maps.android.heatmaps.Gradient;
 import com.google.maps.android.heatmaps.HeatmapTileProvider;
 import com.google.maps.android.heatmaps.WeightedLatLng;
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
 
 
 import java.util.ArrayList;
@@ -79,7 +76,7 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
     //private MapaActivity.ReceptorDatosUsuario receptor;
 
     Bundle datos;
-    Boolean sesionInicidad;
+    Boolean sesionIniciada;
     String cuerpo, macSensor, rolUsuario;
     LogicaFake logicaFake;
     ConstraintLayout cl_leyenda;
@@ -140,12 +137,12 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         logicaFake.getMedicionesPorTiempoZona(this);
 
         SharedPreferences preferences=getSharedPreferences("com.example.tricoenvironment.airlity", Context.MODE_PRIVATE);
-        sesionInicidad = preferences.getBoolean("usuarioLogeado", false);
+        sesionIniciada = preferences.getBoolean("usuarioLogeado", false);
         cuerpo = preferences.getString("cuerpoUsuario", null);
 
-        Log.d("sesion", sesionInicidad+"");
-        Log.d("sesion", sesionInicidad+", "+cuerpo);
-        if(sesionInicidad==false && cuerpo==null){
+        Log.d("sesion", sesionIniciada +"");
+        Log.d("sesion", sesionIniciada +", "+cuerpo);
+        if(sesionIniciada ==false || cuerpo==null){
             fab.setVisibility(GONE);
             iv_filtros.setVisibility(GONE);
             tv_scan.setVisibility(GONE);
@@ -191,7 +188,7 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         NavigationView navigationView = findViewById(R.id.mapa_navigationView);
         navigationView.setItemIconTintList(null);
 
-        if (sesionInicidad && cuerpo!=null){
+        if (sesionIniciada && cuerpo!=null){
             if (!rolUsuario.equals("Admin")){
                 navigationView.getMenu().getItem(6).setVisible(false);
             }
@@ -525,7 +522,7 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
                 //mostrarMediciones();
                 crearMapadeCalor();
             } else {
-                Toast.makeText(MapaActivity.this, "Fallo al recibir mediciones", Toast.LENGTH_LONG).show();
+                //Toast.makeText(MapaActivity.this, "Fallo al recibir mediciones", Toast.LENGTH_LONG).show();
             }
         }
     }
