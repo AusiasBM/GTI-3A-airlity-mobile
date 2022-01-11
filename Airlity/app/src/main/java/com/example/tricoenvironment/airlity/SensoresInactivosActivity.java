@@ -74,12 +74,8 @@ public class SensoresInactivosActivity extends AppCompatActivity {
 
         SharedPreferences preferences=getSharedPreferences("com.example.tricoenvironment.airlity", Context.MODE_PRIVATE);
         sesionInicidad = preferences.getBoolean("usuarioLogeado", false);
-        cuerpo = preferences.getString("cuerpoUsuario", null);
-        Gson gson = new Gson();
 
-
-        Root datosRoot = gson.fromJson(cuerpo, Root.class);
-        tokkenUsuarioDato = datosRoot.getData().getToken();
+        tokkenUsuarioDato = preferences.getString("tokken", null);;
 
         logicaFake.sensoresInactivos(tokkenUsuarioDato, this);
         //logicaFake.sensoresErroneos("Gandia", "SO2", this);
@@ -153,6 +149,8 @@ public class SensoresInactivosActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Intent i = new Intent(getApplicationContext(), MapaActivity.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         SharedPreferences settings = getSharedPreferences("com.example.tricoenvironment.airlity", Context.MODE_PRIVATE);
                         settings.edit().clear().commit();
                         startActivity(i);

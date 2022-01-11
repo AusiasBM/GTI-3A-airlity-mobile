@@ -54,12 +54,8 @@ public class Tab2 extends Fragment {
         context.registerReceiver(receptor, intentFilter);
 
         SharedPreferences preferences=context.getSharedPreferences("com.example.tricoenvironment.airlity", Context.MODE_PRIVATE);
-        cuerpo = preferences.getString("cuerpoUsuario", null);
-        Gson gson = new Gson();
-        Root datosRoot = gson.fromJson(cuerpo, Root.class);
-
-        macSensorDato = datosRoot.getDatosUsuario().getMacSensor().toString();
-        rolUsuario = datosRoot.getDatosUsuario().getRol();
+        macSensorDato = preferences.getString("mac", null);
+        rolUsuario = preferences.getString("rol", "");
     }
 
     /**

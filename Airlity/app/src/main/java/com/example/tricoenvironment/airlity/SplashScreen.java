@@ -2,7 +2,9 @@ package com.example.tricoenvironment.airlity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.animation.AlphaAnimation;
@@ -23,33 +25,43 @@ public class SplashScreen extends AppCompatActivity {
         iv_nombre=findViewById(R.id.iv_nombre);
         tv_lema=findViewById(R.id.tv_lema);
 
-        Animation animation = AnimationUtils.loadAnimation(this, R.anim.rotacion);
-        animation.setFillAfter(true);
-        iv_logo.startAnimation(animation);
+        SharedPreferences preferences=getSharedPreferences("com.example.tricoenvironment.airlity", Context.MODE_PRIVATE);
+        Boolean sesionIniciada = preferences.getBoolean("usuarioLogeado", false);
+        if(sesionIniciada){
+            Intent intent = new Intent(SplashScreen.this, MapaActivity.class);
+            startActivity(intent);
+            finish();
+        }else{
+            Animation animation = AnimationUtils.loadAnimation(this, R.anim.rotacion);
+            animation.setFillAfter(true);
+            iv_logo.startAnimation(animation);
 
-        AlphaAnimation fadeIn=new AlphaAnimation(0.0f, 1.0f);
-        fadeIn.setDuration(1000);
-        fadeIn.setStartOffset(1500);
-        fadeIn.setFillAfter(true);
+            AlphaAnimation fadeIn=new AlphaAnimation(0.0f, 1.0f);
+            fadeIn.setDuration(1000);
+            fadeIn.setStartOffset(1500);
+            fadeIn.setFillAfter(true);
 
-        iv_nombre.setAnimation(fadeIn);
+            iv_nombre.setAnimation(fadeIn);
 
-        AlphaAnimation fadeIn2=new AlphaAnimation(0.0f, 1.0f);
-        fadeIn2.setDuration(1000);
-        fadeIn2.setStartOffset(2000);
-        fadeIn2.setFillAfter(true);
-        tv_lema.setAnimation(fadeIn2);
+            AlphaAnimation fadeIn2=new AlphaAnimation(0.0f, 1.0f);
+            fadeIn2.setDuration(1000);
+            fadeIn2.setStartOffset(2000);
+            fadeIn2.setFillAfter(true);
+            tv_lema.setAnimation(fadeIn2);
 
-        new Handler().postDelayed(new Runnable(){
-            public void run(){
+            new Handler().postDelayed(new Runnable(){
+                public void run(){
 
-                //----------------------------
-                Intent intent = new Intent(SplashScreen.this, MapaActivity.class);
-                startActivity(intent);
-                finish();
-                //----------------------------
+                    //----------------------------
+                    Intent intent = new Intent(SplashScreen.this, MapaActivity.class);
+                    startActivity(intent);
+                    finish();
+                    //----------------------------
 
-            }
-        }, 3000);
+                }
+            }, 3000);
+        }
+
+
     }
 }

@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -15,7 +14,6 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
-import com.google.gson.Gson;
 
 public class ConoceTricoActivity extends AppCompatActivity {
 
@@ -23,8 +21,8 @@ public class ConoceTricoActivity extends AppCompatActivity {
     String idUsuarioDato, nombreUsuarioDato, correoUsuarioDato, contraseñaUsuarioDato, tokkenUsuarioDato, telefonoUsuarioDato, macUsuarioDato;
 
     Bundle datos;
-    Boolean sesionInicidad;
-    String cuerpo, rolUsuario;
+    Boolean sesionIniciada;
+    String rolUsuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,14 +30,8 @@ public class ConoceTricoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_conoce_trico);
 
         SharedPreferences preferences=getSharedPreferences("com.example.tricoenvironment.airlity", Context.MODE_PRIVATE);
-        sesionInicidad = preferences.getBoolean("usuarioLogeado", false);
-        cuerpo = preferences.getString("cuerpoUsuario", null);
-
-        cuerpo = preferences.getString("cuerpoUsuario", null);
-        Gson gson = new Gson();
-        Root datosRoot = gson.fromJson(cuerpo, Root.class);
-
-        rolUsuario = datosRoot.getDatosUsuario().getRol();
+        sesionIniciada = preferences.getBoolean("usuarioLogeado", false);
+        rolUsuario = preferences.getString("rol", "");
 
         //-------------------------------------------
         //Para el menu
@@ -58,7 +50,7 @@ public class ConoceTricoActivity extends AppCompatActivity {
 
         NavigationView navigationView = findViewById(R.id.conocenos_navigationView);
         navigationView.setItemIconTintList(null);
-        if (sesionInicidad && cuerpo!=null){
+        if (sesionIniciada){
             navigationView.getMenu().getItem(2).setVisible(false);
             if (!rolUsuario.equals("Admin")){
                 navigationView.getMenu().getItem(6).setVisible(false);
@@ -141,6 +133,8 @@ public class ConoceTricoActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         datos=null;
                         Intent i = new Intent(getApplicationContext(), MapaActivity.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         SharedPreferences settings = getSharedPreferences("com.example.tricoenvironment.airlity", Context.MODE_PRIVATE);
                         settings.edit().clear().commit();
                         startActivity(i);
