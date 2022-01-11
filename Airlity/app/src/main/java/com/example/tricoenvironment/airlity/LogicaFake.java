@@ -27,7 +27,7 @@ import java.util.List;
 public class LogicaFake {
 
     private static final String ETIQUETA_LOG = ">>>>";
-    private static String url="172.20.10.9";
+    private static String url="192.168.0.107";
     //IP Pere casa 192.168.31.98
     //IP Pere red iphone 172.20.10.2
     //IP Pere en UPVNET 10.236.50.31
@@ -54,7 +54,7 @@ public class LogicaFake {
                     new PeticionarioREST.RespuestaREST () {
                         @Override
                         public void callback(int codigo, String cuerpo) {
-                            Log.d(ETIQUETA_LOG, "codigo respuesta= " + codigo + " <-> \n" + cuerpo);
+                            Log.d("ETIQUETA_LOG", "codigo respuesta= " + codigo + " <-> \n" + cuerpo);
 
                         }
                     }
@@ -74,7 +74,7 @@ public class LogicaFake {
         PeticionarioREST elPeticionario = new PeticionarioREST();
         //Direccion ip en UPVNET10.236.29.250
         //Direccion ip en casa 192.168.0.107
-        elPeticionario.hacerPeticionREST("GET",  "http://"+url+":3500/ultimasMediciones/20", null,
+        elPeticionario.hacerPeticionREST("GET",  "http://"+url+":3500/ultimasMediciones/70", null,
                 new PeticionarioREST.RespuestaREST () {
                     @Override
                     public void callback(int codigo, String cuerpo) {

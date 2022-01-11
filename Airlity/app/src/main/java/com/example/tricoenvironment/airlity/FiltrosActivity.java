@@ -179,7 +179,7 @@ public class FiltrosActivity extends AppCompatActivity {
                 cv_inicio.setDate(fechaActual-unMes);
                 cv_fin.setDate(fechaActual);
                 rb_iaq.setChecked(true);
-                switch_estaciones.setChecked(true);
+               // switch_estaciones.setChecked(true);
             }
         });
 

@@ -365,7 +365,7 @@ public class ServicioEscuharBeacons extends Service {
 
         medicion.setMacSensor(bluetoothDevice.getAddress());
         medicion.setFecha();
-        medicion.setMedida((Utilidades.bytesToInt(tramaIBeacon.getConcentracion()))/1000);
+        medicion.setMedida((Utilidades.bytesToInt(tramaIBeacon.getConcentracion()))/1000.00);
         medicion.setTemperatura(Utilidades.bytesToInt(tramaIBeacon.getTemperatura()));
         medicion.setHumedad(Utilidades.bytesToInt(tramaIBeacon.getHumedad()));
 

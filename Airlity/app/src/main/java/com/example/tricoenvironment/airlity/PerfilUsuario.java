@@ -56,6 +56,8 @@ public class PerfilUsuario extends AppCompatActivity {
     private IntentFilter intentFilter;
     private PerfilUsuario.ReceptorDatosUsuario receptor;
      */
+
+    protected SharedPreferences preferences;
     int codigo;
     Boolean sesionInicidad;
     String cuerpo;
@@ -68,7 +70,7 @@ public class PerfilUsuario extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfil_usuario);
 
-        SharedPreferences preferences=getSharedPreferences("com.example.tricoenvironment.airlity", Context.MODE_PRIVATE);
+        preferences=getSharedPreferences("com.example.tricoenvironment.airlity", Context.MODE_PRIVATE);
         cuerpo = preferences.getString("cuerpoUsuario", null);
         Log.d("Cuerpo",cuerpo+"");
 
@@ -193,7 +195,6 @@ public class PerfilUsuario extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 logicaFake.actualizarUsuario(tokkenUsuarioDato, nombreCambiado, telefonoCambiado, getApplicationContext());
-
             }
         });
     }
@@ -305,6 +306,8 @@ public class PerfilUsuario extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
 
             int codigo = intent.getIntExtra("codigoActualizacion", 0);
+            cuerpo = intent.getStringExtra("cuerpoActualizacion");
+            Log.d("CUERPO___", cuerpo);
 
             if (codigo == 200) {
                 tv_cambio.setVisibility(View.VISIBLE);
@@ -315,12 +318,34 @@ public class PerfilUsuario extends AppCompatActivity {
                 //logicaFake.iniciarSesion(correoUsuarioDato, contraseñaUsuarioDato, getApplicationContext());
                //cuerpo= "{"+"\"error\":null" +",\"data\":{\"token\":"+tokkenUsuarioDato+"\"},\"datosUsuario\":{\"_id\":\""+idUsuarioDato+"\",\"nombreUsuario\":\""+nombreCambiado+",\"correo\":\""+correoUsuarioDato+"\",\"contrasenya\":\""+contraseñaUsuarioDato+"\",\"telefono\":"+telefonoCambiado+",\"macSensor\":\""+macUsuarioDato+"\",\"rol\":\""+rolUsuario+"\"}}";
 
-               /*
-                SharedPreferences sharedPreferences = getSharedPreferences("com.example.tricoenvironment.airlity", MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                //SharedPreferences sharedPreferences = getSharedPreferences("com.example.tricoenvironment.airlity", MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
                 editor.putString("cuerpoUsuario", cuerpo);
                 editor.commit();
-                */
+
+
+                Gson gson = new Gson();
+                Root datosRoot = gson.fromJson(cuerpo, Root.class);
+
+                /*tokkenUsuarioDato = datosRoot.getData().getToken();
+                idUsuarioDato = datosRoot.getDatosUsuario().getId();
+                nombreUsuarioDato = datosRoot.getDatosUsuario().getNombreUsuario();
+                correoUsuarioDato = datosRoot.getDatosUsuario().getCorreo();
+                telefonoUsuarioDato = datosRoot.getDatosUsuario().getTelefono().toString();
+                macUsuarioDato = datosRoot.getDatosUsuario().getMacSensor().toString();
+                rolUsuario = datosRoot.getDatosUsuario().getRol();
+                contraseñaUsuarioDato= datosRoot.getDatosUsuario().getContrasenya();
+
+                Log.d("cuerpo_tokken", tokkenUsuarioDato);
+                nombreCambiado=nombreUsuarioDato;
+                telefonoCambiado=telefonoUsuarioDato;
+
+                tv_nombreUsuario.setText(nombreUsuarioDato);
+                et_nombreUsuario.setText(nombreUsuarioDato);
+                tv_correoElectronico.setText(correoUsuarioDato);
+                et_telefonoUsuario.setText(telefonoUsuarioDato);*/
+
             } else {
                 tv_cambio.setVisibility(View.VISIBLE);
                 tv_cambio.setText("Error al actualizar datos del usuario");
