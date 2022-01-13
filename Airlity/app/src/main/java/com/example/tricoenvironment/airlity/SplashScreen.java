@@ -55,7 +55,7 @@ public class SplashScreen extends AppCompatActivity {
                 public void run(){
 
                     //----------------------------
-                    Intent intent = new Intent(SplashScreen.this, prova_mapa_activity.class);
+                    Intent intent = new Intent(SplashScreen.this, MapaActivity.class);
                     startActivity(intent);
                     finish();
                     //----------------------------
