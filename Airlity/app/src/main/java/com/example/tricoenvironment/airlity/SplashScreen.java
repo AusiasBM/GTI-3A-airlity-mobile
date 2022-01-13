@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -26,8 +27,9 @@ public class SplashScreen extends AppCompatActivity {
         tv_lema=findViewById(R.id.tv_lema);
 
         SharedPreferences preferences=getSharedPreferences("com.example.tricoenvironment.airlity", Context.MODE_PRIVATE);
-        Boolean sesionIniciada = preferences.getBoolean("usuarioLogeado", false);
-        if(sesionIniciada){
+        String tokken = preferences.getString("tokken", null);
+        Log.d("tokken", preferences.getString("tokken", null) +"");
+        if(tokken != null){
             Intent intent = new Intent(SplashScreen.this, MapaActivity.class);
             startActivity(intent);
             finish();
@@ -53,7 +55,7 @@ public class SplashScreen extends AppCompatActivity {
                 public void run(){
 
                     //----------------------------
-                    Intent intent = new Intent(SplashScreen.this, MapaActivity.class);
+                    Intent intent = new Intent(SplashScreen.this, prova_mapa_activity.class);
                     startActivity(intent);
                     finish();
                     //----------------------------
