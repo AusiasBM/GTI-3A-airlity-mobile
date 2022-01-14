@@ -53,6 +53,7 @@ dependencies {
 
     compile 'com.squareup.picasso:picasso:2.5.2'
     implementation 'ca.heartlandsoftware:androidheatmap:1.2.0'
-
+    //mapa
+    implementation 'org.osmdroid:osmdroid-android:6.0.3'
 
 }

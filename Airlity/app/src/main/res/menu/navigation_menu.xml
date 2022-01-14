@@ -27,10 +27,15 @@
         android:id="@+id/menu_signout"
         android:icon="@drawable/iniciar_seion"
         android:title="Cerrar sesión" />
-    <item
+       <item
         android:id="@+id/menu_sensores"
         android:icon="@drawable/sensor"
         android:title="Información de los sensores" />
+
+    <item
+        android:id="@+id/menu_mapaInterpolacion"
+        android:icon="@drawable/mapa"
+        android:title="Mapa de interpolación" />
 
 
     <item

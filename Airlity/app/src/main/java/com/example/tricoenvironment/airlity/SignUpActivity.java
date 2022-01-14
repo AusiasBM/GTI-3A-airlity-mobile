@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.Editable;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.UnderlineSpan;
@@ -27,8 +26,6 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 
 import static android.view.View.VISIBLE;
-
-import java.util.ArrayList;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -245,8 +242,16 @@ public class SignUpActivity extends AppCompatActivity {
             case R.id.menu_nosotros:
                 lanzarContactanos();
                 break;
+            case R.id.menu_mapaInterpolacion:
+                lanzarMapaInterpolacion();
+                break;
         }
 
+    }
+
+    private void lanzarMapaInterpolacion(){
+        Intent i = new Intent(this, Mapa_interpolacion.class);
+        startActivity(i);
     }
 
     private void lanzarInformacion() {

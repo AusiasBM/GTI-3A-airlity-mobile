@@ -7,6 +7,12 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,7 +21,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 
-public class ConoceTricoActivity extends AppCompatActivity {
+public class Mapa_interpolacion extends AppCompatActivity {
 
     boolean usuarioRegistrado, usuario;
     String idUsuarioDato, nombreUsuarioDato, correoUsuarioDato, contraseñaUsuarioDato, tokkenUsuarioDato, telefonoUsuarioDato, macUsuarioDato;
@@ -23,13 +29,26 @@ public class ConoceTricoActivity extends AppCompatActivity {
     Bundle datos;
     Boolean sesionIniciada;
     String rolUsuario;
-
+    String url;
+    RadioGroup rg_mapaInterpolacion;
+    RadioButton rb_Iaq;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_conoce_trico);
+        setContentView(R.layout.activity_mapa_interpolacion);
+        rg_mapaInterpolacion=findViewById(R.id.rg_mapaInterpolacion);
+        final WebView myWebViewIAQ = (WebView) findViewById(R.id.webviewIAQ);
+        rb_Iaq=findViewById(R.id.rb_Iaq);
+        rb_Iaq.setChecked(true);
+        myWebViewIAQ.setWebViewClient(new WebViewClient());
+        myWebViewIAQ.setWebChromeClient(new WebChromeClient());
+        myWebViewIAQ.loadUrl("http://217.76.155.97:5080/mapaIAQ.html");
+        WebSettings webSettings = myWebViewIAQ.getSettings();
+        webSettings.setJavaScriptEnabled(true);
 
-        SharedPreferences preferences=getSharedPreferences("com.example.tricoenvironment.airlity", Context.MODE_PRIVATE);
+
+
+        SharedPreferences preferences = getSharedPreferences("com.example.tricoenvironment.airlity", Context.MODE_PRIVATE);
         sesionIniciada = preferences.getBoolean("usuarioLogeado", false);
         rolUsuario = preferences.getString("rol", "");
 
@@ -38,8 +57,8 @@ public class ConoceTricoActivity extends AppCompatActivity {
         //Pegar esto en todas las clases de activity
         //Prepara el drawer para la elección de items
         //-------------------------------------------
-        final DrawerLayout drawerLayout = findViewById(R.id.conocenos_drawerLayout);
-        findViewById(R.id.conocenos_im_menu).setOnClickListener(new View.OnClickListener() {
+        final DrawerLayout drawerLayout = findViewById(R.id.mapaInterpolacion_drawerLayout);
+        findViewById(R.id.mapaInterpolacion_im_menu).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 drawerLayout.openDrawer(GravityCompat.START);
@@ -48,7 +67,7 @@ public class ConoceTricoActivity extends AppCompatActivity {
 
 
 
-        NavigationView navigationView = findViewById(R.id.conocenos_navigationView);
+        NavigationView navigationView = findViewById(R.id.mapaInterpolacion_navigationView);
         navigationView.setItemIconTintList(null);
         if (sesionIniciada){
             navigationView.getMenu().getItem(2).setVisible(false);
@@ -66,6 +85,28 @@ public class ConoceTricoActivity extends AppCompatActivity {
         prepararDrawer(navigationView);
         //-------------------------------------------
         //-------------------------------------------
+
+
+        rg_mapaInterpolacion.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
+        {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (rg_mapaInterpolacion.getCheckedRadioButtonId()==R.id.rb_Iaq){
+                    myWebViewIAQ.setWebViewClient(new WebViewClient());
+                    myWebViewIAQ.setWebChromeClient(new WebChromeClient());
+                    myWebViewIAQ.loadUrl("http://217.76.155.97:5080/mapaIAQ.html");
+                    WebSettings webSettings = myWebViewIAQ.getSettings();
+                    webSettings.setJavaScriptEnabled(true);
+                }else{
+                    myWebViewIAQ.setWebViewClient(new WebViewClient());
+                    myWebViewIAQ.setWebChromeClient(new WebChromeClient());
+                    myWebViewIAQ.loadUrl("http://217.76.155.97:5080/mapaO3.html");
+                    WebSettings webSettings = myWebViewIAQ.getSettings();
+                    webSettings.setJavaScriptEnabled(true);
+                }
+            }
+        });
+
     }
 
     //-----------------------------------------------------------------------------
@@ -83,6 +124,7 @@ public class ConoceTricoActivity extends AppCompatActivity {
                 });
 
     }
+
 
     private void seleccionarItem(MenuItem itemDrawer) {
 
@@ -112,18 +154,19 @@ public class ConoceTricoActivity extends AppCompatActivity {
                 lanzarSignOut();
                 break;
             case R.id.menu_nosotros:
+                lanzarContactanos();
                 break;
             case R.id.menu_sensores:
                 lanzarSensores();
-                break;case R.id.menu_mapaInterpolacion:
-                lanzarMapaInterpolacion();
+                break;
+            case R.id.menu_mapaInterpolacion:
                 break;
         }
 
     }
 
-    private void lanzarMapaInterpolacion(){
-        Intent i = new Intent(this, Mapa_interpolacion.class);
+    private void lanzarContactanos() {
+        Intent i = new Intent(this, ConoceTricoActivity.class);
         startActivity(i);
     }
 
@@ -133,7 +176,7 @@ public class ConoceTricoActivity extends AppCompatActivity {
     }
 
     private void lanzarSignOut() {
-        AlertDialog.Builder alertDialog=new AlertDialog.Builder(ConoceTricoActivity.this);
+        AlertDialog.Builder alertDialog=new AlertDialog.Builder(Mapa_interpolacion.this);
         alertDialog.setMessage("¿Segur que desea cerrar sesión?").setCancelable(false)
                 .setPositiveButton("Salir", new DialogInterface.OnClickListener() {
                     @Override
@@ -158,39 +201,40 @@ public class ConoceTricoActivity extends AppCompatActivity {
         titulo.show();
     }
 
-        private void lanzarInformacion(){
-            Intent i = new Intent(this, InformacionActivity.class);
-            startActivity(i);
-        }
+    private void lanzarInformacion(){
+        Intent i = new Intent(this, InformacionActivity.class);
+        startActivity(i);
+    }
 
-        private void lanzarSoporteTecnico() {
-            Intent i = new Intent(this, SoporteTecnicoActivity.class);
-            startActivity(i);
-        }
+    private void lanzarSoporteTecnico() {
+        Intent i = new Intent(this, SoporteTecnicoActivity.class);
+        startActivity(i);
+    }
 
-        private void lanzarGraficas(){
-            Intent i = new Intent(this, GraficasActivity.class);
-            startActivity(i);
-        }
+    private void lanzarGraficas(){
+        Intent i = new Intent(this, GraficasActivity.class);
+        startActivity(i);
+    }
 
-        private void lanzarMapa(){
-            Intent i = new Intent(this, MapaActivity.class);
-            startActivity(i);
-        }
+    private void lanzarMapa(){
+        Intent i = new Intent(this, MapaActivity.class);
+        startActivity(i);
+    }
 
-        private void lanzarPerfilUsuario(){
-            Intent i = new Intent(this, PerfilUsuario.class);
-            startActivity(i);
-        }
+    private void lanzarPerfilUsuario(){
+        Intent i = new Intent(this, PerfilUsuario.class);
+        startActivity(i);
+    }
 
-        private void lanzarSignIn(){
-            Intent i = new Intent(this, SignInActivity.class);
-            startActivity(i);
-        }
+    private void lanzarSignIn(){
+        Intent i = new Intent(this, SignInActivity.class);
+        startActivity(i);
+    }
 
-        private void lanzarMediciones(){
-            Intent i = new Intent(this, MedicionesActivity.class);
-            startActivity(i);
-        }
+    private void lanzarMediciones(){
+        Intent i = new Intent(this, MedicionesActivity.class);
+        startActivity(i);
+    }
 
 }
+

@@ -35,10 +35,6 @@ import com.google.gson.Gson;
 
 import static android.view.View.VISIBLE;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 public class SignInActivity extends AppCompatActivity {
 
     String correoUsuario, contraseñaUsuario;
@@ -209,11 +205,17 @@ public class SignInActivity extends AppCompatActivity {
                 break;
             case R.id.menu_nosotros:
                 lanzarContactanos();
+                break;case R.id.menu_mapaInterpolacion:
+                lanzarMapaInterpolacion();
                 break;
         }
 
     }
 
+    private void lanzarMapaInterpolacion(){
+        Intent i = new Intent(this, Mapa_interpolacion.class);
+        startActivity(i);
+    }
     private void lanzarGraficas() {
         Intent i = new Intent(this, GraficasActivity.class);
         startActivity(i);

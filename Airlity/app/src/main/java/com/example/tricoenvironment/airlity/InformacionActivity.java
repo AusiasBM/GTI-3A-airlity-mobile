@@ -128,8 +128,16 @@ public class InformacionActivity extends AppCompatActivity {
             case R.id.menu_sensores:
                 lanzarSensores();
                 break;
+            case R.id.menu_mapaInterpolacion:
+                lanzarMapaInterpolacion();
+                break;
         }
 
+    }
+
+    private void lanzarMapaInterpolacion(){
+        Intent i = new Intent(this, Mapa_interpolacion.class);
+        startActivity(i);
     }
 
     private void lanzarSensores() {

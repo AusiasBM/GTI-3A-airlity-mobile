@@ -9,9 +9,6 @@
 
 package com.example.tricoenvironment.airlity;
 
-import static android.view.View.GONE;
-import static android.view.View.VISIBLE;
-
 import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -23,7 +20,6 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -54,15 +50,15 @@ import com.google.android.gms.maps.model.TileOverlayOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
-
-
 import com.google.maps.android.heatmaps.Gradient;
 import com.google.maps.android.heatmaps.HeatmapTileProvider;
 import com.google.maps.android.heatmaps.WeightedLatLng;
 
-
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 
 public class MapaActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
@@ -300,8 +296,16 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
             case R.id.menu_sensores:
                 lanzarSensores();
                 break;
+            case R.id.menu_mapaInterpolacion:
+                lanzarMapaInterpolacion();
+                break;
         }
 
+    }
+
+    private void lanzarMapaInterpolacion(){
+        Intent i = new Intent(this, Mapa_interpolacion.class);
+        startActivity(i);
     }
 
     private void lanzarSensores() {

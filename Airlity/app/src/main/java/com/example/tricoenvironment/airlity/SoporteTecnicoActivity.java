@@ -106,8 +106,16 @@ public class SoporteTecnicoActivity extends AppCompatActivity {
                 break;
             case R.id.menu_signout:
                 lanzarSignOut();
+                break;case R.id.menu_mapaInterpolacion:
+                lanzarMapaInterpolacion();
                 break;
         }
+
+    }
+
+    private void lanzarMapaInterpolacion(){
+        Intent i = new Intent(this, Mapa_interpolacion.class);
+        startActivity(i);
     }
 
     private void lanzarSignOut() {

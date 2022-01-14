@@ -9,6 +9,14 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.VIBRATE" />
 
+
+
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+
+
+
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -18,10 +26,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".Mapa_interpolacion"></activity>
         <activity
             android:name=".PopUpTerminos"
             android:exported="false"
-            android:theme="@style/AppTheme.TemaPopUp"/>
+            android:theme="@style/AppTheme.TemaPopUp" />
         <activity
             android:name=".SensoresInactivosActivity"
             android:exported="false" />
@@ -46,8 +55,7 @@
         <activity android:name=".InformacionActivity" />
         <activity
             android:name=".MapaActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".GraficasActivity"
             android:exported="false" />
@@ -60,8 +68,7 @@
         <activity
             android:name=".SignInActivity"
             android:exported="false" />
-        <activity android:name=".MedicionesActivity">
-        </activity>
+        <activity android:name=".MedicionesActivity"></activity>
 
         <service android:name=".ServicioEscuharBeacons" />
         <service android:name=".ServicioLogicaFake" />
