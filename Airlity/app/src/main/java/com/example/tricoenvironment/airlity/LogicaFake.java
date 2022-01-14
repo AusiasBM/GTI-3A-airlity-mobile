@@ -11,10 +11,7 @@ package com.example.tricoenvironment.airlity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -27,7 +24,7 @@ import java.util.List;
 public class LogicaFake {
 
     private static final String ETIQUETA_LOG = ">>>>";
-    private static String url="192.168.0.107";
+    private static String url="172.20.10.13";
     //IP Pere casa 192.168.31.98
     //IP Pere red iphone 172.20.10.2
     //IP Pere en UPVNET 10.236.50.31

@@ -16,6 +16,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -93,10 +94,20 @@ public class GraficasActivity extends AppCompatActivity {
 
         NavigationView navigationView = findViewById(R.id.graficas_navigationView);
         navigationView.setItemIconTintList(null);
-        if (!rolUsuario.equals("Admin")){
+        if (sesionIniciada){
+            if (!rolUsuario.equals("Admin")){
+                navigationView.getMenu().getItem(3).setVisible(false);
+                navigationView.getMenu().getItem(6).setVisible(false);
+            }
+            navigationView.getMenu().getItem(3).setVisible(false);
+        }else{
+            navigationView.getMenu().getItem(0).setVisible(false);
+            navigationView.getMenu().getItem(2).setVisible(false);
+            navigationView.getMenu().getItem(4).setVisible(false);
+            navigationView.getMenu().getItem(5).setVisible(false);
             navigationView.getMenu().getItem(6).setVisible(false);
+            navigationView.getMenu().getItem(7).setVisible(false);
         }
-        navigationView.getMenu().getItem(2).setVisible(false);
         prepararDrawer(navigationView);
         //-------------------------------------------
         //-------------------------------------------
@@ -170,6 +181,7 @@ public class GraficasActivity extends AppCompatActivity {
                 lanzarSignOut();
                 break;
             case R.id.menu_perfilUsuario:
+                Log.d("MENU", "MENU PERFIL");
                 lanzarPerfilUsuario();
                 break;
             case R.id.menu_mediciones:
@@ -247,6 +259,7 @@ public class GraficasActivity extends AppCompatActivity {
     }
 
     private void lanzarPerfilUsuario(){
+        Log.d("MENU", "JOLA");
         Intent i = new Intent(this, PerfilUsuario.class);
         startActivity(i);
     }

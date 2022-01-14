@@ -70,17 +70,18 @@ public class Mapa_interpolacion extends AppCompatActivity {
         NavigationView navigationView = findViewById(R.id.mapaInterpolacion_navigationView);
         navigationView.setItemIconTintList(null);
         if (sesionIniciada){
-            navigationView.getMenu().getItem(2).setVisible(false);
             if (!rolUsuario.equals("Admin")){
+                navigationView.getMenu().getItem(3).setVisible(false);
                 navigationView.getMenu().getItem(6).setVisible(false);
             }
-        }else{
-            navigationView.getMenu().getItem(1).setVisible(false);
             navigationView.getMenu().getItem(3).setVisible(false);
+        }else{
+            navigationView.getMenu().getItem(0).setVisible(false);
+            navigationView.getMenu().getItem(2).setVisible(false);
             navigationView.getMenu().getItem(4).setVisible(false);
             navigationView.getMenu().getItem(5).setVisible(false);
             navigationView.getMenu().getItem(6).setVisible(false);
-
+            navigationView.getMenu().getItem(7).setVisible(false);
         }
         prepararDrawer(navigationView);
         //-------------------------------------------

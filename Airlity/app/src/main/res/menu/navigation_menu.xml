@@ -5,7 +5,10 @@
         android:id="@+id/menu_mapa"
         android:icon="@drawable/mapa"
         android:title="Mapa" />
-
+    <item
+        android:id="@+id/menu_mapaInterpolacion"
+        android:icon="@drawable/heatmap"
+        android:title="Mapa de interpolación" />
     <item
         android:id="@+id/menu_mediciones"
         android:icon="@drawable/mediciones"
@@ -14,7 +17,6 @@
         android:id="@+id/menu_signin"
         android:icon="@drawable/iniciar_seion"
         android:title="Iniciar sesión" />
-
     <item
         android:id="@+id/menu_graficas"
         android:icon="@drawable/grafica"
@@ -24,20 +26,13 @@
         android:icon="@drawable/gente"
         android:title="Perfil" />
     <item
-        android:id="@+id/menu_signout"
-        android:icon="@drawable/iniciar_seion"
-        android:title="Cerrar sesión" />
-       <item
         android:id="@+id/menu_sensores"
         android:icon="@drawable/sensor"
         android:title="Información de los sensores" />
-
     <item
-        android:id="@+id/menu_mapaInterpolacion"
-        android:icon="@drawable/mapa"
-        android:title="Mapa de interpolación" />
-
-
+        android:id="@+id/menu_signout"
+        android:icon="@drawable/iniciar_seion"
+        android:title="Cerrar sesión" />
     <item
         android:iconTint="@color/colorGrey"
         android:title="Otros">

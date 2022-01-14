@@ -88,10 +88,26 @@ public class MedicionesActivity extends AppCompatActivity {
 
         NavigationView navigationView = findViewById(R.id.mediciones_navigationView);
         navigationView.setItemIconTintList(null);
+        /*
         if (!rolUsuario.equals("Admin")){
             navigationView.getMenu().getItem(6).setVisible(false);
         }
         navigationView.getMenu().getItem(2).setVisible(false);
+         */
+        if (sesionIniciada){
+            if (!rolUsuario.equals("Admin")){
+                navigationView.getMenu().getItem(3).setVisible(false);
+                navigationView.getMenu().getItem(6).setVisible(false);
+            }
+            navigationView.getMenu().getItem(3).setVisible(false);
+        }else{
+            navigationView.getMenu().getItem(0).setVisible(false);
+            navigationView.getMenu().getItem(2).setVisible(false);
+            navigationView.getMenu().getItem(4).setVisible(false);
+            navigationView.getMenu().getItem(5).setVisible(false);
+            navigationView.getMenu().getItem(6).setVisible(false);
+            navigationView.getMenu().getItem(7).setVisible(false);
+        }
 
         prepararDrawer(navigationView);
         //-------------------------------------------

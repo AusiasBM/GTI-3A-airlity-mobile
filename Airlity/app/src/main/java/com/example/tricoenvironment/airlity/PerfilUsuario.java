@@ -28,14 +28,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import com.google.android.material.internal.TextWatcherAdapter;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 
@@ -141,12 +139,22 @@ public class PerfilUsuario extends AppCompatActivity {
 
         NavigationView navigationView = findViewById(R.id.perfilusuario_navigationView);
         navigationView.setItemIconTintList(null);
-        if (!rolUsuario.equals("Admin")){
+        if (sesionIniciada){
+            if (!rolUsuario.equals("Admin")){
+                navigationView.getMenu().getItem(3).setVisible(false);
+                navigationView.getMenu().getItem(6).setVisible(false);
+            }
+            navigationView.getMenu().getItem(3).setVisible(false);
+        }else{
+            navigationView.getMenu().getItem(0).setVisible(false);
+            navigationView.getMenu().getItem(2).setVisible(false);
+            navigationView.getMenu().getItem(4).setVisible(false);
+            navigationView.getMenu().getItem(5).setVisible(false);
             navigationView.getMenu().getItem(6).setVisible(false);
+            navigationView.getMenu().getItem(7).setVisible(false);
         }
-        navigationView.getMenu().getItem(2).setVisible(false);
         prepararDrawer(navigationView);
-        seleccionarItem(navigationView.getMenu().getItem(4));
+        
         //-------------------------------------------
         //-------------------------------------------
         et_nombreUsuario.addTextChangedListener(new TextWatcher() {
@@ -264,6 +272,7 @@ public class PerfilUsuario extends AppCompatActivity {
         titulo.show();
     }
     private void lanzarGraficas() {
+        Log.d("Entrar en perfil", "Entraaaaaa");
         Intent i = new Intent(this, GraficasActivity.class);
         startActivity(i);
     }

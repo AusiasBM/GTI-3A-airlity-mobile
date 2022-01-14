@@ -1,7 +1,5 @@
 package com.example.tricoenvironment.airlity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,6 +11,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class SplashScreen extends AppCompatActivity {
 
@@ -55,7 +55,7 @@ public class SplashScreen extends AppCompatActivity {
                 public void run(){
 
                     //----------------------------
-                    Intent intent = new Intent(SplashScreen.this, MapaActivity.class);
+                    Intent intent = new Intent(SplashScreen.this, Mapa_interpolacion.class);
                     startActivity(intent);
                     finish();
                     //----------------------------
