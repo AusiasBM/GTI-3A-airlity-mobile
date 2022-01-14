@@ -113,7 +113,7 @@ public class SensoresInactivosActivity extends AppCompatActivity {
         navigationView.setItemIconTintList(null);
 
 
-        navigationView.getMenu().getItem(2).setVisible(false);
+        navigationView.getMenu().getItem(3).setVisible(false);
 
         prepararDrawer(navigationView);
         //-------------------------------------------

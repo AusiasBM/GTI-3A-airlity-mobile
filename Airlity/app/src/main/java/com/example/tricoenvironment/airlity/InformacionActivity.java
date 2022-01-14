@@ -14,7 +14,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -62,17 +61,17 @@ public class InformacionActivity extends AppCompatActivity {
         navigationView.setItemIconTintList(null);
         if (sesionIniciada){
             if (!rolUsuario.equals("Admin")){
+                navigationView.getMenu().getItem(3).setVisible(false);
                 navigationView.getMenu().getItem(6).setVisible(false);
             }
-            navigationView.getMenu().getItem(2).setVisible(false);
-        }else{
-            Log.d("HOLA", "susu");
-
-            navigationView.getMenu().getItem(1).setVisible(false);
             navigationView.getMenu().getItem(3).setVisible(false);
+        }else{
+            navigationView.getMenu().getItem(0).setVisible(false);
+            navigationView.getMenu().getItem(2).setVisible(false);
             navigationView.getMenu().getItem(4).setVisible(false);
             navigationView.getMenu().getItem(5).setVisible(false);
             navigationView.getMenu().getItem(6).setVisible(false);
+            navigationView.getMenu().getItem(7).setVisible(false);
         }
         prepararDrawer(navigationView);
         //-------------------------------------------

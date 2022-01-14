@@ -176,15 +176,17 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         if (sesionIniciada){
             if (!rolUsuario.equals("Admin")){
+                navigationView.getMenu().getItem(3).setVisible(false);
                 navigationView.getMenu().getItem(6).setVisible(false);
             }
-            navigationView.getMenu().getItem(2).setVisible(false);
-        }else{
-            navigationView.getMenu().getItem(1).setVisible(false);
             navigationView.getMenu().getItem(3).setVisible(false);
+        }else{
+            navigationView.getMenu().getItem(0).setVisible(false);
+            navigationView.getMenu().getItem(2).setVisible(false);
             navigationView.getMenu().getItem(4).setVisible(false);
             navigationView.getMenu().getItem(5).setVisible(false);
             navigationView.getMenu().getItem(6).setVisible(false);
+            navigationView.getMenu().getItem(7).setVisible(false);
         }
         prepararDrawer(navigationView);
         //-------------------------------------------
@@ -519,8 +521,8 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
             if (codigo == 200) {
                 Gson gson = new Gson();
                 mediciones = gson.fromJson(cuerpo, MedicionMapa[].class);
-                //mostrarMediciones();
-                crearMapadeCalor();
+                mostrarMediciones();
+                //crearMapadeCalor();
             } else {
                 //Toast.makeText(MapaActivity.this, "Fallo al recibir mediciones", Toast.LENGTH_LONG).show();
             }
