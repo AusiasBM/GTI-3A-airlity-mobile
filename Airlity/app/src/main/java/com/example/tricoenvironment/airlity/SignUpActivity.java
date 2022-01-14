@@ -42,8 +42,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     private IntentFilter intentFilter;
     private ReceptorGetUsuario receptor;
-    private IntentFilter intentFilterLogin;
-    private ReceptorGetUsuarioLogin receptorLogin;
+
 
     CheckBox cb_terminos;
     TextView tv_terminos;
@@ -71,10 +70,6 @@ public class SignUpActivity extends AppCompatActivity {
         intentFilter = new IntentFilter();
         intentFilter.addAction("Get_usuario");
         receptor = new ReceptorGetUsuario();
-
-        intentFilterLogin = new IntentFilter();
-        intentFilterLogin.addAction("Get_usuario_login");
-        receptorLogin = new ReceptorGetUsuarioLogin();
 
 
 
@@ -300,13 +295,11 @@ public class SignUpActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         this.registerReceiver(receptor, intentFilter);
-        this.registerReceiver(receptorLogin, intentFilterLogin);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        this.unregisterReceiver(receptorLogin);
         this.unregisterReceiver(receptor);
     }
 
@@ -343,43 +336,4 @@ public class SignUpActivity extends AppCompatActivity {
         }
     }
 
-    private class ReceptorGetUsuarioLogin extends BroadcastReceiver {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            codigo = intent.getIntExtra("codigo_usuario_login", 0);
-
-            cuerpo = intent.getStringExtra("cuerpo_usuario");
-            if (codigo == 200) {
-
-                Log.d("LOGIN", "Entra en LOGIN");
-                Gson gson = new Gson();
-                Log.d("CUERPO", cuerpo);
-                Root datosRoot = gson.fromJson(cuerpo, Root.class);
-
-                SharedPreferences sharedPreferences = getSharedPreferences("com.example.tricoenvironment.airlity", MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-
-                //Guardamos toda la informacion del usuario descompuesta en campos
-                editor.putBoolean("usuarioLogeado", true);
-                editor.putString("tokken", datosRoot.getData().getToken());
-                editor.putString("id", datosRoot.getDatosUsuario().getId());
-                editor.putString("nombre", datosRoot.getDatosUsuario().getNombreUsuario());
-                editor.putString("correo", datosRoot.getDatosUsuario().getCorreo());
-                editor.putString("telefono", datosRoot.getDatosUsuario().getTelefono().toString());
-                editor.putString("mac", datosRoot.getDatosUsuario().getMacSensor());
-                editor.putString("rol", datosRoot.getDatosUsuario().getRol());
-                editor.putString("contrrasenya", datosRoot.getDatosUsuario().getContrasenya());
-
-                editor.commit();
-
-                Intent i = new Intent(getApplicationContext(), MapaActivity.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                Toast.makeText(getApplicationContext(), "Bienvenido, "+ datosRoot.getDatosUsuario().getNombreUsuario(), Toast.LENGTH_LONG).show();
-                startActivity(i);
-            }
-        }
-
-    }
 }
