@@ -325,15 +325,21 @@ public class SignUpActivity extends AppCompatActivity {
 
                 Log.d("REGISTRO", "Entra en REGISTRO");
 
-                logicaFake.iniciarSesion(correoUsuario, contraseñaUsuario, getApplicationContext());
+                Toast.makeText(getApplicationContext(), "Registro completado! Por favor, revise su correo para verificar cuenta.", Toast.LENGTH_LONG).show();
 
             } else if(codigo == 403){
                 tvErrorSignUp.setVisibility(VISIBLE);
                 tvErrorSignUp.setText("Sensor ya registrado");
+                Toast.makeText(getApplicationContext(), "Error, sensor ya registrado", Toast.LENGTH_LONG).show();
             } else {
-                tvErrorSignUp.setVisibility(VISIBLE);
-                tvErrorSignUp.setText("Usuario ya registrado");
+                Toast.makeText(getApplicationContext(), "Error, usuario ya registrado", Toast.LENGTH_LONG).show();
             }
+
+            Intent i = new Intent(getApplicationContext(), SignInActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(i);
+
         }
     }
 
